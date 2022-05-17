@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 import { useTheme } from "@mui/material/styles";
@@ -45,7 +45,7 @@ function a11yProps(index) {
 
 function LogInPage() {
   const theme = useTheme();
-  const [value, setValue] = React.useState(1);
+  const [value, setValue] = useState(1);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

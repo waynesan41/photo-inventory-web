@@ -1,16 +1,15 @@
 import { Card, CardContent, CardHeader } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import LockOpenIcon from "@mui/icons-material/LockOpen";
+import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import IconButton from "@mui/material/IconButton";
-import BlockedUser from "./BlockedUser";
 
-const BlockedUserList = () => {
-  const [blockUser, setBlockUser] = useState([]);
+const ConnectedUser = () => {
+  const [connectUser, setConnectUser] = useState([]);
 
   useEffect(() => {
-    const getBlockRequest = async () => {
+    const getConnectRequest = async () => {
       const formData = new FormData();
-      formData.append("type", "B");
+      formData.append("type", "C");
 
       try {
         const response = await fetch(
@@ -27,21 +26,36 @@ const BlockedUserList = () => {
         const result = await response.json();
         if (result === "0") {
           window.location = window.location.origin + "/Login";
+        } else if (result === "NO USER") {
+          setConnectUser([]);
         } else {
-          setBlockUser([...result]);
+          setConnectUser([...result]);
         }
       } catch (error) {
         console.log(error.message);
       }
     };
-    getBlockRequest();
+    getConnectRequest();
   }, []);
 
   return (
     <>
-      <BlockedUser blockUser={blockUser} />
+      {connectUser.map((user) => (
+        <Card key={user.UserID}>
+          <CardHeader
+            title={user.FullName}
+            action={
+              <IconButton aria-label="settings">
+                <RemoveCircleIcon />
+              </IconButton>
+            }
+          />
+          <CardContent>Username: {user.Username}</CardContent>
+        </Card>
+      ))}
+      <Card>No Connected User</Card>
     </>
   );
 };
 
-export default BlockedUserList;
+export default ConnectedUser;

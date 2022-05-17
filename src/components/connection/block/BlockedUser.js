@@ -3,33 +3,34 @@ import React, { useState } from "react";
 import { Typography } from "@mui/material";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import IconButton from "@mui/material/IconButton";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const BlockedUser = (props) => {
+  const [unBlocking, setUnBlocking] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [currentID, setCurrentID] = useState();
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
-    setCurrentID(event.currentTarget.id);
-    console.log("currentID: " + currentID);
-    console.log("eventID: " + event.currentTarget.id);
+    props.setCurrentID(event.currentTarget.id);
   };
-
   const handleClose = () => {
+    setUnBlocking(false);
     setAnchorEl(null);
   };
 
   const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
 
-  const unBlockFetch = (event) => {
-    let userID = event.currentTarget.id;
-    console.log(currentID);
-    /* const formData = new FormData();
-    formData.append("userID", "B");
+  const unBlockFetch = async (event) => {
+    console.log("Button unBlock: " + props.currentID);
+    setUnBlocking(!unBlocking);
+    const formData = new FormData();
+
+    formData.append("userID", props.currentID);
+    formData.append("update", "U");
 
     try {
       const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/Connection/getConnection.php",
+        "http://localhost/PhotoInventory/Backend/api/Connection/updateConnection.php",
         {
           method: "POST",
           credentials: "include",
@@ -40,13 +41,18 @@ const BlockedUser = (props) => {
         throw new Error(response.statusText);
       }
       const result = await response.json();
+
       if (result === "0") {
         window.location = window.location.origin + "/Login";
+      } else if (result === "UNBLOCK") {
+        window.location.reload();
       } else {
+        window.location.reload();
       }
     } catch (error) {
       console.log(error.message);
-    } */
+    }
+    setUnBlocking(false);
   };
 
   return (
@@ -56,8 +62,10 @@ const BlockedUser = (props) => {
           <CardHeader
             title={user.FullName}
             action={
-              <Button>
-                <LockOpenIcon id={user.UserID} onClick={handleClick} />
+              <>
+                <Button>
+                  <LockOpenIcon id={user.UserID} onClick={handleClick} />
+                </Button>
                 <Popover
                   open={open}
                   anchorEl={anchorEl}
@@ -68,20 +76,21 @@ const BlockedUser = (props) => {
                   }}
                 >
                   <Button
+                    id={user.UserID}
                     variant="contained"
                     color="error"
                     onClick={unBlockFetch}
                   >
-                    UnBlock {currentID}
+                    {unBlocking && <CircularProgress size={25} />}
+                    {!unBlocking && <>UnBlock</>}
                   </Button>
                 </Popover>
-              </Button>
+              </>
             }
             subheader={<div>Username: {user.Username}</div>}
           />
         </Card>
       ))}
-      <Card>No Block User</Card>
     </>
   );
 };

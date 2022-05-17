@@ -1,6 +1,11 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
-import { BottomNavigation, BottomNavigationAction } from "@mui/material";
+import {
+  BottomNavigation,
+  BottomNavigationAction,
+  Button,
+} from "@mui/material";
+import { Grid } from "@mui/material";
 
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 
@@ -33,66 +38,66 @@ const NavBar = () => {
       console.log(error.message);
     }
   }, []);
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(3);
+
   return (
     <>
-      <BottomNavigation
+      <Grid
+        container
+        spacing={2}
         style={{
           border: "solid 1px blue",
         }}
-        showLabels={true}
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
       >
-        <div
-          style={{
-            marginRight: "auto",
-          }}
-        >
-          717logistics
-        </div>
-        <BottomNavigationAction
-          component={NavLink}
-          to="/ObjectLocation"
-          label="Object"
-          icon={<AddLocationIcon />}
-        />
-        <BottomNavigationAction
-          component={NavLink}
-          to="/MainLocation"
-          label="Main"
-          icon={<LocationOnIcon />}
-        />
-        <BottomNavigationAction
-          component={NavLink}
-          to="/Library"
-          label="Library"
-          icon={<AllInboxIcon />}
-        />
-        <BottomNavigationAction
-          component={NavLink}
-          to="/Connection"
-          label="Connection"
-          icon={<GroupsIcon />}
-        />
-        <BottomNavigationAction
-          component={NavLink}
-          to="/Profile"
-          label="Profile"
-          icon={<PersonOutlineIcon />}
-        />
-
-        <button
-          style={{
-            marginLeft: "auto",
-          }}
-          onClick={logOutphp}
-        >
-          Log Out
-        </button>
-      </BottomNavigation>
+        <Grid item md={1} xs={1}>
+          Company Logo
+        </Grid>
+        <Grid item md={10} xs={10}>
+          <BottomNavigation
+            showLabels={true}
+            value={value}
+            onChange={(event, newValue) => {
+              setValue(newValue);
+            }}
+          >
+            <BottomNavigationAction
+              component={NavLink}
+              to="/ObjectLocation"
+              label="Object"
+              icon={<AddLocationIcon />}
+            />
+            <BottomNavigationAction
+              component={NavLink}
+              to="/MainLocation"
+              label="Main"
+              icon={<LocationOnIcon />}
+            />
+            <BottomNavigationAction
+              component={NavLink}
+              to="/Library"
+              label="Library"
+              icon={<AllInboxIcon />}
+            />
+            <BottomNavigationAction
+              component={NavLink}
+              to="/Connection"
+              label="Connection"
+              icon={<GroupsIcon />}
+            />
+            <BottomNavigationAction
+              component={NavLink}
+              to="/Profile"
+              label="Profile"
+              icon={<PersonOutlineIcon />}
+            />
+          </BottomNavigation>
+        </Grid>
+        <Grid item md={1} xs={1} style={{ textAlign: "right" }}>
+          <Button variant="contained" onClick={logOutphp}>
+            LogOut
+          </Button>
+        </Grid>
+      </Grid>
       <Outlet />
     </>
   );

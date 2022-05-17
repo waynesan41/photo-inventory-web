@@ -59,7 +59,7 @@ const SearchUser = () => {
           <SearchIcon />
         </IconButton>
       </Paper>
-      <Paper style={{ height: "80vh", overflow: "auto" }}>
+      <Paper>
         {searchUser.map((user) => (
           <Card key={user.UserID}>
             <CardHeader

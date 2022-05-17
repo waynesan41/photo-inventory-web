@@ -1,11 +1,11 @@
 import { Card, CardContent, CardHeader, Tooltip } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import RequestTo from "./RequestTo";
 
-import IconButton from "@mui/material/IconButton";
-import CloseIcon from "@mui/icons-material/Close";
-
-const RequestTo = () => {
+const RequestToList = () => {
+  const [noUser, setNoUser] = useState();
   const [requestToUser, setrequestToUser] = useState([]);
+  const [editUserID, setEdituserID] = useState();
 
   useEffect(() => {
     const getBlockRequest = async () => {
@@ -27,6 +27,8 @@ const RequestTo = () => {
         const result = await response.json();
         if (result === "0") {
           window.location = window.location.origin + "/Login";
+        } else if (result === "NO USER") {
+          setNoUser(true);
         } else {
           setrequestToUser([...result]);
         }
@@ -39,24 +41,16 @@ const RequestTo = () => {
 
   return (
     <>
-      {requestToUser.map((user) => (
-        <Card key={user.UserID}>
-          <CardHeader
-            title={user.FullName}
-            action={
-              <Tooltip title={<div>Cancel Request</div>}>
-                <IconButton aria-label="settings" color="warning">
-                  <CloseIcon />
-                </IconButton>
-              </Tooltip>
-            }
-          />
-          <CardContent>Username: {user.Username}</CardContent>
-        </Card>
-      ))}
-      <Card>No Request to Any User</Card>
+      {noUser && <h2>No User You Send Request To.</h2>}
+      {!noUser && (
+        <RequestTo
+          requestToUser={requestToUser}
+          currentID={editUserID}
+          setCurrentID={setEdituserID}
+        />
+      )}
     </>
   );
 };
 
-export default RequestTo;
+export default RequestToList;

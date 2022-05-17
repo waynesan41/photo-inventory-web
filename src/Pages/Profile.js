@@ -1,14 +1,16 @@
-import { Update } from "@mui/icons-material";
-import { Button, Card, Grid, Modal, Box, TextField } from "@mui/material";
+import { Button, Card, Grid, Dialog } from "@mui/material";
 import UpdateProfileForm from "../components/profile/UpdateProfileForm";
+import UpdatePasswordForm from "../components/profile/UpdatePasswordForm";
 
 import React, { useEffect, useState } from "react";
 
 const Profile = () => {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [open, setOpen] = useState(false);
+  const [passForm, setPassForm] = useState(false);
+  const profileFormOpener = () => setOpen(!open);
+  const passFormOpener = () => setPassForm(!passForm);
   const [profileData, setProfileData] = useState({});
+
   useEffect(() => {
     const firstFetch = async () => {
       try {
@@ -24,6 +26,7 @@ const Profile = () => {
         }
         const result = await response.json();
         if (result === "0") {
+          console.log("User is not login");
           window.location = window.location.origin + "/Login";
         } else {
           // console.log(result.Email);
@@ -48,12 +51,22 @@ const Profile = () => {
         <Card>Username: {profileData.Username}</Card>
         <Card>Unit: {profileData.UnitSystem}</Card>
         <Card>Sign Up Date: {profileData.SignUpDate}</Card>
-        <Button variant="contained" color="primary" onClick={handleOpen}>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={profileFormOpener}
+        >
           Edit Profile Information
         </Button>
-        <Modal open={open} onClose={handleClose}>
-          <UpdateProfileForm ProfileData={profileData} />
-        </Modal>
+        <Dialog open={open} onClose={profileFormOpener}>
+          <UpdateProfileForm ProfileData={profileData} closeForm={setOpen} />
+        </Dialog>
+        <Button variant="contained" color="primary" onClick={passFormOpener}>
+          EDIT PASSWORD
+        </Button>
+        <Dialog open={passForm} onClose={passFormOpener}>
+          <UpdatePasswordForm ProfileData={profileData} />
+        </Dialog>
       </Card>
     </Grid>
   );

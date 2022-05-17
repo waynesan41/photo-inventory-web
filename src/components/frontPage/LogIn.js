@@ -14,9 +14,12 @@ import Container from "@mui/material/Container";
 
 export default function SignIn() {
   const [incorrect, setIncorrect] = useState(false);
+  const [loginMessage, setLoginMessage] = useState("");
+
   const incorrectHandler = () => {
     setIncorrect(false);
   };
+
   const handleSubmit = useCallback(async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -36,9 +39,10 @@ export default function SignIn() {
       const result = await response.text();
       console.log(result);
       if (result === "1") {
-        window.location = window.location.origin + "/ObjectLocation";
+        window.location = window.location.origin + "/Profile";
       } else if (result === "0") {
         setIncorrect(true);
+        setLoginMessage("Incorrect Username, Email or Password!");
       }
     } catch (error) {
       console.log(error.message);
@@ -76,8 +80,8 @@ export default function SignIn() {
             required
             fullWidth
             label="Email or Username"
+            // defaultValue="health77"
             name="login"
-            autoFocus
             onChange={incorrectHandler}
           />
           <TextField
@@ -88,8 +92,9 @@ export default function SignIn() {
             name="password"
             label="Password"
             type="password"
-            value="qwerR`qwe12"
+            defaultValue="qwerR`qwe12"
             onChange={incorrectHandler}
+            helperText={loginMessage}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}

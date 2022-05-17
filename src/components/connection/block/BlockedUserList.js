@@ -1,15 +1,17 @@
 import { Card, CardContent, CardHeader } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
-import IconButton from "@mui/material/IconButton";
 
-const ConnectedUser = () => {
-  const [connectUser, setConnectuser] = useState([]);
+import BlockedUser from "./BlockedUser";
+
+const BlockedUserList = () => {
+  const [noBlockuser, setNoBlockUser] = useState();
+  const [blockUser, setBlockUser] = useState([]);
+  const [editUserID, setEdituserID] = useState();
 
   useEffect(() => {
-    const getConnectRequest = async () => {
+    const getBlockRequest = async () => {
       const formData = new FormData();
-      formData.append("type", "C");
+      formData.append("type", "B");
 
       try {
         const response = await fetch(
@@ -24,36 +26,33 @@ const ConnectedUser = () => {
           throw new Error(response.statusText);
         }
         const result = await response.json();
+
         if (result === "0") {
           window.location = window.location.origin + "/Login";
+        } else if (result === "NO USER") {
+          setNoBlockUser(true);
         } else {
-          setConnectuser([...result]);
+          setBlockUser([...result]);
         }
       } catch (error) {
         console.log(error.message);
       }
     };
-    getConnectRequest();
+    getBlockRequest();
   }, []);
 
   return (
     <>
-      {connectUser.map((user) => (
-        <Card key={user.UserID}>
-          <CardHeader
-            title={user.FullName}
-            action={
-              <IconButton aria-label="settings">
-                <RemoveCircleIcon />
-              </IconButton>
-            }
-          />
-          <CardContent>Username: {user.Username}</CardContent>
-        </Card>
-      ))}
-      <Card>No Connected User</Card>
+      {noBlockuser && <h2>You don't have any Blocked User.</h2>}
+      {!noBlockuser && (
+        <BlockedUser
+          blockUser={blockUser}
+          currentID={editUserID}
+          setCurrentID={setEdituserID}
+        />
+      )}
     </>
   );
 };
 
-export default ConnectedUser;
+export default BlockedUserList;

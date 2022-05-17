@@ -12,28 +12,28 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 
 export default function SignUp() {
-  const [emailTaken, setEmailTaken] = useState(false);
-  const [userTaken, setUserTaken] = useState(false);
-  /*   const [nameError, setNameError] = useState(false);
-  const [passError, setPassError] = useState(false); */
+  const [fullName, setFullName] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPass, setConfirmPass] = useState("");
 
-  const [emailMessage, setEmailMessage] = useState("");
+  const [fullNameValid, setFullNameValid] = useState(false);
+  const [passwordValid, setPasswordValid] = useState(false);
+  const [confirmPassValid, setConfirmPassValid] = useState(false);
+
   const [emailValid, setEmailValid] = useState(false);
+  const [emailTaken, setEmailTaken] = useState(false);
+  const [emailMessage, setEmailMessage] = useState("");
 
-  const [userMessage, setUserMessage] = useState("");
   const [userValid, setUserValid] = useState(false);
+  const [userTaken, setUserTaken] = useState(false);
+  const [userMessage, setUserMessage] = useState("");
 
   const handleSubmit = useCallback(async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // console.log(data.get("confirm-password"));
     data.delete("confirm-password");
-    /* console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-      fullName: data.get("fullName"),
-      username: data.get("username"),
-    }); */
+
     try {
       const response = await fetch(
         "http://localhost/PhotoInventory/Backend/api/account/signUp.php",
@@ -85,7 +85,7 @@ export default function SignUp() {
     }
   };
   const validateUsername = (event) => {
-    const usernameRegex = /^[A-Z0-9a-z _.]*$/;
+    const usernameRegex = /^[A-Z0-9a-z_.]{3,20}$/;
     const email = event.target.value;
     setEmailTaken(false);
     if (usernameRegex.test(email)) {
@@ -93,7 +93,41 @@ export default function SignUp() {
       setUserMessage("");
     } else {
       setUserValid(true);
-      setUserMessage("Username can only contain _ . and letters and number");
+      setUserMessage(
+        "Username can contain _ . and 3 to 35 letters and number."
+      );
+    }
+  };
+  const fullNameHandler = (event) => {
+    setFullName(event.target.value);
+
+    if (event.target.value.length < 1 || event.target.value.length > 45) {
+      setFullNameValid(true);
+    } else {
+      setFullNameValid(false);
+    }
+  };
+
+  //PASSWORD HANDLER
+  const passwordHandler = (event) => {
+    const passRegex = /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9\s])^.{9,100}/;
+    setPassword(event.target.value);
+
+    if (passRegex.test(event.target.value)) {
+      setPasswordValid(false);
+    } else {
+      setPasswordValid(true);
+    }
+  };
+
+  //CONFIRM PASSWORD HANDLER
+  const confirmPasswordHandler = (event) => {
+    setConfirmPass(event.target.value);
+
+    if (event.target.value != password) {
+      setConfirmPassValid(true);
+    } else {
+      setConfirmPassValid(false);
     }
   };
 
@@ -109,24 +143,28 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Register New Acount
         </Typography>
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12}>
               <TextField
-                name="fullName"
                 required
+                name="fullName"
                 fullWidth
+                error={fullNameValid}
                 id="fullName"
                 label="Full Name"
-                value="日本のs1ကျူ"
+                defaultValue="杠杠"
+                inputProps={{ maxLength: 45 }}
+                onChange={fullNameHandler}
                 autoFocus
+                helperText={fullNameValid && "Name require 1 to 30 characters."}
               />
             </Grid>
 
             <Grid item xs={12}>
               <TextField
                 error={emailValid || emailTaken}
-                required
+                required={true}
                 fullWidth
                 id="email"
                 label="Email Address"
@@ -134,7 +172,7 @@ export default function SignUp() {
                 name="email"
                 // autoComplete="email"
                 onChange={validateEmail}
-                value="l23@gg.com"
+                defaultValue="ganggang@gg.com"
                 helperText={emailMessage}
               />
             </Grid>
@@ -145,14 +183,16 @@ export default function SignUp() {
                 fullWidth
                 id="username"
                 label="Username"
+                inputProps={{ maxLength: 35 }}
                 name="username"
-                value="sdon123"
+                defaultValue="randomGuy123"
                 onChange={validateUsername}
                 helperText={userMessage}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
+                error={passwordValid}
                 required
                 fullWidth
                 name="password"
@@ -160,23 +200,43 @@ export default function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="new-password"
-                value="qwerR`qwe12"
+                inputProps={{ maxLength: 225 }}
+                onBlur={passwordHandler}
+                onChange={passwordHandler}
+                defaultValue="qwerR`qwe12"
+                helperText={
+                  passwordValid && (
+                    <>
+                      Require at least 9 Characters! Containing at least One
+                      Number
+                      <br /> One Uppercase / One Lowercase / One Special
+                      Character letter
+                    </>
+                  )
+                }
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 required
                 fullWidth
+                error={confirmPassValid}
                 name="confirm-password"
                 label="Confirm Password"
                 type="password"
                 id="confirm-password"
-                value="qwerR`qwe12"
+                inputProps={{ maxLength: 225 }}
+                onBlur={confirmPasswordHandler}
+                onChange={confirmPasswordHandler}
+                defaultValue="qwerR`qwe12"
+                helperText={confirmPassValid && "Password Doesn't Match!"}
               />
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
+                control={
+                  <Checkbox value="allowExtraEmails" required color="primary" />
+                }
                 label="I Agreed to Term and Condition."
               />
             </Grid>
