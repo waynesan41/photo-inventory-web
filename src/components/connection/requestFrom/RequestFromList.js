@@ -1,18 +1,19 @@
-import { Card, CardContent, CardHeader } from "@mui/material";
+import { Card, CardHeader } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
-import IconButton from "@mui/material/IconButton";
-import ConnectedUserList from "./ConnectedUserList";
 
-const ConnectedUser = () => {
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
+import RequestFrom from "./RequestFrom";
+
+const RequestFromList = () => {
   const [noUser, setNoUser] = useState(false);
-  const [connectUser, setConnectUser] = useState([]);
-  const [currentID, setCurrentID] = useState();
+  const [requestFromUser, setrequestFromUser] = useState([]);
+  const [editUserID, setEditUserID] = useState();
 
   useEffect(() => {
-    const getConnectRequest = async () => {
+    const getBlockRequest = async () => {
       const formData = new FormData();
-      formData.append("type", "C");
+      formData.append("type", "F");
 
       try {
         const response = await fetch(
@@ -31,30 +32,29 @@ const ConnectedUser = () => {
           window.location = window.location.origin + "/Login";
         } else if (result === "NO USER") {
           setNoUser(true);
-          setConnectUser([]);
         } else {
+          setrequestFromUser([...result]);
           setNoUser(false);
-          setConnectUser([...result]);
         }
       } catch (error) {
         console.log(error.message);
       }
     };
-    getConnectRequest();
+    getBlockRequest();
   }, []);
 
   return (
     <>
-      {noUser && <h2>No Connected User.</h2>}
+      {noUser && <h2>No Request from Any User.</h2>}
       {!noUser && (
-        <ConnectedUserList
-          userList={connectUser}
-          currentID={currentID}
-          setCurrentID={setCurrentID}
+        <RequestFrom
+          requestFromUser={requestFromUser}
+          setCurrentID={setEditUserID}
+          currentID={editUserID}
         />
       )}
     </>
   );
 };
 
-export default ConnectedUser;
+export default RequestFromList;

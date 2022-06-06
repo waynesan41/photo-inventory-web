@@ -25,7 +25,10 @@ const UpdateProfileForm = (props) => {
       data.get("email") === props.ProfileData.Email
     ) {
       console.log("Nothing to Be update Because The Value doesn't change!");
+      props.closeForm(false);
+      return 0;
     }
+
     if (data.get("email") === props.ProfileData.Email) {
       console.log("The E-mail is the Same");
       data.delete("email");
@@ -39,7 +42,7 @@ const UpdateProfileForm = (props) => {
       data.delete("username");
     }
 
-    console.log(data.size);
+    console.log(data);
 
     try {
       const response = await fetch(
@@ -53,7 +56,18 @@ const UpdateProfileForm = (props) => {
       if (!response.ok) {
         throw new Error(response.statusText);
       }
+
       const result = await response.json();
+
+      //User NOT Login
+      if (result === 0) {
+        window.location = window.location.origin + "/Login";
+      }
+      //User Put In BAD KDY
+      if (result === "BAD KEY") {
+        console.log("Bad Keys");
+        window.location = window.location.origin + "/Profile";
+      }
 
       if (result.NAME === "INVALID") {
         setNameValid(true);
@@ -77,22 +91,24 @@ const UpdateProfileForm = (props) => {
         setEmailMessage("");
       }
 
-      if (result === "BAD KEY") {
-        console.log("Bad Keys");
-        // window.location = window.location.origin + "/Profile";
+      if (data.has("fullName")) {
+        console.log("There is Full Name in Data");
+        if (result.NAME !== "GOOD") {
+          return 0;
+        }
       }
-      if (
-        result.NAME === "GOOD" &&
-        result.USERNAME === "GOOD" &&
-        result.EMAIL === "GOOD"
-      ) {
-        window.location = window.location.origin + "/Profile";
+      if (data.has("username")) {
+        if (result.USERNAME !== "GOOD") {
+          return 0;
+        }
+      }
+      if (data.has("email")) {
+        if (result.EMAIL !== "GOOD") {
+          return 0;
+        }
       }
 
-      console.log(result);
-      if (result === 0) {
-        window.location = window.location.origin + "/Login";
-      }
+      window.location = window.location.origin + "/Profile";
     } catch (error) {
       console.log(error.message);
     }
@@ -110,7 +126,7 @@ const UpdateProfileForm = (props) => {
     }
   };
   const validateUsername = (event) => {
-    const usernameRegex = /^[A-Z0-9a-z _.]*$/;
+    const usernameRegex = /^[0-9a-z _.]*$/;
     const email = event.target.value;
     setEmailTaken(false);
     if (usernameRegex.test(email)) {

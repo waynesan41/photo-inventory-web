@@ -34,6 +34,16 @@ export default function SignUp() {
     // console.log(data.get("confirm-password"));
     data.delete("confirm-password");
 
+    console.log(fullNameValid);
+    if (
+      fullNameValid ||
+      passwordValid ||
+      confirmPassValid ||
+      emailValid ||
+      userValid
+    ) {
+      return 0;
+    }
     try {
       const response = await fetch(
         "http://localhost/PhotoInventory/Backend/api/account/signUp.php",
@@ -85,7 +95,7 @@ export default function SignUp() {
     }
   };
   const validateUsername = (event) => {
-    const usernameRegex = /^[A-Z0-9a-z_.]{3,20}$/;
+    const usernameRegex = /^[0-9a-z_.]{3,20}$/;
     const email = event.target.value;
     setEmailTaken(false);
     if (usernameRegex.test(email)) {
@@ -98,6 +108,8 @@ export default function SignUp() {
       );
     }
   };
+
+  //FULL NAME HANDLER
   const fullNameHandler = (event) => {
     setFullName(event.target.value);
 
@@ -110,9 +122,14 @@ export default function SignUp() {
 
   //PASSWORD HANDLER
   const passwordHandler = (event) => {
-    const passRegex = /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9\s])^.{9,100}/;
+    const passRegex =
+      /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9\s])^.{9,100}/;
     setPassword(event.target.value);
-
+    if (event.target.value != confirmPass) {
+      setConfirmPassValid(true);
+    } else {
+      setConfirmPassValid(false);
+    }
     if (passRegex.test(event.target.value)) {
       setPasswordValid(false);
     } else {
@@ -153,7 +170,7 @@ export default function SignUp() {
                 error={fullNameValid}
                 id="fullName"
                 label="Full Name"
-                defaultValue="杠杠"
+                // defaultValue="杠杠"
                 inputProps={{ maxLength: 45 }}
                 onChange={fullNameHandler}
                 autoFocus
@@ -172,7 +189,7 @@ export default function SignUp() {
                 name="email"
                 // autoComplete="email"
                 onChange={validateEmail}
-                defaultValue="ganggang@gg.com"
+                // defaultValue="ganggang@gg.com"
                 helperText={emailMessage}
               />
             </Grid>
@@ -185,7 +202,7 @@ export default function SignUp() {
                 label="Username"
                 inputProps={{ maxLength: 35 }}
                 name="username"
-                defaultValue="randomGuy123"
+                // defaultValue="randomGuy123"
                 onChange={validateUsername}
                 helperText={userMessage}
               />
@@ -203,7 +220,7 @@ export default function SignUp() {
                 inputProps={{ maxLength: 225 }}
                 onBlur={passwordHandler}
                 onChange={passwordHandler}
-                defaultValue="qwerR`qwe12"
+                // defaultValue="qwerR`qwe12"
                 helperText={
                   passwordValid && (
                     <>
@@ -228,7 +245,7 @@ export default function SignUp() {
                 inputProps={{ maxLength: 225 }}
                 onBlur={confirmPasswordHandler}
                 onChange={confirmPasswordHandler}
-                defaultValue="qwerR`qwe12"
+                // defaultValue="qwerR`qwe12"
                 helperText={confirmPassValid && "Password Doesn't Match!"}
               />
             </Grid>

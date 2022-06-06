@@ -3,8 +3,8 @@ import { Grid, Card, ButtonGroup, Button } from "@mui/material";
 
 import ConnectedUser from "../components/connection/connect/ConnectedUser";
 import RequestTo from "../components/connection/requestTo/RequestTo";
-import RequestFrom from "../components/connection/requestFrom/RequestFrom";
-import SearchUser from "../components/connection/search/SearchUser";
+import RequestFromList from "../components/connection/requestFrom/RequestFromList";
+import SearchUser from "../components/connection/search/SearchUserList";
 
 import { NavLink, Outlet, Route, Routes, Router } from "react-router-dom";
 

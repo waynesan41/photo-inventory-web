@@ -1,97 +1,65 @@
 import { Card, CardContent, CardHeader, Popover, Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
-import CheckIcon from "@mui/icons-material/Check";
+import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import CircularProgress from "@mui/material/CircularProgress";
 
-const RequestFrom = (props) => {
+const ConnectedUserList = (props) => {
+  const [sending, setSending] = useState(false);
+  const [blocking, setBlocking] = useState(false);
+
   const [anchorEl, setAnchorEl] = useState(null);
-  const [direct, setDirect] = useState(null);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
     props.setCurrentID(event.currentTarget.id);
-    setDirect(event.currentTarget.value);
   };
-
   const handleClose = () => {
     setAnchorEl(null);
   };
   const open = Boolean(anchorEl);
 
-  // ACCEPT REQUEST HANDLER
-  const acceptFetch = async () => {
-    const formData = new FormData();
-
-    formData.append("userID", props.currentID);
-    formData.append("update", "A");
-
-    try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/Connection/updateConnection.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: formData,
-        }
-      );
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-      const result = await response.json();
-
-      if (result === "0") {
-        window.location = window.location.origin + "/Login";
-      } else if (result === "ACCEPT") {
-        window.location.reload();
-      } else {
-        window.location.reload();
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
-  }; //End of Accept Fetch
-
-  // DENIED REQUEST HANDLER
-  const denyFetch = async () => {
-    const formData = new FormData();
-
-    formData.append("userID", props.currentID);
-    formData.append("update", "D");
-
-    try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/Connection/updateConnection.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: formData,
-        }
-      );
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-      const result = await response.json();
-
-      if (result === "0") {
-        window.location = window.location.origin + "/Login";
-      } else if (result === "DENY") {
-        window.location.reload();
-      } else {
-        window.location.reload();
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
-  }; // End of Denied Fetch
-
-  // BLOCK REQUEST HANDLER
+  //BLOCK FETCH
   const blockFetch = async () => {
+    setBlocking(!blocking);
     const formData = new FormData();
 
     formData.append("userID", props.currentID);
     formData.append("update", "B");
+
+    try {
+      const response = await fetch(
+        "http://localhost/PhotoInventory/Backend/api/Connection/updateConnection.php",
+        {
+          method: "POST",
+          credentials: "include",
+          body: formData,
+        }
+      );
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      const result = await response.json();
+
+      if (result === "0") {
+        window.location = window.location.origin + "/Login";
+      } else if (result === "DISCONNECT") {
+        window.location.reload();
+      } else {
+        window.location.reload();
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+    setBlocking(false);
+  };
+  //DISCONNECT FETCH
+  const disconnectFetch = async () => {
+    const formData = new FormData();
+
+    formData.append("userID", props.currentID);
+    formData.append("update", "R");
 
     try {
       const response = await fetch(
@@ -117,11 +85,10 @@ const RequestFrom = (props) => {
     } catch (error) {
       console.log(error.message);
     }
-  }; // End of BLOCK Fetch
-
+  };
   return (
     <>
-      {props.requestFromUser.map((user) => (
+      {props.userList.map((user) => (
         <Card key={user.UserID}>
           <CardHeader
             title={user.FullName}
@@ -131,17 +98,7 @@ const RequestFrom = (props) => {
                   id={user.UserID}
                   onClick={handleClick}
                   variant="outlined"
-                  color="primary"
-                  value={1}
-                >
-                  <CheckIcon />
-                </Button>
-                <Button
-                  id={user.UserID}
-                  onClick={handleClick}
-                  variant="outlined"
-                  color="error"
-                  value={2}
+                  color="secondary"
                 >
                   <CloseIcon />
                 </Button>
@@ -154,39 +111,34 @@ const RequestFrom = (props) => {
                     horizontal: "left",
                   }}
                 >
-                  {direct == 1 && (
-                    <Button onClick={acceptFetch} variant="contained">
-                      Accept Request
-                    </Button>
-                  )}
-                  {direct == 2 && (
-                    <>
-                      <Button
-                        onClick={blockFetch}
-                        variant="contained"
-                        color="error"
-                      >
-                        Block User
-                      </Button>
-                      <Button
-                        onClick={denyFetch}
-                        variant="contained"
-                        color="warning"
-                      >
-                        Denied Request
-                      </Button>
-                    </>
-                  )}
+                  <Button
+                    variant="contained"
+                    color="error"
+                    onClick={blockFetch}
+                  >
+                    Block
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="warning"
+                    onClick={disconnectFetch}
+                  >
+                    Disconnect
+                  </Button>
                 </Popover>
               </>
             }
-            subheader={<div>Username: {user.Username}</div>}
+            subheader={
+              <div>
+                Username: {user.Username}
+                <br /> ID: {user.UserID}
+              </div>
+            }
           />
         </Card>
       ))}
-      <Card>No Request From any User</Card>
     </>
   );
 };
 
-export default RequestFrom;
+export default ConnectedUserList;

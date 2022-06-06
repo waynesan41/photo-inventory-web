@@ -18,8 +18,10 @@ const RequestTo = (props) => {
     setAnchorEl(null);
   };
 
+  const open = Boolean(anchorEl);
+
   const cancelRequestFetch = async () => {
-    console.log("Button unBlock: " + props.currentID);
+    // console.log("Button unBlock: " + props.currentID);
     setLoading(true);
     const formData = new FormData();
 
@@ -52,7 +54,6 @@ const RequestTo = (props) => {
     }
   };
 
-  const open = Boolean(anchorEl);
   return (
     <>
       {props.requestToUser.map((user) => (
@@ -61,8 +62,13 @@ const RequestTo = (props) => {
             title={user.FullName}
             action={
               <>
-                <Button>
-                  <CloseIcon id={user.UserID} onClick={handleClick} />
+                <Button
+                  id={user.UserID}
+                  onClick={handleClick}
+                  variant="outlined"
+                  color="error"
+                >
+                  <CloseIcon color="error" />
                 </Button>
                 <Popover
                   open={open}
@@ -74,7 +80,6 @@ const RequestTo = (props) => {
                   }}
                 >
                   <Button
-                    id={user.UserID}
                     variant="contained"
                     color="error"
                     onClick={cancelRequestFetch}

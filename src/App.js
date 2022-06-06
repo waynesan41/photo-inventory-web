@@ -12,10 +12,12 @@ import NavBar from "./Pages/NavBar";
 import Connection from "./Pages/Connection";
 
 import BlockedUserList from "./components/connection/block/BlockedUserList";
-import RequestFrom from "./components/connection/requestFrom/RequestFrom";
+import RequestFromList from "./components/connection/requestFrom/RequestFromList";
 import ConnectedUser from "./components/connection/connect/ConnectedUser";
-import SearchUser from "./components/connection/search/SearchUser";
+
 import RequestToList from "./components/connection/requestTo/RequestToList";
+import SearchUserList from "./components/connection/search/SearchUserList";
+import ObjectLibrary from "./components/OBJECT/ObjectLibrary";
 
 function App() {
   const yourHandler = () => {
@@ -30,13 +32,19 @@ function App() {
             <Route path="/" element={<ObjectLocation />} />
             <Route path="/ObjectLocation" element={<ObjectLocation />} />
             <Route path="/MainLocation" element={<MainLocation />} />
+
             <Route path="/Library" element={<Library />} />
+            <Route path="/Library/:libraryID" element={<ObjectLibrary />} />
+
             <Route path="/Connection" element={<Connection />}>
               <Route path="/Connection/" element={<ConnectedUser />} />
-              <Route path="/Connection/Search" element={<SearchUser />} />
+              <Route path="/Connection/Search" element={<SearchUserList />} />
               <Route path="/Connection/Connect" element={<ConnectedUser />} />
               <Route path="/Connection/RequestTo" element={<RequestToList />} />
-              <Route path="/Connection/RequestFrom" element={<RequestFrom />} />
+              <Route
+                path="/Connection/RequestFrom"
+                element={<RequestFromList />}
+              />
               <Route path="/Connection/Block" element={<BlockedUserList />} />
             </Route>
             <Route path="/Profile" element={<Profile />} />

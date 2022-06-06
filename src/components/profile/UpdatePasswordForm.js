@@ -1,6 +1,7 @@
 import { Button, Grid, Box, TextField } from "@mui/material";
 
 import React, { useEffect, useState, useCallback } from "react";
+
 const style = {
   padding: 10,
   width: 400,
@@ -11,11 +12,23 @@ const style = {
 };
 
 const UpdatePasswordForm = (props) => {
+  const [password, setPassword] = useState("");
+  const [confirmPass, setConfirmPass] = useState("");
+
+  const [newPassValid, setNewPassValid] = useState(false);
+  const [oldPassValid, setOldPassValid] = useState(false);
+  const [confirmPassValid, setConfirmPassValid] = useState(false);
+
   const updatehandler = async (event) => {
     event.preventDefault();
+
     const data = new FormData(event.currentTarget);
 
     data.delete("confirm-password");
+
+    if (oldPassValid || confirmPassValid || newPassValid) {
+      return 0;
+    }
 
     try {
       const response = await fetch(
@@ -34,13 +47,10 @@ const UpdatePasswordForm = (props) => {
 
       if (result.PASSWORD === "WRONG") {
         setOldPassValid(true);
-        setOldPassMessage("Old Password Incorrect!");
       } else if (result.PASSWORD === "INVALID") {
         setNewPassValid(true);
-        setNewPassMessage("Password Invalid");
       } else {
         setOldPassValid(false);
-        setOldPassMessage("");
       }
 
       if (result.PASSWORD === "GOOD") {
@@ -56,15 +66,36 @@ const UpdatePasswordForm = (props) => {
     }
   };
 
-  const [newPassMessage, setNewPassMessage] = useState("");
-  const [newPassValid, setNewPassValid] = useState(false);
+  const oldPasswordHandler = () => {
+    setOldPassValid(false);
+  };
+  //PASSWORD HANDLER
+  const passwordHandler = (event) => {
+    setPassword(event.target.value);
+    const passRegex =
+      /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9\s])^.{9,100}/;
 
-  const [oldPassMessage, setOldPassMessage] = useState("");
-  const [oldPassValid, setOldPassValid] = useState(false);
+    if (event.target.value != confirmPass) {
+      setConfirmPassValid(true);
+    } else {
+      setConfirmPassValid(false);
+    }
+    if (passRegex.test(event.target.value)) {
+      setNewPassValid(false);
+    } else {
+      setNewPassValid(true);
+    }
+  };
 
-  const [confirmPassMessage, setConfirmPassMessage] = useState("");
-  const [confirmPassValid, setConfirmPassValid] = useState(false);
-
+  //CONFIRM PASSWORD HANDLER
+  const confirmPasswordHandler = (event) => {
+    setConfirmPass(event.target.value);
+    if (event.target.value != password) {
+      setConfirmPassValid(true);
+    } else {
+      setConfirmPassValid(false);
+    }
+  };
   return (
     <Box
       style={style}
@@ -83,8 +114,11 @@ const UpdatePasswordForm = (props) => {
             type="password"
             id="password1"
             autoComplete="new-password"
-            defaultValue="qwerR`qwe12"
-            helperText={oldPassMessage}
+            onFocus={oldPasswordHandler}
+            onChange={oldPasswordHandler}
+            onBlur={oldPasswordHandler}
+            // defaultValue="qwerR`qwe12"
+            helperText={oldPassValid && "Old Password Incorrect!"}
           />
         </Grid>
         <Grid item xs={12}>
@@ -96,8 +130,17 @@ const UpdatePasswordForm = (props) => {
             label="New Password"
             type="password"
             id="password2"
-            defaultValue="qwerR`qwe12"
-            helperText={newPassMessage}
+            // defaultValue="qwerR`qwe12"
+            onChange={passwordHandler}
+            helperText={
+              newPassValid && (
+                <>
+                  Require at least 9 Characters! Containing at least One Number
+                  <br /> One Uppercase / One Lowercase / One Special Character
+                  letter
+                </>
+              )
+            }
           />
         </Grid>
         <Grid item xs={12}>
@@ -109,8 +152,9 @@ const UpdatePasswordForm = (props) => {
             label="Confirm Password"
             type="password"
             id="confirm-password"
-            defaultValue="qwerR`qwe12"
-            helperText={confirmPassMessage}
+            // defaultValue="qwerR`qwe12"
+            onChange={confirmPasswordHandler}
+            helperText={confirmPassValid && "Password Doesn't Match!"}
           />
         </Grid>
       </Grid>

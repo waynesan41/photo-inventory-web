@@ -1,11 +1,7 @@
 import React from "react";
+import LibraryCardList from "../components/LIBRARY/LibraryCardList";
 const Library = () => {
-  return (
-    <div>
-      This is Library Object
-      <img src="http://localhost/PhotoInventory/Backend/api/readImage.php" />
-    </div>
-  );
+  return <LibraryCardList />;
 };
 
 export default Library;

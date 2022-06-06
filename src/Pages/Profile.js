@@ -61,11 +61,15 @@ const Profile = () => {
         <Dialog open={open} onClose={profileFormOpener}>
           <UpdateProfileForm ProfileData={profileData} closeForm={setOpen} />
         </Dialog>
+
         <Button variant="contained" color="primary" onClick={passFormOpener}>
           EDIT PASSWORD
         </Button>
         <Dialog open={passForm} onClose={passFormOpener}>
-          <UpdatePasswordForm ProfileData={profileData} />
+          <UpdatePasswordForm
+            ProfileData={profileData}
+            closeForm={setPassForm}
+          />
         </Dialog>
       </Card>
     </Grid>

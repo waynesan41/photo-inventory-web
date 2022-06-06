@@ -31,6 +31,7 @@ const RequestToList = () => {
           setNoUser(true);
         } else {
           setrequestToUser([...result]);
+          setNoUser(false);
         }
       } catch (error) {
         console.log(error.message);

@@ -1,6 +1,7 @@
 import React from "react";
+import MainLocationList from "../components/MAIN-LOCATION/MainLocationList";
 const MainLocation = () => {
-  return <div>This is Main Location Page</div>;
+  return <MainLocationList />;
 };
 
 export default MainLocation;

@@ -1,45 +1,73 @@
 import {
+  Button,
   Card,
-  CardContent,
+  Popover,
   CardHeader,
   IconButton,
   Paper,
 } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 import React, { useEffect, useState } from "react";
-import { TextField } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import AddIcon from "@mui/icons-material/Add";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import MoreOption from "./MoreOption";
 
-const SearchUser = () => {
-  const [searchUser, setsearchUser] = useState([]);
+import AcceptDenied from "./options/AcceptDenied";
+import CancelRequest from "./options/CancelRequest";
+import Disconnect from "./options/Disconnect";
+import SendRequestBlock from "./options/SendRequestBlock";
 
-  const getSearchUser = async (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
+const SearchUser = (props) => {
+  const [status, setStatus] = useState("R");
+  const [loading, setLoading] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+    console.log(event.currentTarget.id);
+    props.setCurrentID(event.currentTarget.id);
+    fetchConnectionStatus(event.currentTarget.id);
+  };
+  const handleClose = () => {
+    setLoading(false);
+    setAnchorEl(null);
+  };
+  const open = Boolean(anchorEl);
+
+  const fetchConnectionStatus = async (fetchID) => {
+    setLoading(true);
+    const formData = new FormData();
+
+    formData.append("userID", fetchID);
 
     try {
       const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/Connection/searchUser.php",
+        "http://localhost/PhotoInventory/Backend/api/Connection/checkSearch.php",
         {
           method: "POST",
           credentials: "include",
-          body: data,
+          body: formData,
         }
       );
       if (!response.ok) {
         throw new Error(response.statusText);
       }
       const result = await response.json();
+
+      console.log(result);
+
       if (result === "0") {
         window.location = window.location.origin + "/Login";
+      } else if (
+        result === "N" ||
+        result === "T" ||
+        result === "F" ||
+        result === "C"
+      ) {
+        setStatus(result);
       } else {
-        console.log(result);
-        if (result === "No User Found!") {
-          setsearchUser([]);
-        } else {
-          setsearchUser([...result]);
-        }
+        window.location.reload();
       }
+      setLoading(false);
     } catch (error) {
       console.log(error.message);
     }
@@ -47,34 +75,62 @@ const SearchUser = () => {
 
   return (
     <>
-      <Paper component="form" sx={{ display: "flex" }} onSubmit={getSearchUser}>
-        <TextField
-          id="username"
-          label="Search Username"
-          name="username"
-          variant="outlined"
-          fullWidth
-        />
-        <IconButton type="submit">
-          <SearchIcon />
-        </IconButton>
-      </Paper>
-      <Paper>
-        {searchUser.map((user) => (
-          <Card key={user.UserID}>
-            <CardHeader
-              title={user.FullName}
-              action={
-                <IconButton aria-label="help" color="secondary">
-                  <AddIcon />
-                </IconButton>
-              }
-            />
-            <CardContent>Username: {user.Username}</CardContent>
-          </Card>
-        ))}
-        <Card>No User Found from Search</Card>
-      </Paper>
+      {props.searchUser.map((user) => (
+        <Card key={user.UserID}>
+          <CardHeader
+            title={user.FullName}
+            action={
+              <>
+                <Button
+                  variant="contained"
+                  id={user.UserID}
+                  onClick={handleClick}
+                >
+                  <MoreVertIcon />
+                </Button>
+                <Popover
+                  open={open}
+                  anchorEl={anchorEl}
+                  onClose={handleClose}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "left",
+                  }}
+                >
+                  {status === "C" && (
+                    <Disconnect
+                      currentID={props.currentID}
+                      removeBlockUser={props.removeBlockUser}
+                      close={setAnchorEl}
+                    />
+                  )}
+                  {status === "T" && (
+                    <CancelRequest
+                      currentID={props.currentID}
+                      close={setAnchorEl}
+                    />
+                  )}
+                  {status === "F" && (
+                    <AcceptDenied
+                      currentID={props.currentID}
+                      close={setAnchorEl}
+                    />
+                  )}
+                  {status === "N" && (
+                    <SendRequestBlock
+                      currentID={props.currentID}
+                      removeBlockUser={props.removeBlockUser}
+                      close={setAnchorEl}
+                    />
+                  )}
+                  {loading && <CircularProgress size={35} />}
+                </Popover>
+              </>
+            }
+            subheader={<div>Username: {user.Username}</div>}
+          />
+        </Card>
+      ))}
     </>
   );
 };

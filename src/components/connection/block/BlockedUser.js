@@ -20,7 +20,7 @@ const BlockedUser = (props) => {
 
   const open = Boolean(anchorEl);
 
-  const unBlockFetch = async (event) => {
+  const unBlockFetch = async () => {
     console.log("Button unBlock: " + props.currentID);
     setUnBlocking(!unBlocking);
     const formData = new FormData();
@@ -63,8 +63,12 @@ const BlockedUser = (props) => {
             title={user.FullName}
             action={
               <>
-                <Button>
-                  <LockOpenIcon id={user.UserID} onClick={handleClick} />
+                <Button
+                  id={user.UserID}
+                  variant="outlined"
+                  onClick={handleClick}
+                >
+                  <LockOpenIcon />
                 </Button>
                 <Popover
                   open={open}
