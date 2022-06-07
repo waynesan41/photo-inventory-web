@@ -32,10 +32,10 @@ const EditShareUser = (props) => {
   };
   const fetchShareUser = async () => {
     const data = new FormData();
-    data.append("libraryID", props.data.LibraryID);
+    data.append("mainID", props.data.LibraryID);
     try {
       const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/Library/getUser.php",
+        "http://localhost/PhotoInventory/Backend/api/MainLocation/getUser.php",
         {
           method: "POST",
           credentials: "include",

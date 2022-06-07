@@ -7,7 +7,7 @@ import {
   Button,
   FormControl,
 } from "@mui/material";
-import { useChangePeople } from "../../LibraryCardList";
+import { useChangePeople } from "../../MainLocationList";
 
 const NewUserShareForm = (props) => {
   const changeTotalPeople = useChangePeople();

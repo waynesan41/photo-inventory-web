@@ -2,9 +2,9 @@ import { Button, Card, CardActionArea, Dialog, Grid } from "@mui/material";
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
-/* import AddShareUser from "./--ADD-USER/AddShareUser";
+import AddShareUser from "./--ADD-USER/AddShareUser";
 import EditLibraryForm from "./--EDIT-FORM/EditLibraryForm";
-import EditShareUser from "./--EDIT-SHARE/EditShareUser"; */
+import EditShareUser from "./--EDIT-SHARE/EditShareUser";
 
 const OwnMainLocationOne = (props) => {
   const [open, setOpen] = useState(false);
@@ -22,7 +22,7 @@ const OwnMainLocationOne = (props) => {
     <>
       <Card elevation={5}>
         <Link
-          to={`${props.mainData.LibraryID}`}
+          to={`${props.mainData.MainLocationID}`}
           style={{ textDecoration: "none", color: "black" }}
         >
           <CardActionArea style={{ padding: "5px" }}>
@@ -40,7 +40,7 @@ const OwnMainLocationOne = (props) => {
             color="info"
             onClick={() => openHandler(1)}
           >
-            Edit Library
+            Edit Name
           </Button>
 
           <Button
@@ -57,11 +57,11 @@ const OwnMainLocationOne = (props) => {
         </Grid>
       </Card>
       <Dialog open={open} onClose={closeHandler}>
-        {/* {formType == 1 && (
+        {formType == 1 && (
           <EditLibraryForm data={props.mainData} closeForm={closeHandler} />
         )}
         {formType == 2 && <EditShareUser data={props.mainData} />}
-        {formType == 3 && <AddShareUser data={props.mainData} />} */}
+        {formType == 3 && <AddShareUser data={props.mainData} />}
       </Dialog>
     </>
   );

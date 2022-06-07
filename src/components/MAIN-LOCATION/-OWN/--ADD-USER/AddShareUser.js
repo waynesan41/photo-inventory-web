@@ -14,10 +14,10 @@ const AddShareUser = (props) => {
   };
   const fetchConnectedUser = async () => {
     const data = new FormData();
-    data.append("libraryID", props.data.LibraryID);
+    data.append("mainID", props.data.MainLocationID);
     try {
       const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/Library/getNewUser.php",
+        "http://localhost/PhotoInventory/Backend/api/MainLocation/getNewUser.php",
         {
           method: "POST",
           credentials: "include",

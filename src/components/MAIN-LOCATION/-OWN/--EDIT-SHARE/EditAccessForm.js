@@ -7,7 +7,7 @@ import {
   FormControl,
 } from "@mui/material";
 
-import { useChangePeople } from "../../LibraryCardList";
+import { useChangePeople } from "../../MainLocationList";
 import { useShareFormChange } from "./EditShareUser.js";
 
 const EditAccessForm = (props) => {
