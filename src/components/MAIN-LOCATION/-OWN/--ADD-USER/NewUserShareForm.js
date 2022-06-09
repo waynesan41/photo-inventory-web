@@ -8,9 +8,11 @@ import {
   FormControl,
 } from "@mui/material";
 import { useChangePeople } from "../../MainLocationList";
+import { useMainLocationID } from "./AddShareUser";
 
 const NewUserShareForm = (props) => {
   const changeTotalPeople = useChangePeople();
+  const { changeNewUser, mainID } = useMainLocationID();
 
   //FETCH API TO Add New User to the Library
   const fetchUpdateUser = async (event) => {
@@ -18,7 +20,7 @@ const NewUserShareForm = (props) => {
 
     const data = new FormData(event.currentTarget);
 
-    data.append("libraryID", props.libraryID);
+    data.append("mainID", mainID);
     data.append("userID", props.user.UserID);
 
     /* console.log("data");
@@ -28,7 +30,7 @@ const NewUserShareForm = (props) => {
 
     try {
       const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/Library/shareLibrary.php",
+        "http://localhost/PhotoInventory/Backend/api/MainLocation/shareMainLocation.php",
         {
           method: "POST",
           credentials: "include",
@@ -43,10 +45,10 @@ const NewUserShareForm = (props) => {
 
       if (result === "0") {
         window.location = window.location.origin + "/Login";
-      } else if (result === "UPDATED") {
-        props.changeNewUser(props.user.UserID);
+      } else if (result === "SHARED") {
+        changeNewUser(props.user.UserID);
+        changeTotalPeople(mainID, 1);
         props.closeShareForm();
-        changeTotalPeople(props.libraryID, 1);
       }
     } catch (error) {
       console.log(error.message);

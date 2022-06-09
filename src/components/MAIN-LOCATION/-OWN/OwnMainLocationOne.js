@@ -1,6 +1,7 @@
+import React, { useState } from "react";
+
 import { Button, Card, CardActionArea, Dialog, Grid } from "@mui/material";
 
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import AddShareUser from "./--ADD-USER/AddShareUser";
 import EditLibraryForm from "./--EDIT-FORM/EditLibraryForm";
@@ -22,7 +23,7 @@ const OwnMainLocationOne = (props) => {
     <>
       <Card elevation={5}>
         <Link
-          to={`${props.mainData.MainLocationID}`}
+          to={`${props.mainData.MainLocationID}/0`}
           style={{ textDecoration: "none", color: "black" }}
         >
           <CardActionArea style={{ padding: "5px" }}>

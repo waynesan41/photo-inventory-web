@@ -14,10 +14,11 @@ import Connection from "./Pages/Connection";
 import BlockedUserList from "./components/connection/block/BlockedUserList";
 import RequestFromList from "./components/connection/requestFrom/RequestFromList";
 import ConnectedUser from "./components/connection/connect/ConnectedUser";
-
 import RequestToList from "./components/connection/requestTo/RequestToList";
 import SearchUserList from "./components/connection/search/SearchUserList";
+
 import ObjectLibrary from "./components/OBJECT/ObjectLibrary";
+import LocationPage from "./components/LOCATION/LocationPage";
 
 function App() {
   const yourHandler = () => {
@@ -31,7 +32,12 @@ function App() {
           <Route path="/" element={<NavBar />}>
             <Route path="/" element={<ObjectLocation />} />
             <Route path="/ObjectLocation" element={<ObjectLocation />} />
-            <Route path="/MainLocation" element={<MainLocation />} />
+            <Route path="/MainLocation/" element={<MainLocation />} />
+            <Route path="/MainLocation/:mainID" element={<LocationPage />} />
+            <Route
+              path="/MainLocation/:mainID/:locationID"
+              element={<LocationPage />}
+            />
 
             <Route path="/Library" element={<Library />} />
             <Route path="/Library/:libraryID" element={<ObjectLibrary />} />

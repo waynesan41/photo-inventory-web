@@ -22,12 +22,13 @@ const ShareMainLocationOne = (props) => {
   return (
     <Card elevation={5}>
       <Link
-        to={`${props.mainData.MainLocationID}`}
+        to={`${props.mainData.MainLocationID}/0`}
         style={{ textDecoration: "none", color: "black" }}
       >
         <CardActionArea style={{ padding: "5px" }}>
           <h3>{props.mainData.Name}</h3>
-          <div>Total Object: {props.mainData.TotalObject}</div>
+          <div>Total Location: {props.mainData.TotalLocation}</div>
+          <div>Total Object: {props.mainData.TotalObjectType}</div>
           <div>Owner Name: {props.mainData.FullName}</div>
           <div>Owner Username: {props.mainData.Username}</div>
           <div>Access Level: {props.mainData.AccessType}</div>
@@ -45,7 +46,7 @@ const ShareMainLocationOne = (props) => {
       </Grid>
       <Dialog open={open} onClose={closeHandler}>
         <ConfirmLeaveForm
-          libraryID={props.mainData.ObjectLibraryID}
+          mainID={props.mainData.MainLocationID}
           closeConfirm={closeHandler}
         />
       </Dialog>

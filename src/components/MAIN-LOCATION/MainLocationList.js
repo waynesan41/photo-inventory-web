@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Button, Card, Dialog, Grid, Item } from "@mui/material";
+import { Button, Dialog, Grid } from "@mui/material";
 
 import { Link, NavLink } from "react-router-dom";
 
@@ -30,7 +30,7 @@ const MainLocationList = () => {
 
   const changeTotalPeople = (id, ps) => {
     const items = ownLibrary.filter((lib) => {
-      if (lib.LibraryID == id) {
+      if (lib.MainLocationID == id) {
         if (ps == 1) lib.NumPeople++;
         else if (ps == 2) lib.NumPeople--;
       }

@@ -26,14 +26,14 @@ const EditLibraryForm = (props) => {
   const editFormSubmitHandler = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    data.append("libraryID", props.data.LibraryID);
+    data.append("mainID", props.data.MainLocationID);
 
     if (data.get("name") == props.data.Name) {
       props.closeForm();
     } else {
       try {
         const response = await fetch(
-          "http://localhost/PhotoInventory/Backend/api/Library/updateLibrary.php",
+          "http://localhost/PhotoInventory/Backend/api/MainLocation/updateMainLocation.php",
           {
             method: "POST",
             credentials: "include",
@@ -61,7 +61,7 @@ const EditLibraryForm = (props) => {
     <Box style={style} component="form" onSubmit={editFormSubmitHandler}>
       <Grid container>
         <Grid item xs={12}>
-          <h3>Edit Library</h3>
+          <h3>Edit Main Location Name</h3>
         </Grid>
         <Grid item xs={12} style={{ marginBottom: "20px" }}>
           <TextField
@@ -70,7 +70,7 @@ const EditLibraryForm = (props) => {
             required
             fullWidth
             id="name"
-            label="Library Name"
+            label="Main Location Name"
             defaultValue={props.data.Name}
             autoFocus
           />

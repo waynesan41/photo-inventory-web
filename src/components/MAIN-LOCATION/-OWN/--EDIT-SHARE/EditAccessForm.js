@@ -12,7 +12,7 @@ import { useShareFormChange } from "./EditShareUser.js";
 
 const EditAccessForm = (props) => {
   const changeTotalPeople = useChangePeople();
-  const { removeUser, changeAccess } = useShareFormChange();
+  const { removeUser, changeAccess, mainID } = useShareFormChange();
   //UPDATE API CALL Edit / Remove
   const fetchUpdateUser = async (event) => {
     event.preventDefault();
@@ -20,11 +20,11 @@ const EditAccessForm = (props) => {
 
     if (data.get("access") == 0) {
       data.delete("access");
-      data.append("libraryID", props.libraryID);
+      data.append("mainID", mainID);
       data.append("userID", props.user.UserID);
       try {
         const response = await fetch(
-          "http://localhost/PhotoInventory/Backend/api/library/removeShareUser.php",
+          "http://localhost/PhotoInventory/Backend/api/MainLocation/removeShareUser.php",
           {
             method: "POST",
             credentials: "include",
@@ -41,7 +41,7 @@ const EditAccessForm = (props) => {
           window.location = window.location.origin + "/Login";
         } else if (result === "REMOVE") {
           props.closeEditForm();
-          changeTotalPeople(props.libraryID, 2);
+          changeTotalPeople(mainID, 2);
           removeUser(props.user.UserID);
         } else {
           console.log("Error Removing ");
@@ -54,12 +54,12 @@ const EditAccessForm = (props) => {
         props.closeEditForm();
         return 0;
       }
-      data.append("libraryID", props.libraryID);
+      data.append("mainID", mainID);
       data.append("userID", props.user.UserID);
 
       try {
         const response = await fetch(
-          "http://localhost/PhotoInventory/Backend/api/Library/shareLibrary.php",
+          "http://localhost/PhotoInventory/Backend/api/MainLocation/shareMainLocation.php",
           {
             method: "POST",
             credentials: "include",
@@ -74,7 +74,7 @@ const EditAccessForm = (props) => {
 
         if (result === "0") {
           window.location = window.location.origin + "/Login";
-        } else if (result === "UPDATED") {
+        } else if (result === "SHARED") {
           changeAccess(props.user.UserID, data.get("access"));
           props.closeEditForm();
         }

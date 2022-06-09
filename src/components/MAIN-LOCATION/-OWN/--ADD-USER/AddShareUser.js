@@ -1,9 +1,17 @@
-import { useEffect, useState } from "react";
-import { Box, Button, Grid } from "@mui/material";
+import React, { useContext, useEffect, useState } from "react";
+
+import { Box } from "@mui/material";
 import NewUserOne from "./NewUserOne";
 
+const MainLocationIDContext = React.createContext();
+export const useMainLocationID = () => {
+  return useContext(MainLocationIDContext);
+};
+
 const AddShareUser = (props) => {
-  const [addUser, setAddUser] = useState([]);
+  const [addUser, setAddUser] = useState([]); //Lists of Users That can be ADD/SHARE
+  const [mainID, setMainID] = useState(props.data.MainLocationID);
+  //Should be Pass as Context
   const changeNewUser = (id) => {
     const items = addUser.filter((user) => {
       if (user.UserID != id) {
@@ -46,16 +54,15 @@ const AddShareUser = (props) => {
   }, []);
   return (
     <Box minWidth={400}>
-      {addUser.length > 1 &&
-        addUser.map((User) => (
-          <Box style={{ margin: "3px" }} key={User.UserID}>
-            <NewUserOne
-              user={User}
-              libraryID={props.data.LibraryID}
-              changeNewUser={changeNewUser}
-            />
-          </Box>
-        ))}
+      <MainLocationIDContext.Provider value={{ changeNewUser, mainID }}>
+        {addUser.length > 0 &&
+          addUser.map((User) => (
+            <Box style={{ margin: "3px" }} key={User.UserID}>
+              <NewUserOne user={User} />
+            </Box>
+          ))}
+        {addUser.length == 0 && <Box>No Connected To Share Library.</Box>}
+      </MainLocationIDContext.Provider>
     </Box>
   );
 };

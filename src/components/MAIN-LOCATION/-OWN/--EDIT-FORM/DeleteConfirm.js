@@ -33,13 +33,13 @@ const DeleteConfirm = (props) => {
 
   const fetchDeleteLibrary = async () => {
     const formData = new FormData();
-    formData.append("libraryID", props.data.LibraryID);
+    formData.append("mainID", props.data.MainLocationID);
     formData.append("name", libName);
 
     console.log(formData);
     try {
       const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/Library/deleteLibrary.php",
+        "http://localhost/PhotoInventory/Backend/api/MainLocation/deleteMainLocation.php",
         {
           method: "POST",
           credentials: "include",
@@ -67,10 +67,10 @@ const DeleteConfirm = (props) => {
       <Grid container component="form">
         <Grid item xs={12}>
           <Alert severity="error">
-            DELETING Library WILL DELETE All OBJECTS Inside Library!
+            DELETING Main Location WILL DELETE All Locations Inside!
           </Alert>
           <Alert severity="info">
-            Enter Library name: "{props.data.Name}" to Confirm Delete.
+            Enter Main Location name: "{props.data.Name}" to Confirm Delete.
           </Alert>
         </Grid>
         <Grid item xs={12} style={{ marginBottom: "20px" }}>
@@ -80,7 +80,7 @@ const DeleteConfirm = (props) => {
             required
             fullWidth
             id="name"
-            label="Confirm Library Name"
+            label="Confirm Main Location Name"
             onChange={checkConfirm}
             autoFocus
           />
@@ -101,7 +101,7 @@ const DeleteConfirm = (props) => {
       </Button>
       <Dialog open={open} onClose={props.close}>
         <Alert severity="error">
-          DELETING Library WILL DELETE All OBJECTS Inside Library!
+          DELETING MAIN LOCATION WILL DELETE All Locations Inside!
         </Alert>
         <Grid
           container

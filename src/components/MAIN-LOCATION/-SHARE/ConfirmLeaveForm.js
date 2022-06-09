@@ -4,10 +4,10 @@ const ConfirmLeaveForm = (props) => {
   //FETCH LEAVE SHARE Library
   const fetchLeaveLibrary = async () => {
     const data = new FormData();
-    data.append("libraryID", props.libraryID);
+    data.append("mainID", props.mainID);
     try {
       const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/Library/leaveShareLibrary.php",
+        "http://localhost/PhotoInventory/Backend/api/MainLocation/LeaveShareLocation.php",
         {
           method: "POST",
           credentials: "include",

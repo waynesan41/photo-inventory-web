@@ -10,6 +10,7 @@ export const useShareFormChange = () => {
 
 const EditShareUser = (props) => {
   const [shareUser, setShareUser] = useState([]);
+  const [mainID, setMainID] = useState(props.data.MainLocationID);
 
   const changeAccess = (id, access) => {
     const items = shareUser.filter((el) => {
@@ -32,10 +33,10 @@ const EditShareUser = (props) => {
   };
   const fetchShareUser = async () => {
     const data = new FormData();
-    data.append("mainID", props.data.LibraryID);
+    data.append("mainID", props.data.MainLocationID);
     try {
       const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/MainLocation/getUser.php",
+        "http://localhost/PhotoInventory/Backend/api/MainLocation/getSharedUser.php",
         {
           method: "POST",
           credentials: "include",
@@ -65,10 +66,12 @@ const EditShareUser = (props) => {
   }, []);
   return (
     <Box minWidth={400}>
-      <ShareFormChangeContex.Provider value={{ removeUser, changeAccess }}>
+      <ShareFormChangeContex.Provider
+        value={{ removeUser, changeAccess, mainID }}
+      >
         {shareUser.map((User) => (
           <Box style={{ margin: "3px" }} key={User.UserID}>
-            <ShareUserOne user={User} libraryID={props.data.LibraryID} />
+            <ShareUserOne user={User} />
           </Box>
         ))}
       </ShareFormChangeContex.Provider>

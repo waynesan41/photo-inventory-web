@@ -31,8 +31,6 @@ const NewUserOne = (props) => {
       <Dialog open={open} onClose={closeHandler}>
         <NewUserShareForm
           user={props.user}
-          libraryID={props.libraryID}
-          changeNewUser={props.changeNewUser}
           closeShareForm={closeHandler}
         />
       </Dialog>
