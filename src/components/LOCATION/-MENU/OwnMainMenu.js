@@ -48,9 +48,9 @@ const OwnMainMenu = (props) => {
     fetchLibraryInfo();
   }, []);
   return (
-    <>
-      <Box>Library Name: {mainInfo.Name}</Box>
-      <Box>Total Objects: {mainInfo.TotalObject}</Box>
+    <Box style={{ display: "inline-block", float: "right" }}>
+      <Box>Main Location: {mainInfo.Name}</Box>
+      {/* <Box>Total Objects: {mainInfo.TotalObject}</Box> */}
       <Button variant="contained" onClick={openHandler}>
         Add New Location
       </Button>
@@ -60,7 +60,7 @@ const OwnMainMenu = (props) => {
       <Dialog open={open} onClose={closeHandler}>
         <>Just Form to Add New Location</>
       </Dialog>
-    </>
+    </Box>
   );
 };
 

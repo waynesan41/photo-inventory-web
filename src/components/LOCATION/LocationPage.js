@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import LocationList from "./-COMPONENTS/LocationList";
+import LocationBread from "./-COMPONENTS/--FETCH/LocationBread";
+import LocationList from "./-COMPONENTS/--FETCH/LocationList";
 import OwnMainMenu from "./-MENU/OwnMainMenu";
 import ShareMainMenu from "./-MENU/ShareMainMenu";
 
@@ -55,12 +56,15 @@ const LocationPage = () => {
   }, []);
   return (
     <>
-      <h2>Main ID: {mainID}</h2>
-      <h2>Location ID: {locationID}</h2>
+      {/* <h2>Main ID: {mainID}</h2>
+      <h2>Location ID: {locationID}</h2> */}
       <MainLocationContex.Provider value={{ mainID, mainType, accessLvl }}>
         {mainType == 0 && <h3>Sorry You don't have Access to the Library</h3>}
         {mainType == 1 && <OwnMainMenu mainID={mainID} />}
         {mainType == 2 && <ShareMainMenu />}
+        {mainType != 0 && locationID != 0 && (
+          <LocationBread locationID={locationID} />
+        )}
         {(mainType == 1 || mainType == 2) && <LocationList />}
       </MainLocationContex.Provider>
     </>

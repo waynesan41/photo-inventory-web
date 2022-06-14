@@ -27,7 +27,7 @@ const ObjectOne = (props) => {
           <CardMedia
             component="img"
             height="250"
-            image={`http://localhost/PhotoInventory/Backend/api/readImage.php?id1=${props.objData.LibraryID}&id2=${props.objData.ObjectID}`}
+            image={`http://localhost/PhotoInventory/Backend/api/readImageObject.php?id1=${props.objData.LibraryID}&id2=${props.objData.ObjectID}`}
           />
         )}
       </CardActionArea>

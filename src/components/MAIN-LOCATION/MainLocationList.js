@@ -86,15 +86,15 @@ const MainLocationList = () => {
         <Button variant="contained" onClick={openHandler}>
           Add New Main Location
         </Button>
-        <Grid container spacing={1}>
-          {ownLibrary.map((lib) => (
-            <Grid item xs={12} sm={12} md={6} key={lib.MainLocationID}>
-              <ChangePeopleContex.Provider value={changeTotalPeople}>
+        <ChangePeopleContex.Provider value={changeTotalPeople}>
+          <Grid container spacing={1}>
+            {ownLibrary.map((lib) => (
+              <Grid item xs={12} sm={12} md={6} key={lib.MainLocationID}>
                 <OwnMainLocationOne mainData={lib} />
-              </ChangePeopleContex.Provider>
-            </Grid>
-          ))}
-        </Grid>
+              </Grid>
+            ))}
+          </Grid>
+        </ChangePeopleContex.Provider>
       </Grid>
       <Dialog open={open} onClose={closeHandler}>
         <NewMainLocationForm />

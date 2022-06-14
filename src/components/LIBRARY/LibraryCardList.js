@@ -81,15 +81,15 @@ const LibraryCardList = () => {
         <Button variant="contained" onClick={openHandler}>
           Add New Library
         </Button>
-        <Grid container spacing={1}>
-          {ownLibrary.map((lib) => (
-            <Grid item xs={12} sm={12} md={6} key={lib.LibraryID}>
-              <ChangePeopleContex.Provider value={changeTotalPeople}>
+        <ChangePeopleContex.Provider value={changeTotalPeople}>
+          <Grid container spacing={1}>
+            {ownLibrary.map((lib) => (
+              <Grid item xs={12} sm={12} md={6} key={lib.LibraryID}>
                 <LibraryCardOwn libraryData={lib} />
-              </ChangePeopleContex.Provider>
-            </Grid>
-          ))}
-        </Grid>
+              </Grid>
+            ))}
+          </Grid>
+        </ChangePeopleContex.Provider>
       </Grid>
       <Dialog open={open} onClose={closeHandler}>
         <NewLibraryForm />
