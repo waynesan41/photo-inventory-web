@@ -5,7 +5,7 @@ import { useLibraryContex } from "../ObjectLibrary";
 import DeleteConfirm from "./DeleteConfirm";
 
 const EditForm = (props) => {
-  const { libraryID, libType, accessLvl } = useLibraryContex();
+  const { libraryID, libType } = useLibraryContex();
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
 
@@ -83,7 +83,7 @@ const EditForm = (props) => {
 
   useEffect(() => {
     if (props.objData.Photo != 0) {
-      const src = `http://localhost/PhotoInventory/Backend/api/readImage.php?id1=${props.objData.LibraryID}&id2=${props.objData.ObjectID}`;
+      const src = `http://localhost/PhotoInventory/Backend/api/readImageObject.php?id1=${props.objData.LibraryID}&id2=${props.objData.ObjectID}`;
       fetchOrignalImage(src);
       setPreview(src);
     }

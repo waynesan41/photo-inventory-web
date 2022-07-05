@@ -1,6 +1,9 @@
 import { Button, Dialog, Box } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import NewLocationForm from "../-COMPONENTS/--FORM/NewLocationForm";
 const OwnMainMenu = (props) => {
+  let { mainID, locationID } = useParams(); // Value from URL
   const [open, setOpen] = useState(false);
   const [mainInfo, setMainInfo] = useState({});
 
@@ -58,7 +61,7 @@ const OwnMainMenu = (props) => {
   <Button variant="contained">Add User</Button> */}
 
       <Dialog open={open} onClose={closeHandler}>
-        <>Just Form to Add New Location</>
+        <NewLocationForm topID={locationID} close={closeHandler} />
       </Dialog>
     </Box>
   );

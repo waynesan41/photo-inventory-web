@@ -1,17 +1,19 @@
 import { Box, Button, TextField } from "@mui/material";
+
 import { useState, useEffect } from "react";
-import { useLibraryContex } from "../../ObjectLibrary";
-const FormAddObject = () => {
-  const { libraryID, libType, accessLvl } = useLibraryContex();
+import { useMainLocationContex } from "../../LocationPage";
+
+const NewLocationForm = (props) => {
+  const { mainID, mainType, accessLvl } = useMainLocationContex();
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
 
-  //FETCH ADD New Object
-  const fetchAddObject = async (event) => {
+  const fetchAddLocation = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    data.append("libraryID", libraryID);
-    data.append("libType", libType);
+    data.append("mainID", mainID);
+    data.append("locType", mainType);
+    data.append("topID", props.topID);
     if (data.get("description").length == 0) {
       data.delete("description");
     }
@@ -24,7 +26,7 @@ const FormAddObject = () => {
     }
     try {
       const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/object/addNewObject.php",
+        "http://localhost/PhotoInventory/Backend/api/location/addNewLocation.php",
         {
           method: "POST",
           credentials: "include",
@@ -74,58 +76,67 @@ const FormAddObject = () => {
     // I've kept this example simple by using the first image instead of multiple
     setSelectedFile(e.target.files[0]);
   };
-
   return (
-    <Box
-      minWidth={500}
-      style={{ padding: "5px" }}
-      component="form"
-      onSubmit={fetchAddObject}
-    >
-      <h3>Add New Object</h3>
-      <TextField
-        variant="filled"
-        name="name"
-        required
-        fullWidth
-        id="name"
-        label="Object Name"
-        autoFocus
-      />
+    <>
+      <Box
+        style={{ padding: "5px" }}
+        component="form"
+        onSubmit={fetchAddLocation}
+      >
+        <h3>Add New Location</h3>
+        <TextField
+          variant="filled"
+          name="name"
+          required
+          fullWidth
+          id="name"
+          label="New Location Name"
+          autoFocus
+        />
 
-      <Box style={{ margin: "5px 0px 5px 0px" }}>
-        {selectedFile && (
-          <Box>
-            <img
-              style={{ maxHeight: "200px", maxWidth: "200px" }}
-              src={preview}
+        <Box style={{ margin: "5px 0px 5px 0px" }}>
+          {selectedFile && (
+            <Box>
+              <img
+                style={{ maxHeight: "200px", maxWidth: "200px" }}
+                src={preview}
+              />
+            </Box>
+          )}
+          <Button component="label" variant="outlined">
+            Upload Image
+            <input
+              type="file"
+              accept="image/*"
+              onChange={onSelectFile}
+              hidden
             />
-          </Box>
-        )}
-        <Button component="label" variant="outlined">
-          Upload Image
-          <input type="file" accept="image/*" onChange={onSelectFile} hidden />
+          </Button>
+          <Button variant="outlined" color="error" onClick={removePreview}>
+            Remove Image
+          </Button>
+        </Box>
+
+        <TextField
+          style={{ margin: "5px 0px 5px 0px" }}
+          multiline
+          variant="outlined"
+          name="description"
+          fullWidth
+          id="description"
+          label="Description"
+          rows={4}
+        />
+
+        <Button variant="outlined" color="error" onClick={props.close}>
+          Cancel
         </Button>
-        <Button variant="outlined" color="error" onClick={removePreview}>
-          Remove Image
+        <Button type="submit" variant="contained">
+          Add New Location
         </Button>
       </Box>
-
-      <TextField
-        style={{ margin: "5px 0px 5px 0px" }}
-        multiline
-        variant="outlined"
-        name="description"
-        fullWidth
-        id="description"
-        label="Description"
-        rows={4}
-      />
-      <Button variant="contained" type="submit">
-        Add New Object
-      </Button>
-    </Box>
+    </>
   );
 };
 
-export default FormAddObject;
+export default NewLocationForm;

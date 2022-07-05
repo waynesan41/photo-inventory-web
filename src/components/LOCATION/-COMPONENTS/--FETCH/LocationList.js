@@ -38,11 +38,10 @@ const LocationList = () => {
         window.location = window.location.origin + "/Login";
       } else if (result === "DENY" || result == "FAIL" || result == "INVALID") {
         setLocationList([]);
-        console.log("No Access");
+        console.log("No Access or No Location Here");
       } else {
         setLocationList([...result]);
       }
-      console.log(result);
     } catch (error) {
       console.log(error.message);
     }
@@ -79,7 +78,11 @@ const LocationList = () => {
           <Box
             sx={{ boxShadow: 5 }}
             key={obj.LocationID}
-            style={{ margin: "4px" }}
+            style={{
+              margin: "4px",
+              border: "3px solid green",
+              borderRadius: "5px",
+            }}
           >
             <LocationOne locationData={obj} />
           </Box>

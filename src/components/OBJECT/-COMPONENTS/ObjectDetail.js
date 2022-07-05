@@ -41,6 +41,7 @@ const ObjectDetail = (props) => {
         Edit
       </Button>
       <h3>{props.objData.Name}</h3>
+      <b>ObjectID: {props.objData.ObjectID}</b>
       <Box>
         <img style={{ maxWidth: "500px" }} src={src} />
       </Box>

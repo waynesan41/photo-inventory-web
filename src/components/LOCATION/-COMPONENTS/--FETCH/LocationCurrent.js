@@ -1,11 +1,24 @@
 import React, { useState } from "react";
 
-import { Box, Button, Card, CardMedia } from "@mui/material";
+import { Box, Button, Card, CardMedia, Dialog } from "@mui/material";
 import { useParams } from "react-router-dom";
+import EditLocationForm from "../--FORM/EditLocationForm";
+import PlaceLocationForm from "../--FORM/PlaceLocationForm";
 
 const LocationCurrent = () => {
   let { mainID, locationID } = useParams();
   const [locationInfo, setLocationInfo] = useState({});
+  const [open, setOpen] = useState(false);
+  const [formType, setSetFormType] = useState(0);
+
+  const openHandler = (type) => {
+    setSetFormType(type);
+    setOpen(true);
+  };
+  const closeHandler = () => {
+    setSetFormType(0);
+    setOpen(false);
+  };
 
   const fetchLocationInfo = async () => {
     const data = new FormData();
@@ -55,21 +68,51 @@ const LocationCurrent = () => {
         }}
       >
         <Box sx={{ display: "flex", flexDirection: "column" }}>
-          <CardMedia
-            component="img"
-            height="250"
-            image={`http://localhost/PhotoInventory/Backend/api/readImageLocation.php?id1=${mainID}&id2=${locationID}`}
-          />
-        </Box>
-        <Box sx={{ display: "flex", flexDirection: "column" }}>
-          {locationInfo && (
-            <>
-              <Box>Location Name: {locationInfo.Name} </Box>
-              <Box>Description: {locationInfo.Description} </Box>
-            </>
+          {locationInfo.Photo != 0 && (
+            <CardMedia
+              component="img"
+              height="250"
+              image={`http://localhost/PhotoInventory/Backend/api/readImageLocation.php?id1=${mainID}&id2=${locationID}`}
+            />
           )}
         </Box>
+        <Box sx={{ display: "flex", flexDirection: "column", margin: "3px" }}>
+          {locationInfo && (
+            <>
+              <Box>
+                <i>Location Name: </i> <b>{locationInfo.Name}</b>
+              </Box>
+              <Box>
+                <i>Description: </i>
+                {locationInfo.Description}
+              </Box>
+            </>
+          )}
+          <Box>
+            <Button
+              variant="contained"
+              onClick={() => {
+                openHandler(1);
+              }}
+            >
+              Edit Location
+            </Button>
+            <Button
+              variant="contained"
+              color="success"
+              onClick={() => {
+                openHandler(2);
+              }}
+            >
+              Place Object
+            </Button>
+          </Box>
+        </Box>
       </Card>
+      <Dialog open={open} onClose={closeHandler}>
+        {formType == 1 && <EditLocationForm locData={locationInfo} />}
+        {formType == 2 && <PlaceLocationForm />}
+      </Dialog>
     </>
   );
 };

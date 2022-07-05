@@ -5,6 +5,7 @@ import LocationCurrent from "./-COMPONENTS/--FETCH/LocationCurrent";
 import LocationList from "./-COMPONENTS/--FETCH/LocationList";
 import OwnMainMenu from "./-MENU/OwnMainMenu";
 import ShareMainMenu from "./-MENU/ShareMainMenu";
+import PlaceObjectList from "./-OBJECT-LOCATION/PlaceObjectList";
 
 const MainLocationContex = React.createContext();
 export const useMainLocationContex = () => {
@@ -62,11 +63,12 @@ const LocationPage = () => {
       <MainLocationContex.Provider value={{ mainID, mainType, accessLvl }}>
         {mainType == 0 && <h3>Sorry You don't have Access to the Library</h3>}
         {mainType == 1 && <OwnMainMenu mainID={mainID} />}
-        {mainType == 2 && <ShareMainMenu />}
+        {mainType == 2 && <ShareMainMenu mainID={mainID} />}
         {mainType != 0 && <LocationBread />}
         {mainType != 0 && locationID != 0 && <LocationCurrent />}
         {/* {(mainType == 1 || mainType == 2) && <LocationList />} */}
         {(mainType == 1 || mainType == 2) && <LocationList />}
+        {(mainType == 1 || mainType == 2) && <PlaceObjectList />}
       </MainLocationContex.Provider>
     </>
   );
