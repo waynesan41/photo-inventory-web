@@ -1,15 +1,14 @@
 import {
   Card,
   CardActionArea,
-  CardContent,
   CardHeader,
   CardMedia,
   Dialog,
 } from "@mui/material";
 import { useState } from "react";
-import ObjectDetail from "./ObjectDetail";
+import LinkObjLocForm from "../--FORM/LinkObjLocForm";
 
-const ObjectOne = (props) => {
+const ObjectPlaceOne = (props) => {
   const [open, setOpen] = useState(false);
 
   const openDetail = () => {
@@ -31,10 +30,10 @@ const ObjectOne = (props) => {
         )}
       </CardActionArea>
       <Dialog open={open} onClose={closeDetail}>
-        <ObjectDetail objData={props.objData} />
+        <LinkObjLocForm objData={props.objData} />
       </Dialog>
     </Card>
   );
 };
 
-export default ObjectOne;
+export default ObjectPlaceOne;

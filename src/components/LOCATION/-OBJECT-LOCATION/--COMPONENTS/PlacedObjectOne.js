@@ -1,15 +1,14 @@
 import {
   Card,
   CardActionArea,
-  CardContent,
   CardHeader,
   CardMedia,
   Dialog,
+  CardContent,
 } from "@mui/material";
 import { useState } from "react";
-import ObjectDetail from "./ObjectDetail";
 
-const ObjectOne = (props) => {
+const PlaceObjectOne = (props) => {
   const [open, setOpen] = useState(false);
 
   const openDetail = () => {
@@ -29,12 +28,15 @@ const ObjectOne = (props) => {
             image={`http://localhost/PhotoInventory/Backend/api/readImageObject.php?id1=${props.objData.LibraryID}&id2=${props.objData.ObjectID}`}
           />
         )}
+        <CardContent>
+          Quantity: <b>{props.objData.Quantity}</b>
+        </CardContent>
       </CardActionArea>
       <Dialog open={open} onClose={closeDetail}>
-        <ObjectDetail objData={props.objData} />
+        <>Object Detail</>
       </Dialog>
     </Card>
   );
 };
 
-export default ObjectOne;
+export default PlaceObjectOne;

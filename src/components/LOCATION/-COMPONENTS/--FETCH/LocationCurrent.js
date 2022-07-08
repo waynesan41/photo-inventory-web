@@ -1,23 +1,33 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import { Box, Button, Card, CardMedia, Dialog } from "@mui/material";
 import { useParams } from "react-router-dom";
 import EditLocationForm from "../--FORM/EditLocationForm";
-import PlaceLocationForm from "../--FORM/PlaceLocationForm";
+import PlaceObjectForm from "../../-OBJECT-LOCATION/--FORM/PlaceObjectForm";
+
+const CurrentLocationDataContex = React.createContext();
+export const useCurrentLocationData = () => {
+  return useContext(CurrentLocationDataContex);
+};
 
 const LocationCurrent = () => {
   let { mainID, locationID } = useParams();
   const [locationInfo, setLocationInfo] = useState({});
   const [open, setOpen] = useState(false);
+  const [open2, setOpen2] = useState(false);
   const [formType, setSetFormType] = useState(0);
 
-  const openHandler = (type) => {
-    setSetFormType(type);
+  const openHandler = () => {
     setOpen(true);
   };
   const closeHandler = () => {
-    setSetFormType(0);
     setOpen(false);
+  };
+  const openHandler2 = () => {
+    setOpen2(true);
+  };
+  const closeHandler2 = () => {
+    setOpen2(false);
   };
 
   const fetchLocationInfo = async () => {
@@ -40,7 +50,7 @@ const LocationCurrent = () => {
       const result = await response.json();
 
       console.log(result);
-      if (result === "0") {
+      if (result === 0) {
         window.location = window.location.origin + "/Login";
       } else if (result == "DENY") {
         console.log("Access Deny");
@@ -89,29 +99,23 @@ const LocationCurrent = () => {
             </>
           )}
           <Box>
-            <Button
-              variant="contained"
-              onClick={() => {
-                openHandler(1);
-              }}
-            >
+            <Button variant="contained" onClick={openHandler}>
               Edit Location
             </Button>
-            <Button
-              variant="contained"
-              color="success"
-              onClick={() => {
-                openHandler(2);
-              }}
-            >
+            <Button variant="contained" color="success" onClick={openHandler2}>
               Place Object
             </Button>
           </Box>
         </Box>
       </Card>
       <Dialog open={open} onClose={closeHandler}>
-        {formType == 1 && <EditLocationForm locData={locationInfo} />}
-        {formType == 2 && <PlaceLocationForm />}
+        <EditLocationForm locData={locationInfo} />
+      </Dialog>
+
+      <Dialog open={open2} onClose={closeHandler2} fullWidth maxWidth="70%">
+        <CurrentLocationDataContex.Provider value={{ locationInfo }}>
+          <PlaceObjectForm />
+        </CurrentLocationDataContex.Provider>
       </Dialog>
     </>
   );
