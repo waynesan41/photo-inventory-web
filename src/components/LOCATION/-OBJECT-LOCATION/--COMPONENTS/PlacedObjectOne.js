@@ -7,6 +7,7 @@ import {
   CardContent,
 } from "@mui/material";
 import { useState } from "react";
+import EditPlacedObject from "../--FORM/EditPlacedObject";
 
 const PlaceObjectOne = (props) => {
   const [open, setOpen] = useState(false);
@@ -32,8 +33,8 @@ const PlaceObjectOne = (props) => {
           Quantity: <b>{props.objData.Quantity}</b>
         </CardContent>
       </CardActionArea>
-      <Dialog open={open} onClose={closeDetail}>
-        <>Object Detail</>
+      <Dialog open={open} onClose={closeDetail} maxWidth="90%">
+        <EditPlacedObject objData={props.objData} />
       </Dialog>
     </Card>
   );

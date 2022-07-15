@@ -19,9 +19,9 @@ const FormAddObject = () => {
       data.append("photo", 1);
       data.append("img1", selectedFile);
     }
-    for (var pair of data.entries()) {
+    /* for (var pair of data.entries()) {
       console.log(pair[0] + ": " + pair[1]);
-    }
+    } */
     try {
       const response = await fetch(
         "http://localhost/PhotoInventory/Backend/api/object/addNewObject.php",

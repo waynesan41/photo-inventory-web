@@ -162,7 +162,7 @@ const EditLocationForm = (props) => {
         Cancel
       </Button>
       <Button variant="outlined" color="success" type="submit">
-        Update Object
+        Update Location
       </Button>
       <Dialog open={open} onClose={closeHandler}>
         <DeleteConfirm close={closeHandler} data={props.locData} />

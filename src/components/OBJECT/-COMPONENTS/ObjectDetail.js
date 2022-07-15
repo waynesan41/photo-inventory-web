@@ -1,19 +1,26 @@
-import { CloseOutlined } from "@mui/icons-material";
 import { Box, Button, Dialog, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import EditForm from "./EditForm";
 import { useLibraryContex } from "../ObjectLibrary";
+import ListLocation from "../-PLACE-OBJECT/ListLocation";
 
 const ObjectDetail = (props) => {
-  const { libraryID, libType, accessLvl } = useLibraryContex();
+  const { libType, accessLvl } = useLibraryContex();
   const [edit, setEdit] = useState(true);
   const [src, setSrc] = useState("");
   const [open, setOpen] = useState(false);
+  const [open2, setOpen2] = useState(false);
   const openEdit = () => {
     setOpen(true);
   };
   const closeEdit = () => {
     setOpen(false);
+  };
+  const open2Handler = () => {
+    setOpen2(true);
+  };
+  const close2Handler = () => {
+    setOpen2(false);
   };
 
   useEffect(() => {
@@ -31,17 +38,24 @@ const ObjectDetail = (props) => {
   }, []);
 
   return (
-    <Box minWidth={350}>
-      <Button
-        variant="contained"
-        style={{ margin: "5px", float: "right" }}
-        onClick={openEdit}
-        disabled={edit}
-      >
-        Edit
-      </Button>
-      <h3>{props.objData.Name}</h3>
+    <Box minWidth={350} style={{ padding: "10px" }}>
+      <Box fontSize={25}>
+        <b>{props.objData.Name}</b>
+      </Box>
       <b>ObjectID: {props.objData.ObjectID}</b>
+      <Box style={{ margin: "5px 0px 5px 0px" }}>
+        <Button
+          variant="contained"
+          onClick={openEdit}
+          disabled={edit}
+          style={{ marginRight: "10px" }}
+        >
+          Edit
+        </Button>
+        <Button variant="outlined" color="success" onClick={open2Handler}>
+          Find Ojbect Placement
+        </Button>
+      </Box>
       <Box>
         <img style={{ maxWidth: "500px" }} src={src} />
       </Box>
@@ -51,6 +65,9 @@ const ObjectDetail = (props) => {
       </Typography>
       <Dialog open={open} onClose={closeEdit}>
         <EditForm objData={props.objData} closeEdit={closeEdit} />
+      </Dialog>
+      <Dialog open={open2} onClose={close2Handler}>
+        <ListLocation objData={props.objData} />
       </Dialog>
     </Box>
   );

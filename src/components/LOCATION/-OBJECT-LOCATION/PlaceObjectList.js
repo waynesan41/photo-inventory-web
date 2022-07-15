@@ -5,10 +5,12 @@ import { Box, TextField, Button } from "@mui/material";
 
 import { useMainLocationContex } from "../LocationPage";
 import PlacedObjectOne from "./--COMPONENTS/PlacedObjectOne";
+import { useCurrentLocationData } from "../-COMPONENTS/--FETCH/LocationCurrent";
 
 const PlaceObjectList = () => {
   let { mainID, locationID } = useParams();
   const { mainType } = useMainLocationContex();
+
   const [placeObjList, setPlaceObjList] = useState([]);
 
   const fetchSearchLocation = () => {

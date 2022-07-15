@@ -32,7 +32,7 @@ const ObjectLibrary = () => {
       if (!response.ok) {
         throw new Error(response.statusText);
       }
-      const result = await response.json();
+      const result = await response.text();
 
       if (result === "0") {
         window.location = window.location.origin + "/Login";
@@ -45,6 +45,7 @@ const ObjectLibrary = () => {
         setAccessLvl(result);
       } else {
         console.log("fail to fetch");
+        console.log(result);
       }
     } catch (error) {
       console.log(error.message);

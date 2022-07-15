@@ -47,7 +47,7 @@ const PlaceObjectForm = () => {
 
       if (result === 0) {
         window.location = window.location.origin + "/Login";
-      } else if (result === "INVALID") {
+      } else if (result === "INVALID" || result === "NO LIBRARY") {
         setLibraryList([]);
       } else {
         setLibraryList([...result]);
@@ -80,12 +80,14 @@ const PlaceObjectForm = () => {
           label="Select Library"
           onChange={handleChange}
         >
-          {libraryList.map((obj) => (
-            <MenuItem key={obj.LibraryID} value={obj.LibraryID}>
-              {obj.Name}
-            </MenuItem>
-          ))}
+          {libraryList.length > 0 &&
+            libraryList.map((obj) => (
+              <MenuItem key={obj.LibraryID} value={obj.LibraryID}>
+                {obj.Name}
+              </MenuItem>
+            ))}
         </Select>
+        {libraryList.length == 0 && <>NO LIBRARY FOUND</>}
       </FormControl>
       {selectedLibID !== "" && (
         <SearchObjectList libType={mainType} libraryID={selectedLibID} />

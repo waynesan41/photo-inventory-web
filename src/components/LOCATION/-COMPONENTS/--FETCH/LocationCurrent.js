@@ -4,18 +4,19 @@ import { Box, Button, Card, CardMedia, Dialog } from "@mui/material";
 import { useParams } from "react-router-dom";
 import EditLocationForm from "../--FORM/EditLocationForm";
 import PlaceObjectForm from "../../-OBJECT-LOCATION/--FORM/PlaceObjectForm";
+import { useCurrentLocationData } from "../../LocationPage";
 
-const CurrentLocationDataContex = React.createContext();
+/* const CurrentLocationDataContex = React.createContext();
 export const useCurrentLocationData = () => {
   return useContext(CurrentLocationDataContex);
-};
+}; */
 
 const LocationCurrent = () => {
   let { mainID, locationID } = useParams();
-  const [locationInfo, setLocationInfo] = useState({});
+  // const [locationInfo, setLocationInfo] = useState({});
+  const { locationInfo } = useCurrentLocationData();
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
-  const [formType, setSetFormType] = useState(0);
 
   const openHandler = () => {
     setOpen(true);
@@ -30,7 +31,7 @@ const LocationCurrent = () => {
     setOpen2(false);
   };
 
-  const fetchLocationInfo = async () => {
+  /* const fetchLocationInfo = async () => {
     const data = new FormData();
     data.append("mainID", mainID);
     data.append("locationID", locationID);
@@ -66,7 +67,7 @@ const LocationCurrent = () => {
 
   useState(() => {
     fetchLocationInfo();
-  }, []);
+  }, []); */
   return (
     <>
       <Card
@@ -113,9 +114,9 @@ const LocationCurrent = () => {
       </Dialog>
 
       <Dialog open={open2} onClose={closeHandler2} fullWidth maxWidth="70%">
-        <CurrentLocationDataContex.Provider value={{ locationInfo }}>
-          <PlaceObjectForm />
-        </CurrentLocationDataContex.Provider>
+        {/* <CurrentLocationDataContex.Provider value={{ locationInfo }}> */}
+        <PlaceObjectForm />
+        {/* </CurrentLocationDataContex.Provider> */}
       </Dialog>
     </>
   );

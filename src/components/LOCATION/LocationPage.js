@@ -7,6 +7,11 @@ import OwnMainMenu from "./-MENU/OwnMainMenu";
 import ShareMainMenu from "./-MENU/ShareMainMenu";
 import PlaceObjectList from "./-OBJECT-LOCATION/PlaceObjectList";
 
+const CurrentLocationDataContex = React.createContext();
+export const useCurrentLocationData = () => {
+  return useContext(CurrentLocationDataContex);
+};
+
 const MainLocationContex = React.createContext();
 export const useMainLocationContex = () => {
   return useContext(MainLocationContex);
@@ -16,7 +21,41 @@ const LocationPage = () => {
   let { mainID, locationID } = useParams(); // Value from URL
   const [mainType, setMainType] = useState();
   const [accessLvl, setAccessLvl] = useState();
+  const [locationInfo, setLocationInfo] = useState({});
 
+  const fetchLocationInfo = async () => {
+    const data = new FormData();
+    data.append("mainID", mainID);
+    data.append("locationID", locationID);
+
+    try {
+      const response = await fetch(
+        "http://localhost/PhotoInventory/Backend/api/Location/getLocationInfo.php",
+        {
+          method: "POST",
+          credentials: "include",
+          body: data,
+        }
+      );
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      const result = await response.json();
+
+      console.log(result);
+      if (result === 0) {
+        window.location = window.location.origin + "/Login";
+      } else if (result == "DENY") {
+        console.log("Access Deny");
+        console.log(result);
+        setLocationInfo({});
+      } else {
+        setLocationInfo(result);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
   const fetchMainAccessInfo = async () => {
     const data = new FormData();
     data.append("mainID", mainID);
@@ -55,6 +94,7 @@ const LocationPage = () => {
 
   useEffect(() => {
     fetchMainAccessInfo();
+    fetchLocationInfo();
   }, []);
   return (
     <>
@@ -65,10 +105,13 @@ const LocationPage = () => {
         {mainType == 1 && <OwnMainMenu mainID={mainID} />}
         {mainType == 2 && <ShareMainMenu mainID={mainID} />}
         {mainType != 0 && <LocationBread />}
-        {mainType != 0 && locationID != 0 && <LocationCurrent />}
-        {/* {(mainType == 1 || mainType == 2) && <LocationList />} */}
-        {(mainType == 1 || mainType == 2) && <LocationList />}
-        {(mainType == 1 || mainType == 2) && <PlaceObjectList />}
+
+        <CurrentLocationDataContex.Provider value={{ locationInfo }}>
+          {mainType != 0 && locationID != 0 && <LocationCurrent />}
+          {/* {(mainType == 1 || mainType == 2) && <LocationList />} */}
+          {(mainType == 1 || mainType == 2) && <LocationList />}
+          {(mainType == 1 || mainType == 2) && <PlaceObjectList />}
+        </CurrentLocationDataContex.Provider>
       </MainLocationContex.Provider>
     </>
   );
