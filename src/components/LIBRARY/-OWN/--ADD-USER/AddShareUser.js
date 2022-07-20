@@ -30,12 +30,14 @@ const AddShareUser = (props) => {
       const result = await response.json();
 
       console.log(result);
+      console.log(addUser);
       if (result === "0") {
         window.location = window.location.origin + "/Login";
       } else if (result === "NO USER") {
         setAddUser([]);
       } else {
         setAddUser([...result]);
+        console.log("user is set");
       }
     } catch (error) {
       console.log(error.message);
@@ -46,7 +48,7 @@ const AddShareUser = (props) => {
   }, []);
   return (
     <Box minWidth={400}>
-      {addUser.length > 1 &&
+      {addUser.length > 0 &&
         addUser.map((User) => (
           <Box style={{ margin: "3px" }} key={User.UserID}>
             <NewUserOne

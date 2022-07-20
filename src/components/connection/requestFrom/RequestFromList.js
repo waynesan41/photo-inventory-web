@@ -1,9 +1,6 @@
-import { Card, CardHeader } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
-import CheckIcon from "@mui/icons-material/Check";
-import CloseIcon from "@mui/icons-material/Close";
-import RequestFrom from "./RequestFrom";
+import RequestFromOne from "./RequestFromOne";
 
 const RequestFromList = () => {
   const [noUser, setNoUser] = useState(false);
@@ -46,13 +43,15 @@ const RequestFromList = () => {
   return (
     <>
       {noUser && <h2>No Request from Any User.</h2>}
-      {!noUser && (
-        <RequestFrom
-          requestFromUser={requestFromUser}
-          setCurrentID={setEditUserID}
-          currentID={editUserID}
-        />
-      )}
+      {!noUser &&
+        requestFromUser.map((user) => (
+          <RequestFromOne
+            key={user.UserID}
+            user={user}
+            setCurrentID={setEditUserID}
+            currentID={editUserID}
+          />
+        ))}
     </>
   );
 };

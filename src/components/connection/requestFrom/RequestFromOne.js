@@ -1,11 +1,10 @@
-import { Card, CardContent, CardHeader, Popover, Button } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { Card, CardHeader, Popover, Button } from "@mui/material";
+import React, { useState } from "react";
 
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
-import CircularProgress from "@mui/material/CircularProgress";
 
-const RequestFrom = (props) => {
+const RequestFromOne = (props) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [direct, setDirect] = useState(null);
 
@@ -121,72 +120,69 @@ const RequestFrom = (props) => {
 
   return (
     <>
-      {props.requestFromUser.map((user) => (
-        <Card key={user.UserID}>
-          <CardHeader
-            title={user.FullName}
-            action={
-              <>
-                <Button
-                  id={user.UserID}
-                  onClick={handleClick}
-                  variant="outlined"
-                  color="primary"
-                  value={1}
-                >
-                  <CheckIcon />
-                </Button>
-                <Button
-                  id={user.UserID}
-                  onClick={handleClick}
-                  variant="outlined"
-                  color="error"
-                  value={2}
-                >
-                  <CloseIcon />
-                </Button>
-                <Popover
-                  open={open}
-                  anchorEl={anchorEl}
-                  onClose={handleClose}
-                  anchorOrigin={{
-                    vertical: "bottom",
-                    horizontal: "left",
-                  }}
-                >
-                  {direct == 1 && (
-                    <Button onClick={acceptFetch} variant="contained">
-                      Accept Request
+      <Card key={props.user.UserID} style={{ border: "2px solid gray" }}>
+        <CardHeader
+          title={props.user.FullName}
+          action={
+            <>
+              <Button
+                id={props.user.UserID}
+                onClick={handleClick}
+                variant="outlined"
+                color="primary"
+                value={1}
+              >
+                <CheckIcon />
+              </Button>
+              <Button
+                id={props.user.UserID}
+                onClick={handleClick}
+                variant="outlined"
+                color="error"
+                value={2}
+              >
+                <CloseIcon />
+              </Button>
+              <Popover
+                open={open}
+                anchorEl={anchorEl}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}
+              >
+                {direct == 1 && (
+                  <Button onClick={acceptFetch} variant="contained">
+                    Accept Request
+                  </Button>
+                )}
+                {direct == 2 && (
+                  <>
+                    <Button
+                      onClick={blockFetch}
+                      variant="contained"
+                      color="error"
+                    >
+                      Block User
                     </Button>
-                  )}
-                  {direct == 2 && (
-                    <>
-                      <Button
-                        onClick={blockFetch}
-                        variant="contained"
-                        color="error"
-                      >
-                        Block User
-                      </Button>
-                      <Button
-                        onClick={denyFetch}
-                        variant="contained"
-                        color="warning"
-                      >
-                        Denied Request
-                      </Button>
-                    </>
-                  )}
-                </Popover>
-              </>
-            }
-            subheader={<div>Username: {user.Username}</div>}
-          />
-        </Card>
-      ))}
-      <Card>No Request From any User</Card>
+                    <Button
+                      onClick={denyFetch}
+                      variant="contained"
+                      color="warning"
+                    >
+                      Denied Request
+                    </Button>
+                  </>
+                )}
+              </Popover>
+            </>
+          }
+          subheader={<div>Username: {props.user.Username}</div>}
+        />
+      </Card>
     </>
   );
 };
 
-export default RequestFrom;
+export default RequestFromOne;

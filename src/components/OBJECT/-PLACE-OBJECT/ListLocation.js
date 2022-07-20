@@ -35,7 +35,7 @@ const ListLocation = (props) => {
       console.log(result);
       if (result === "0") {
         window.location = window.location.origin + "/Login";
-      } else if (result === "NO LOCATION") {
+      } else if (result === "NO LOCATION" || result === "DENY") {
         setLocationList([]);
       } else {
         setLocationList([...result]);
@@ -50,16 +50,22 @@ const ListLocation = (props) => {
 
   return (
     <>
-      <Box>
+      <Box
+        style={{
+          padding: "5px",
+          display: "grid",
+          gridGap: "5px",
+          gridTemplateColumns: "repeat(3, 1fr)",
+        }}
+      >
         {locationList.length === 0 && (
-          <Box>This Item is not Found in Any Location</Box>
+          <Box component="h3">This Object is not Place in any Location!</Box>
         )}
         {locationList.map((loc) => (
           <Box key={loc.LocationID}>
             <OneLocation locationData={loc} />
           </Box>
         ))}
-        <>something</>
       </Box>
     </>
   );

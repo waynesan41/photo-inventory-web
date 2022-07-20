@@ -13,7 +13,7 @@ import Connection from "./Pages/Connection";
 
 import BlockedUserList from "./components/connection/block/BlockedUserList";
 import RequestFromList from "./components/connection/requestFrom/RequestFromList";
-import ConnectedUser from "./components/connection/connect/ConnectedUser";
+import ConnectedUser from "./components/connection/connect/ConnectedUserList";
 import RequestToList from "./components/connection/requestTo/RequestToList";
 import SearchUserList from "./components/connection/search/SearchUserList";
 

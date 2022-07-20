@@ -1,11 +1,11 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import {
   BottomNavigation,
   BottomNavigationAction,
+  Box,
   Button,
 } from "@mui/material";
-import { Grid } from "@mui/material";
 
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 
@@ -38,68 +38,85 @@ const NavBar = () => {
       console.log(error.message);
     }
   }, []);
-  const [value, setValue] = useState(3);
+  const [value, setValue] = useState(0);
+  useEffect(() => {
+    switch (window.location.pathname.split("/").at(1)) {
+      case "MainLocation":
+        setValue(0);
+        break;
+      case "Library":
+        setValue(1);
+        break;
+      case "Connection":
+        setValue(2);
+        break;
+      case "Profile":
+        setValue(3);
+        break;
+      default:
+        setValue(0);
+    }
+  }, []);
 
   return (
-    <>
-      <Grid
-        container
-        spacing={2}
+    <Box>
+      <Box
         style={{
-          border: "solid 1px blue",
+          display: "grid",
+          gridTemplateColumns: "1fr 10fr 1fr",
+          gridGap: "10px",
+          paddingBottom: "5px",
+          marginBottom: "5px",
+          borderBottom: "2px solid gray",
         }}
       >
-        <Grid item md={1} xs={1}>
-          Company Logo
-        </Grid>
-        <Grid item md={10} xs={10}>
-          <BottomNavigation
-            showLabels={true}
-            value={value}
-            onChange={(event, newValue) => {
-              setValue(newValue);
-            }}
-          >
-            <BottomNavigationAction
-              component={NavLink}
-              to="/ObjectLocation"
-              label="Object"
-              icon={<AddLocationIcon />}
-            />
-            <BottomNavigationAction
-              component={NavLink}
-              to="/MainLocation"
-              label="Main"
-              icon={<LocationOnIcon />}
-            />
-            <BottomNavigationAction
-              component={NavLink}
-              to="/Library"
-              label="Library"
-              icon={<AllInboxIcon />}
-            />
-            <BottomNavigationAction
-              component={NavLink}
-              to="/Connection"
-              label="Connection"
-              icon={<GroupsIcon />}
-            />
-            <BottomNavigationAction
-              component={NavLink}
-              to="/Profile"
-              label="Profile"
-              icon={<PersonOutlineIcon />}
-            />
-          </BottomNavigation>
-        </Grid>
-        <Grid item md={1} xs={1} style={{ textAlign: "right" }}>
+        <Box>
+          <b>Company Name</b>
+        </Box>
+        <BottomNavigation
+          showLabels={true}
+          value={value}
+          onChange={(event, newValue) => {
+            setValue(newValue);
+          }}
+        >
+          <BottomNavigationAction
+            component={NavLink}
+            to="/MainLocation"
+            label="Main"
+            icon={<LocationOnIcon />}
+            style={{ border: "2px solid #4176cf", borderRadius: "10px" }}
+          />
+          <BottomNavigationAction
+            component={NavLink}
+            to="/Library"
+            label="Library"
+            icon={<AllInboxIcon />}
+            style={{ border: "2px solid #4176cf", borderRadius: "10px" }}
+          />
+          <BottomNavigationAction
+            component={NavLink}
+            to="/Connection"
+            label="Connection"
+            icon={<GroupsIcon />}
+            style={{ border: "2px solid #4176cf", borderRadius: "10px" }}
+          />
+          <BottomNavigationAction
+            component={NavLink}
+            to="/Profile"
+            label="Profile"
+            icon={<PersonOutlineIcon />}
+            style={{ border: "2px solid #4176cf", borderRadius: "10px" }}
+          />
+        </BottomNavigation>
+        <Box style={{ float: "right" }}>
           <Button variant="contained" onClick={logOutphp}>
             LogOut
           </Button>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
       <Outlet />
-    </>
+    </Box>
   );
 };
 

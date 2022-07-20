@@ -1,16 +1,8 @@
-import {
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  IconButton,
-  Paper,
-} from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { Button, Paper } from "@mui/material";
+import React, { useState } from "react";
 import { TextField } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import AddIcon from "@mui/icons-material/Add";
-import SearchUser from "./SearchUser";
+
+import SearchUser from "./SearchUserOne";
 
 const SearchUserList = () => {
   const [noUser, setNoUser] = useState(false);
@@ -76,14 +68,15 @@ const SearchUserList = () => {
       </Paper>
       <Paper>
         {noUser && <h2>No Users Found in Search.</h2>}
-        {!noUser && (
-          <SearchUser
-            searchUser={searchUser}
-            currentID={currentID}
-            setCurrentID={setCurrentID}
-            removeBlockUser={removeBlockUser}
-          />
-        )}
+        {!noUser &&
+          searchUser.map((user) => (
+            <SearchUser
+              key={user.UserID}
+              user={user}
+              setCurrentID={setCurrentID}
+              removeBlockUser={removeBlockUser}
+            />
+          ))}
       </Paper>
     </>
   );

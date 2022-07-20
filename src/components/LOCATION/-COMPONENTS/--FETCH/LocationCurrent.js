@@ -4,7 +4,11 @@ import { Box, Button, Card, CardMedia, Dialog } from "@mui/material";
 import { useParams } from "react-router-dom";
 import EditLocationForm from "../--FORM/EditLocationForm";
 import PlaceObjectForm from "../../-OBJECT-LOCATION/--FORM/PlaceObjectForm";
-import { useCurrentLocationData } from "../../LocationPage";
+import {
+  useCurrentLocationData,
+  useMainLocationContex,
+} from "../../LocationPage";
+import MoveLocationSearch from "../--FORM/---MOVE-LOCATION/MoveLocationSearch";
 
 /* const CurrentLocationDataContex = React.createContext();
 export const useCurrentLocationData = () => {
@@ -14,9 +18,11 @@ export const useCurrentLocationData = () => {
 const LocationCurrent = () => {
   let { mainID, locationID } = useParams();
   // const [locationInfo, setLocationInfo] = useState({});
+  const { accessLvl } = useMainLocationContex();
   const { locationInfo } = useCurrentLocationData();
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
+  const [open3, setOpen3] = useState(false);
 
   const openHandler = () => {
     setOpen(true);
@@ -29,6 +35,12 @@ const LocationCurrent = () => {
   };
   const closeHandler2 = () => {
     setOpen2(false);
+  };
+  const openHandler3 = () => {
+    setOpen3(true);
+  };
+  const closeHandler3 = () => {
+    setOpen3(false);
   };
 
   /* const fetchLocationInfo = async () => {
@@ -100,23 +112,42 @@ const LocationCurrent = () => {
             </>
           )}
           <Box>
-            <Button variant="contained" onClick={openHandler}>
+            <Button
+              variant="contained"
+              onClick={openHandler}
+              disabled={accessLvl < 3}
+            >
               Edit Location
             </Button>
-            <Button variant="contained" color="success" onClick={openHandler2}>
+            <Button
+              variant="contained"
+              color="success"
+              onClick={openHandler2}
+              disabled={accessLvl < 2}
+            >
               Place Object
+            </Button>
+            <Button
+              variant="contained"
+              onClick={openHandler3}
+              disabled={accessLvl < 3}
+            >
+              Move Location
             </Button>
           </Box>
         </Box>
       </Card>
       <Dialog open={open} onClose={closeHandler}>
-        <EditLocationForm locData={locationInfo} />
+        <EditLocationForm locData={locationInfo} closeHandler={closeHandler} />
       </Dialog>
 
       <Dialog open={open2} onClose={closeHandler2} fullWidth maxWidth="70%">
         {/* <CurrentLocationDataContex.Provider value={{ locationInfo }}> */}
         <PlaceObjectForm />
         {/* </CurrentLocationDataContex.Provider> */}
+      </Dialog>
+      <Dialog open={open3} onClose={closeHandler3} fullWidth maxWidth="70%">
+        <MoveLocationSearch />
       </Dialog>
     </>
   );

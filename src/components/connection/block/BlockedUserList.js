@@ -1,7 +1,6 @@
-import { Card, CardContent, CardHeader } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
-import BlockedUser from "./BlockedUser";
+import BlockedUserOne from "./BlockedUserOne";
 
 const BlockedUserList = () => {
   const [noBlockuser, setNoBlockUser] = useState();
@@ -44,13 +43,15 @@ const BlockedUserList = () => {
   return (
     <>
       {noBlockuser && <h2>You don't have any Blocked User.</h2>}
-      {!noBlockuser && (
-        <BlockedUser
-          blockUser={blockUser}
-          currentID={editUserID}
-          setCurrentID={setEdituserID}
-        />
-      )}
+      {!noBlockuser &&
+        blockUser.map((user) => (
+          <BlockedUserOne
+            key={user.UserID}
+            user={user}
+            currentID={editUserID}
+            setCurrentID={setEdituserID}
+          />
+        ))}
     </>
   );
 };

@@ -4,7 +4,7 @@ import { useMainLocationContex } from "../../LocationPage";
 import DeleteConfirm from "./DeleteConfirm";
 
 const EditLocationForm = (props) => {
-  const { mainType } = useMainLocationContex();
+  const { mainType, accessLvl } = useMainLocationContex();
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
 
@@ -116,6 +116,7 @@ const EditLocationForm = (props) => {
         style={{ display: "inline", float: "right" }}
         variant="contained"
         color="error"
+        disabled={accessLvl < 3}
       >
         Delete
       </Button>
@@ -158,7 +159,7 @@ const EditLocationForm = (props) => {
         defaultValue={props.locData.Description}
         rows={4}
       />
-      <Button variant="outlined" color="warning">
+      <Button variant="outlined" color="warning" onClick={props.closeHandler}>
         Cancel
       </Button>
       <Button variant="outlined" color="success" type="submit">

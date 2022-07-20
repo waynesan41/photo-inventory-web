@@ -2,7 +2,9 @@ import { Button, Dialog, Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import NewLocationForm from "../-COMPONENTS/--FORM/NewLocationForm";
+import { useMainLocationContex } from "../LocationPage";
 const ShareMainMenu = (props) => {
+  const { mainType, accessLvl } = useMainLocationContex();
   let { mainID, locationID } = useParams(); // Value from URL
   const [open, setOpen] = useState(false);
   const [mainInfo, setMainInfo] = useState({});
@@ -58,6 +60,9 @@ const ShareMainMenu = (props) => {
         Main Location: <b>{mainInfo.Name}</b>
       </Box>
       <Box>
+        Access Lvl: <b>{accessLvl}</b>
+      </Box>
+      <Box>
         Total Objects:
         {mainInfo.TotalObjectType}
       </Box>
@@ -70,7 +75,11 @@ const ShareMainMenu = (props) => {
       </Box>
       <Box>Owner Username: {mainInfo.Username}</Box>
 
-      <Button variant="contained" onClick={openHandler}>
+      <Button
+        variant="contained"
+        onClick={openHandler}
+        disabled={accessLvl < 2}
+      >
         Add New Location
       </Button>
       {/* <Button variant="contained">Edit User</Button>

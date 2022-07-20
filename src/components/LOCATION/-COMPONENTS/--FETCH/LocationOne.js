@@ -9,14 +9,6 @@ import {
 import { useState } from "react";
 
 const LocationOne = (props) => {
-  const [open, setOpen] = useState(false);
-
-  const openDetail = () => {
-    setOpen(true);
-  };
-  const closeDetail = () => {
-    setOpen(false);
-  };
   return (
     <Card>
       <Link
@@ -34,9 +26,6 @@ const LocationOne = (props) => {
           )}
         </CardActionArea>
       </Link>
-      <Dialog open={open} onClose={closeDetail}>
-        <>This is Form</>
-      </Dialog>
     </Card>
   );
 };

@@ -98,10 +98,8 @@ const LocationPage = () => {
   }, []);
   return (
     <>
-      {/* <h2>Main ID: {mainID}</h2>
-      <h2>Location ID: {locationID}</h2> */}
       <MainLocationContex.Provider value={{ mainID, mainType, accessLvl }}>
-        {mainType == 0 && <h3>Sorry You don't have Access to the Library</h3>}
+        {mainType == 0 && <h3>Sorry You don't have Access to the Location</h3>}
         {mainType == 1 && <OwnMainMenu mainID={mainID} />}
         {mainType == 2 && <ShareMainMenu mainID={mainID} />}
         {mainType != 0 && <LocationBread />}

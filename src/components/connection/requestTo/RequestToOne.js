@@ -5,7 +5,7 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import CircularProgress from "@mui/material/CircularProgress";
 
-const RequestTo = (props) => {
+const RequestToOne = (props) => {
   const [loading, setLoading] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -56,46 +56,44 @@ const RequestTo = (props) => {
 
   return (
     <>
-      {props.requestToUser.map((user) => (
-        <Card key={user.UserID}>
-          <CardHeader
-            title={user.FullName}
-            action={
-              <>
+      <Card key={props.user.UserID} style={{ border: "2px solid gray" }}>
+        <CardHeader
+          title={props.user.FullName}
+          action={
+            <>
+              <Button
+                id={props.user.UserID}
+                onClick={handleClick}
+                variant="outlined"
+                color="error"
+              >
+                <CloseIcon color="error" />
+              </Button>
+              <Popover
+                open={open}
+                anchorEl={anchorEl}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}
+              >
                 <Button
-                  id={user.UserID}
-                  onClick={handleClick}
-                  variant="outlined"
+                  variant="contained"
                   color="error"
+                  onClick={cancelRequestFetch}
                 >
-                  <CloseIcon color="error" />
+                  {loading && <CircularProgress size={25} />}
+                  {!loading && <>Cancel Request</>}
                 </Button>
-                <Popover
-                  open={open}
-                  anchorEl={anchorEl}
-                  onClose={handleClose}
-                  anchorOrigin={{
-                    vertical: "bottom",
-                    horizontal: "left",
-                  }}
-                >
-                  <Button
-                    variant="contained"
-                    color="error"
-                    onClick={cancelRequestFetch}
-                  >
-                    {loading && <CircularProgress size={25} />}
-                    {!loading && <>Cancel Request</>}
-                  </Button>
-                </Popover>
-              </>
-            }
-            subheader={<div>Username: {user.Username}</div>}
-          />
-        </Card>
-      ))}
+              </Popover>
+            </>
+          }
+          subheader={<div>Username: {props.user.Username}</div>}
+        />
+      </Card>
     </>
   );
 };
 
-export default RequestTo;
+export default RequestToOne;

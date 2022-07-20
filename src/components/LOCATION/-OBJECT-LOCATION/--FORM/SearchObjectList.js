@@ -1,6 +1,12 @@
 import { useState } from "react";
-import { Box, TextField, Button } from "@mui/material";
-import ObjectOne from "../../../OBJECT/-COMPONENTS/ObjectOne";
+import {
+  Box,
+  TextField,
+  Button,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+} from "@mui/material";
 import ObjectPlaceOne from "../--COMPONENTS/ObjectPlaceOne";
 const SearchObjectList = (props) => {
   const [object, setObject] = useState([]);
@@ -38,20 +44,40 @@ const SearchObjectList = (props) => {
     }
   };
   return (
-    <Box
-      style={{
-        margin: "15px 0px 5px 0px",
-        display: "grid",
-        gridGap: "5px",
-        gridTemplateColumns: "7fr 1fr",
-      }}
-      component="form"
-      onSubmit={fetchSearchObject}
-    >
-      <TextField name="search" label="Search Object" required></TextField>
-      <Button variant="outlined" type="submit">
-        Search
-      </Button>
+    <Box style={{ padding: "5px" }}>
+      <Box component="form" onSubmit={fetchSearchObject}>
+        <RadioGroup
+          defaultValue="1"
+          name="filter"
+          required
+          style={{ display: "inline" }}
+        >
+          <FormControlLabel value="1" control={<Radio />} label="All" />
+          <FormControlLabel
+            value="2"
+            control={<Radio />}
+            label="Placed Object"
+          />
+          <FormControlLabel
+            value="3"
+            control={<Radio />}
+            label="Unplace Object"
+          />
+        </RadioGroup>
+        <Box
+          style={{
+            margin: "10px 0px 5px 0px",
+            display: "grid",
+            gridGap: "5px",
+            gridTemplateColumns: "7fr 1fr",
+          }}
+        >
+          <TextField name="search" label="SearchObject"></TextField>
+          <Button variant="outlined" type="submit">
+            Search
+          </Button>
+        </Box>
+      </Box>
       <Box
         style={{
           display: "grid",

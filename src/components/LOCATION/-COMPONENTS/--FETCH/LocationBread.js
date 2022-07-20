@@ -41,7 +41,6 @@ const LocationBread = () => {
   }, []);
   return (
     <>
-      LocationID: {locationID} MainID: {mainID}
       <Breadcrumbs separator=">" arial-label="breadcrumb">
         <Link href={0}>Home</Link>
         {breadList.map((loc) => (

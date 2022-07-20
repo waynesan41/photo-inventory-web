@@ -66,7 +66,7 @@ const ObjectDetail = (props) => {
       <Dialog open={open} onClose={closeEdit}>
         <EditForm objData={props.objData} closeEdit={closeEdit} />
       </Dialog>
-      <Dialog open={open2} onClose={close2Handler}>
+      <Dialog open={open2} onClose={close2Handler} maxWidth="80%">
         <ListLocation objData={props.objData} />
       </Dialog>
     </Box>

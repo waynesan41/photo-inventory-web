@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, Tooltip } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import RequestTo from "./RequestTo";
+import RequestToOne from "./RequestToOne";
+import RequestTo from "./RequestToOne";
 
 const RequestToList = () => {
   const [noUser, setNoUser] = useState();
@@ -43,13 +44,15 @@ const RequestToList = () => {
   return (
     <>
       {noUser && <h2>No User You Send Request To.</h2>}
-      {!noUser && (
-        <RequestTo
-          requestToUser={requestToUser}
-          currentID={editUserID}
-          setCurrentID={setEdituserID}
-        />
-      )}
+      {!noUser &&
+        requestToUser.map((user) => (
+          <RequestToOne
+            key={user.UserID}
+            user={user}
+            currentID={editUserID}
+            setCurrentID={setEdituserID}
+          />
+        ))}
     </>
   );
 };

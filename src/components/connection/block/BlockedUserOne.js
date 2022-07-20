@@ -1,11 +1,9 @@
 import { Button, Card, CardContent, CardHeader, Popover } from "@mui/material";
 import React, { useState } from "react";
-import { Typography } from "@mui/material";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
-import IconButton from "@mui/material/IconButton";
 import CircularProgress from "@mui/material/CircularProgress";
 
-const BlockedUser = (props) => {
+const BlockedUserOne = (props) => {
   const [unBlocking, setUnBlocking] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -57,46 +55,44 @@ const BlockedUser = (props) => {
 
   return (
     <>
-      {props.blockUser.map((user) => (
-        <Card key={user.UserID}>
-          <CardHeader
-            title={user.FullName}
-            action={
-              <>
+      <Card style={{ border: "2px solid gray" }}>
+        <CardHeader
+          title={props.user.FullName}
+          action={
+            <>
+              <Button
+                id={props.user.UserID}
+                variant="outlined"
+                onClick={handleClick}
+              >
+                <LockOpenIcon />
+              </Button>
+              <Popover
+                open={open}
+                anchorEl={anchorEl}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}
+              >
                 <Button
-                  id={user.UserID}
-                  variant="outlined"
-                  onClick={handleClick}
+                  id={props.user.UserID}
+                  variant="contained"
+                  color="error"
+                  onClick={unBlockFetch}
                 >
-                  <LockOpenIcon />
+                  {unBlocking && <CircularProgress size={25} />}
+                  {!unBlocking && <>UnBlock</>}
                 </Button>
-                <Popover
-                  open={open}
-                  anchorEl={anchorEl}
-                  onClose={handleClose}
-                  anchorOrigin={{
-                    vertical: "bottom",
-                    horizontal: "left",
-                  }}
-                >
-                  <Button
-                    id={user.UserID}
-                    variant="contained"
-                    color="error"
-                    onClick={unBlockFetch}
-                  >
-                    {unBlocking && <CircularProgress size={25} />}
-                    {!unBlocking && <>UnBlock</>}
-                  </Button>
-                </Popover>
-              </>
-            }
-            subheader={<div>Username: {user.Username}</div>}
-          />
-        </Card>
-      ))}
+              </Popover>
+            </>
+          }
+          subheader={<div>Username: {props.user.Username}</div>}
+        />
+      </Card>
     </>
   );
 };
 
-export default BlockedUser;
+export default BlockedUserOne;
