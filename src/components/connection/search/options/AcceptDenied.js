@@ -22,7 +22,7 @@ const AcceptDenied = (props) => {
       }
       const result = await response.json();
 
-      if (result === "0") {
+      if (result === 0) {
         window.location = window.location.origin + "/Login";
       } else if (result === "ACCEPT") {
         props.close(null);

@@ -2,7 +2,6 @@ import { Button } from "@mui/material";
 import React, { useState } from "react";
 
 const Disconnect = (props) => {
-  const [sending, setSending] = useState(false);
   const [blocking, setBlocking] = useState(false);
   //BLOCK FETCH
   const blockFetch = async () => {
@@ -26,7 +25,7 @@ const Disconnect = (props) => {
       }
       const result = await response.json();
 
-      if (result === "0") {
+      if (result === 0) {
         window.location = window.location.origin + "/Login";
       } else if (result === "BLOCK") {
         props.close(null);

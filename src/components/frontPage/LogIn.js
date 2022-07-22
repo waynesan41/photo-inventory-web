@@ -36,11 +36,11 @@ export default function SignIn() {
       if (!response.ok) {
         throw new Error(response.statusText);
       }
-      const result = await response.text();
-      console.log(result);
-      if (result === "1") {
+      const result = await response.json();
+
+      if (result === 1) {
         window.location = window.location.origin + "/Profile";
-      } else if (result === "0") {
+      } else if (result === 0) {
         setIncorrect(true);
         setLoginMessage("Incorrect Username, Email or Password!");
       }

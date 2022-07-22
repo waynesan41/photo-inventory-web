@@ -1,4 +1,4 @@
-import { Button, Card, CardActionArea, Dialog, Grid } from "@mui/material";
+import { Button, Card, CardActionArea, Dialog, Box, Grid } from "@mui/material";
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -20,40 +20,38 @@ const LibraryCardOwn = (props) => {
   };
   return (
     <>
-      <Card elevation={5}>
+      <Card elevation={5} style={{ backgroundColor: "#b8e8ff" }}>
         <Link
           to={`${props.libraryData.LibraryID}`}
           style={{ textDecoration: "none", color: "black" }}
         >
-          <CardActionArea style={{ padding: "5px" }}>
-            <h3>{props.libraryData.Name}</h3>
-            <div>ID: {props.libraryData.LibraryID}</div>
-            <div>Total Object: {props.libraryData.TotalObject}</div>
-            <div>Total People: {props.libraryData.NumPeople}</div>
+          <CardActionArea style={{ padding: "5px 5px 35px 5px" }}>
+            <Box fontSize={20} fontWeight="bold" margin="10px 0px 10px 0px">
+              {props.libraryData.Name}
+            </Box>
+
+            <Box>Total Object: {props.libraryData.TotalObject}</Box>
+            <Box>Total People: {props.libraryData.NumPeople}</Box>
           </CardActionArea>
         </Link>
-        <Grid container style={{ justifyContent: "center" }}>
-          <Button
-            variant="contained"
-            color="info"
-            onClick={() => openHandler(1)}
-          >
-            Edit Library
-          </Button>
-
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => openHandler(2)}
-            disabled={!props.libraryData.NumPeople}
-          >
-            Edit User
-          </Button>
-          <Button variant="contained" onClick={() => openHandler(3)}>
-            ADD User
-          </Button>
-        </Grid>
       </Card>
+      <Grid container style={{ justifyContent: "center" }}>
+        <Button variant="contained" color="info" onClick={() => openHandler(1)}>
+          Edit Library
+        </Button>
+
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => openHandler(2)}
+          disabled={!props.libraryData.NumPeople}
+        >
+          Edit User
+        </Button>
+        <Button variant="contained" onClick={() => openHandler(3)}>
+          ADD User
+        </Button>
+      </Grid>
       <Dialog open={open} onClose={closeHandler}>
         {formType == 1 && (
           <EditLibraryForm data={props.libraryData} closeForm={closeHandler} />

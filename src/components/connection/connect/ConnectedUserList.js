@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import { Box } from "@mui/material";
 import ConnectedUserOne from "./ConnectedUserOne";
 
 const ConnectedUserList = () => {
@@ -25,7 +25,7 @@ const ConnectedUserList = () => {
           throw new Error(response.statusText);
         }
         const result = await response.json();
-        if (result === "0") {
+        if (result === 0) {
           window.location = window.location.origin + "/Login";
         } else if (result === "NO USER") {
           setNoUser(true);
@@ -40,9 +40,19 @@ const ConnectedUserList = () => {
     };
     getConnectRequest();
   }, []);
-
+  const titleStyle = {
+    fontSize: 25,
+    fontWeight: "bold",
+    borderRadius: "5px",
+    margin: "5px 0px 15px 0px",
+    fontSize: 35,
+    display: "flex",
+    justifyContent: "center",
+    alignItem: "center",
+  };
   return (
     <>
+      <Box style={titleStyle}>Connected User</Box>
       {noUser && <h2>No Connected User.</h2>}
       {!noUser &&
         connectUser.map((user) => (

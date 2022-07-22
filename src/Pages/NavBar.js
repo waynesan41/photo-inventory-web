@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import {
   BottomNavigation,
@@ -10,12 +10,11 @@ import {
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 import AllInboxIcon from "@mui/icons-material/AllInbox";
-import AddLocationIcon from "@mui/icons-material/AddLocation";
 import GroupsIcon from "@mui/icons-material/Groups";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 
 const NavBar = () => {
-  const logOutphp = useCallback(async () => {
+  const logOutphp = async () => {
     try {
       const response = await fetch(
         "http://localhost/PhotoInventory/Backend/api/account/logout.php",
@@ -27,9 +26,9 @@ const NavBar = () => {
       if (!response.ok) {
         throw new Error(response.statusText);
       }
-      const data = await response.text();
+      const data = await response.json();
       console.log(data);
-      if (data == 0) {
+      if (data === 0) {
         window.location = window.location.origin + "/login";
       } else {
         console.log("Log Out Fail!");
@@ -37,7 +36,7 @@ const NavBar = () => {
     } catch (error) {
       console.log(error.message);
     }
-  }, []);
+  };
   const [value, setValue] = useState(0);
   useEffect(() => {
     switch (window.location.pathname.split("/").at(1)) {
@@ -109,7 +108,7 @@ const NavBar = () => {
             style={{ border: "2px solid #4176cf", borderRadius: "10px" }}
           />
         </BottomNavigation>
-        <Box style={{ float: "right" }}>
+        <Box style={{ display: "grid", alignItems: "start" }}>
           <Button variant="contained" onClick={logOutphp}>
             LogOut
           </Button>

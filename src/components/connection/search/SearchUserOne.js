@@ -2,7 +2,6 @@ import { Button, Card, Popover, CardHeader } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import React, { useState } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import MoreOption from "./MoreOption";
 
 import AcceptDenied from "./options/AcceptDenied";
 import CancelRequest from "./options/CancelRequest";
@@ -17,7 +16,7 @@ const SearchUserOne = (props) => {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
     console.log(event.currentTarget.id);
-    props.setCurrentID(event.currentTarget.id);
+    // props.setCurrentID(event.currentTarget.id);
     fetchConnectionStatus(event.currentTarget.id);
   };
   const handleClose = () => {
@@ -48,7 +47,7 @@ const SearchUserOne = (props) => {
 
       console.log(result);
 
-      if (result === "0") {
+      if (result === 0) {
         window.location = window.location.origin + "/Login";
       } else if (
         result === "N" ||

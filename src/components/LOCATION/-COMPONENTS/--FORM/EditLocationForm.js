@@ -22,9 +22,9 @@ const EditLocationForm = (props) => {
       data.append("img1", selectedFile);
     }
 
-    for (var pair of data.entries()) {
+    /* for (var pair of data.entries()) {
       console.log(pair[0] + ": " + pair[1]);
-    }
+    } */
     try {
       const response = await fetch(
         "http://localhost/PhotoInventory/Backend/api/location/updateLocation.php",
@@ -40,7 +40,7 @@ const EditLocationForm = (props) => {
       const result = await response.json();
       console.log(result);
 
-      if (result === "0") {
+      if (result === 0) {
         window.location = window.location.origin + "/Login";
       } else if (result === "UPDATED") {
         window.location.reload();
@@ -55,6 +55,7 @@ const EditLocationForm = (props) => {
   const fetchOrignalImage = async (url) => {
     const res = await fetch(url, {
       method: "GET",
+      credentials: "include",
     });
     const imgBlob = await res.blob();
     setSelectedFile(imgBlob);
@@ -76,7 +77,7 @@ const EditLocationForm = (props) => {
   //USE EFFECT
   useEffect(() => {
     if (props.locData.Photo != 0) {
-      const src = `http://localhost/PhotoInventory/Backend/api/readImageLocation.php?id1=${props.locData.MainLocationID}&id2=${props.locData.LocationID}`;
+      const src = `http://localhost/PhotoInventory/Backend/api/image/readImageLocation.php?id1=${props.locData.MainLocationID}&id2=${props.locData.LocationID}`;
       fetchOrignalImage(src);
       setPreview(src);
     }

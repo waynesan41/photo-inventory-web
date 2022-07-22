@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Button, Dialog, Grid } from "@mui/material";
-
-import { Link, NavLink } from "react-router-dom";
+import { Box, Button, Dialog, Grid } from "@mui/material";
 
 import NewMainLocationForm from "./-NEWMAIN/NewMainLocationForm";
 import OwnMainLocationOne from "./-OWN/OwnMainLocationOne";
@@ -17,22 +15,19 @@ const MainLocationList = () => {
   const [shareLibrary, setShareLibrary] = useState([]);
 
   const [open, setOpen] = useState(false);
-  const [formType, setFormType] = useState(null);
 
   const openHandler = (type) => {
-    setFormType(type);
     setOpen(true);
   };
   const closeHandler = () => {
-    setFormType(null);
     setOpen(false);
   };
 
   const changeTotalPeople = (id, ps) => {
     const items = ownLibrary.filter((lib) => {
-      if (lib.MainLocationID == id) {
-        if (ps == 1) lib.NumPeople++;
-        else if (ps == 2) lib.NumPeople--;
+      if (lib.MainLocationID === id) {
+        if (ps === 1) lib.NumPeople++;
+        else if (ps === 2) lib.NumPeople--;
       }
       return lib;
     });
@@ -60,11 +55,11 @@ const MainLocationList = () => {
       if (result === 0) {
         window.location = window.location.origin + "/Login";
       } else {
-        if (libType == 1) {
-          if (result == "NO LOCATION") setOwnLibrary([]);
+        if (libType === 1) {
+          if (result === "NO LOCATION") setOwnLibrary([]);
           else setOwnLibrary([...result]);
-        } else if (libType == 2) {
-          if (result == "NO SHARE LOCATION") setShareLibrary([]);
+        } else if (libType === 2) {
+          if (result === "NO SHARE LOCATION") setShareLibrary([]);
           else setShareLibrary([...result]);
         }
       }
@@ -75,15 +70,25 @@ const MainLocationList = () => {
   };
 
   useEffect(() => {
+    if (window.location.pathname !== "/MainLocation/") {
+      window.location = window.location.origin + "/MainLocation/";
+    }
+
     fetchLibrary(1);
     fetchLibrary(2);
   }, []);
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} style={{ padding: "5px" }}>
       <Grid item xs={6} md={6}>
-        <h2 style={{ display: "inline-block" }}>Own Main Location</h2>
-        <Button variant="contained" onClick={openHandler}>
+        <Box fontSize={30} display="inline">
+          Own Main Location
+        </Box>
+        <Button
+          variant="contained"
+          onClick={openHandler}
+          style={{ display: "inline", float: "right" }}
+        >
           Add New Main Location
         </Button>
         <ChangePeopleContex.Provider value={changeTotalPeople}>
@@ -101,7 +106,9 @@ const MainLocationList = () => {
       </Dialog>
 
       <Grid item xs={6} md={6}>
-        <h2>Share Main Location</h2>
+        <Box fontSize={30} display="inline">
+          Shared Main Location
+        </Box>
         <Grid container spacing={1}>
           {shareLibrary.map((lib) => (
             <Grid item xs={12} sm={12} md={6} key={lib.MainLocationID}>

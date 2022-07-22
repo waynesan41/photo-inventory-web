@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, CardHeader, Popover } from "@mui/material";
+import { Button, Card, CardHeader, Popover } from "@mui/material";
 import React, { useState } from "react";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -40,7 +40,7 @@ const BlockedUserOne = (props) => {
       }
       const result = await response.json();
 
-      if (result === "0") {
+      if (result === 0) {
         window.location = window.location.origin + "/Login";
       } else if (result === "UNBLOCK") {
         window.location.reload();

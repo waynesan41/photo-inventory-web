@@ -6,11 +6,10 @@ import { useLibraryContex } from "../ObjectLibrary";
 import FormAddObject from "./--FORM/FormAddObject";
 
 const ShareHeader = () => {
-  const [object, setObject] = useState([]);
   const [open, setOpen] = useState(false);
   const [libInfo, setLibInfo] = useState({});
   const [addable, setAddable] = useState(true);
-  const { libraryID, libType, accessLvl } = useLibraryContex();
+  const { libraryID, accessLvl } = useLibraryContex();
 
   const openHandler = () => {
     setOpen(true);
@@ -39,9 +38,9 @@ const ShareHeader = () => {
       const result = await response.json();
 
       console.log(result);
-      if (result === "0") {
+      if (result === 0) {
         window.location = window.location.origin + "/Login";
-      } else if (result == "DENY") {
+      } else if (result === "DENY") {
         console.log("Access Deny");
         console.log(result);
         setLibInfo({});
@@ -62,18 +61,77 @@ const ShareHeader = () => {
   }, []);
 
   return (
-    <>
-      <Box>Library name: {libInfo.Name}</Box>
-      <Box>Owner: {libInfo.FullName}</Box>
-      <Box>Total Objects: {libInfo.TotalObject}</Box>
-      <Box>Access Level: {accessLvl}</Box>
-      <Button variant="contained" onClick={openHandler} disabled={addable}>
-        Add Object
+    <Box margin="5px">
+      <Box
+        component={Button}
+        fontSize={25}
+        border="2px solid #0394fc"
+        style={{
+          display: "inline-block",
+          margin: "5px",
+          padding: "5px",
+          borderRadius: "10px",
+          textTransform: "none",
+        }}
+      >
+        Library:
+        <b
+          onClick={() => {
+            window.location.reload();
+          }}
+        >
+          {libInfo.Name}
+        </b>
+      </Box>
+      <Box
+        fontSize={20}
+        style={{
+          color: "#0394fc",
+          border: "2px solid #0394fc",
+          margin: "5px",
+          padding: "5px",
+          borderRadius: "10px",
+          display: "inline-block",
+        }}
+      >
+        Total Objects: <b>{libInfo.TotalObject}</b>
+      </Box>
+      <Box
+        style={{
+          color: "#6600ff",
+          border: "2px solid #6600ff",
+          margin: "5px",
+          padding: "5px",
+          borderRadius: "10px",
+          display: "inline-block",
+        }}
+      >
+        Owner: <b>{libInfo.FullName}</b>
+      </Box>
+      <Box
+        style={{
+          color: "#6600ff",
+          border: "2px solid #6600ff",
+          margin: "5px",
+          padding: "5px",
+          borderRadius: "10px",
+          display: "inline-block",
+        }}
+      >
+        Access Level: <b>{accessLvl}</b>
+      </Box>
+      <Button
+        variant="contained"
+        onClick={openHandler}
+        disabled={addable}
+        style={{ float: "right" }}
+      >
+        Add New Object
       </Button>
       <Dialog open={open} onClose={closeHandler}>
         <FormAddObject />
       </Dialog>
-    </>
+    </Box>
   );
 };
 

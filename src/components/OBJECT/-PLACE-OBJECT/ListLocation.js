@@ -1,7 +1,6 @@
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
-import LocationList from "../../LOCATION/-COMPONENTS/--FETCH/LocationList";
-import LocationOne from "../../LOCATION/-COMPONENTS/--FETCH/LocationOne";
+
 import { useLibraryContex } from "../ObjectLibrary";
 import OneLocation from "./OneLocation";
 
@@ -33,7 +32,7 @@ const ListLocation = (props) => {
       const result = await response.json();
 
       console.log(result);
-      if (result === "0") {
+      if (result === 0) {
         window.location = window.location.origin + "/Login";
       } else if (result === "NO LOCATION" || result === "DENY") {
         setLocationList([]);

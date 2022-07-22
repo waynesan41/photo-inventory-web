@@ -1,4 +1,4 @@
-import { Breadcrumbs, Link } from "@mui/material";
+import { Box, Breadcrumbs, Link } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -40,16 +40,33 @@ const LocationBread = () => {
     if (locationID != 0) fetchBread();
   }, []);
   return (
-    <>
+    <Box margin="10px" display="block">
       <Breadcrumbs separator=">" arial-label="breadcrumb">
-        <Link href={0}>Home</Link>
+        <Link
+          href={0}
+          style={{
+            border: "2px solid green",
+            borderRadius: "5px",
+            padding: "5px",
+          }}
+        >
+          Home
+        </Link>
         {breadList.map((loc) => (
-          <Link key={loc.LocationID} href={`${loc.LocationID}`}>
+          <Link
+            key={loc.LocationID}
+            href={`${loc.LocationID}`}
+            style={{
+              border: "2px solid green",
+              borderRadius: "5px",
+              padding: "5px",
+            }}
+          >
             {loc.Name}
           </Link>
         ))}
       </Breadcrumbs>
-    </>
+    </Box>
   );
 };
 

@@ -1,7 +1,6 @@
-import { Card, CardContent, CardHeader, Tooltip } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { Box } from "@mui/material";
 import RequestToOne from "./RequestToOne";
-import RequestTo from "./RequestToOne";
 
 const RequestToList = () => {
   const [noUser, setNoUser] = useState();
@@ -26,7 +25,7 @@ const RequestToList = () => {
           throw new Error(response.statusText);
         }
         const result = await response.json();
-        if (result === "0") {
+        if (result === 0) {
           window.location = window.location.origin + "/Login";
         } else if (result === "NO USER") {
           setNoUser(true);
@@ -40,9 +39,20 @@ const RequestToList = () => {
     };
     getBlockRequest();
   }, []);
+  const titleStyle = {
+    fontSize: 25,
+    fontWeight: "bold",
+    borderRadius: "5px",
+    margin: "5px 0px 15px 0px",
+    fontSize: 35,
+    display: "flex",
+    justifyContent: "center",
+    alignItem: "center",
+  };
 
   return (
     <>
+      <Box style={titleStyle}>Request Send To User</Box>
       {noUser && <h2>No User You Send Request To.</h2>}
       {!noUser &&
         requestToUser.map((user) => (

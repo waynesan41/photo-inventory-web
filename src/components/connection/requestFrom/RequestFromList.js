@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 
+import { Box } from "@mui/material";
 import RequestFromOne from "./RequestFromOne";
 
 const RequestFromList = () => {
@@ -25,7 +26,7 @@ const RequestFromList = () => {
           throw new Error(response.statusText);
         }
         const result = await response.json();
-        if (result === "0") {
+        if (result === 0) {
           window.location = window.location.origin + "/Login";
         } else if (result === "NO USER") {
           setNoUser(true);
@@ -39,9 +40,19 @@ const RequestFromList = () => {
     };
     getBlockRequest();
   }, []);
-
+  const titleStyle = {
+    fontSize: 25,
+    fontWeight: "bold",
+    borderRadius: "5px",
+    margin: "5px 0px 15px 0px",
+    fontSize: 35,
+    display: "flex",
+    justifyContent: "center",
+    alignItem: "center",
+  };
   return (
     <>
+      <Box style={titleStyle}>Request Send From User</Box>
       {noUser && <h2>No Request from Any User.</h2>}
       {!noUser &&
         requestFromUser.map((user) => (

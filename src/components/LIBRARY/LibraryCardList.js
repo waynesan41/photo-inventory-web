@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Button, Card, Dialog, Grid, Item } from "@mui/material";
+import { Button, Dialog, Box, Grid } from "@mui/material";
 import LibraryCardOwn from "./-OWN/LibraryCardOwn";
 import LibraryCardShare from "./-SHARE/LibraryCardShare";
 import NewLibraryForm from "./-NEWLIBRARY/NewLibraryForm";
-import { Link, NavLink } from "react-router-dom";
 
 const ChangePeopleContex = React.createContext();
 export const useChangePeople = () => {
@@ -15,22 +14,19 @@ const LibraryCardList = () => {
   const [shareLibrary, setShareLibrary] = useState([]);
 
   const [open, setOpen] = useState(false);
-  const [formType, setFormType] = useState(null);
 
-  const openHandler = (type) => {
-    setFormType(type);
+  const openHandler = () => {
     setOpen(true);
   };
   const closeHandler = () => {
-    setFormType(null);
     setOpen(false);
   };
 
   const changeTotalPeople = (id, ps) => {
     const items = ownLibrary.filter((lib) => {
-      if (lib.LibraryID == id) {
-        if (ps == 1) lib.NumPeople++;
-        else if (ps == 2) lib.NumPeople--;
+      if (lib.LibraryID === id) {
+        if (ps === 1) lib.NumPeople++;
+        else if (ps === 2) lib.NumPeople--;
       }
       return lib;
     });
@@ -55,12 +51,12 @@ const LibraryCardList = () => {
       }
       const result = await response.json();
 
-      if (result === "0") {
+      if (result === 0) {
         window.location = window.location.origin + "/Login";
       } else {
-        if (libType == 1) {
+        if (libType === 1) {
           setOwnLibrary([...result]);
-        } else if (libType == 2) {
+        } else if (libType === 2) {
           setShareLibrary([...result]);
         }
       }
@@ -75,10 +71,16 @@ const LibraryCardList = () => {
   }, []);
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} style={{ padding: "5px" }}>
       <Grid item xs={6} md={6}>
-        <h2 style={{ display: "inline-block" }}>Own Library</h2>
-        <Button variant="contained" onClick={openHandler}>
+        <Box fontSize={30} display="inline">
+          Own Library
+        </Box>
+        <Button
+          variant="contained"
+          onClick={openHandler}
+          style={{ display: "inline", float: "right" }}
+        >
           Add New Library
         </Button>
         <ChangePeopleContex.Provider value={changeTotalPeople}>
@@ -96,7 +98,9 @@ const LibraryCardList = () => {
       </Dialog>
 
       <Grid item xs={6} md={6}>
-        <h2>Share Library</h2>
+        <Box fontSize={30} display="inline">
+          Shared Library
+        </Box>
         <Grid container spacing={1}>
           {shareLibrary.map((lib) => (
             <Grid item xs={12} sm={12} md={6} key={lib.ObjectLibraryID}>

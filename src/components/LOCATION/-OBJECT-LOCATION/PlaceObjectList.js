@@ -54,7 +54,9 @@ const PlaceObjectList = () => {
   };
 
   useEffect(() => {
-    fetchPlaceObject();
+    if (locationID !== "0") {
+      fetchPlaceObject();
+    }
   }, []);
   return (
     <Box>

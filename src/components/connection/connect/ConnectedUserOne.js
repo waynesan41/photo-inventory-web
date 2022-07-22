@@ -39,7 +39,7 @@ const ConnectedUserOne = (props) => {
       }
       const result = await response.json();
 
-      if (result === "0") {
+      if (result === 0) {
         window.location = window.location.origin + "/Login";
       } else if (result === "DISCONNECT") {
         window.location.reload();
@@ -85,7 +85,7 @@ const ConnectedUserOne = (props) => {
   };
   return (
     <>
-      <Card key={props.user.UserID} style={{ border: "2px solid gray" }}>
+      <Card style={{ border: "2px solid gray" }}>
         <CardHeader
           title={props.user.FullName}
           action={
@@ -120,12 +120,7 @@ const ConnectedUserOne = (props) => {
               </Popover>
             </>
           }
-          subheader={
-            <div>
-              Username: {props.user.Username}
-              <br /> ID: {props.user.UserID}
-            </div>
-          }
+          subheader={<div>Username: {props.user.Username}</div>}
         />
       </Card>
     </>

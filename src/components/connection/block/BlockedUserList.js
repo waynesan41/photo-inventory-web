@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 
+import { Box } from "@mui/material";
 import BlockedUserOne from "./BlockedUserOne";
 
 const BlockedUserList = () => {
@@ -26,7 +27,7 @@ const BlockedUserList = () => {
         }
         const result = await response.json();
 
-        if (result === "0") {
+        if (result === 0) {
           window.location = window.location.origin + "/Login";
         } else if (result === "NO USER") {
           setNoBlockUser(true);
@@ -39,9 +40,19 @@ const BlockedUserList = () => {
     };
     getBlockRequest();
   }, []);
-
+  const titleStyle = {
+    fontSize: 25,
+    fontWeight: "bold",
+    borderRadius: "5px",
+    margin: "5px 0px 15px 0px",
+    fontSize: 35,
+    display: "flex",
+    justifyContent: "center",
+    alignItem: "center",
+  };
   return (
     <>
+      <Box style={titleStyle}>Blocked User</Box>
       {noBlockuser && <h2>You don't have any Blocked User.</h2>}
       {!noBlockuser &&
         blockUser.map((user) => (

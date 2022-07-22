@@ -1,11 +1,4 @@
-import {
-  Button,
-  Card,
-  CardActionArea,
-  Dialog,
-  Grid,
-  Paper,
-} from "@mui/material";
+import { Button, Card, CardActionArea, Dialog, Grid, Box } from "@mui/material";
 import React, { useState } from "react";
 import ConfirmLeaveForm from "./ConfirmLeaveForm";
 import { Link } from "react-router-dom";
@@ -20,17 +13,19 @@ const LibraryCardShare = (props) => {
   };
 
   return (
-    <Card elevation={5}>
+    <Card elevation={5} style={{ backgroundColor: "#d4f1ff" }}>
       <Link
         to={`${props.libraryData.ObjectLibraryID}`}
         style={{ textDecoration: "none", color: "black" }}
       >
         <CardActionArea style={{ padding: "5px" }}>
-          <h3>{props.libraryData.Name}</h3>
-          <div>Total Object: {props.libraryData.TotalObject}</div>
-          <div>Owner Name: {props.libraryData.OwnerName}</div>
-          <div>Owner Username: {props.libraryData.OwnerUsername}</div>
-          <div>Access Level: {props.libraryData.AccessType}</div>
+          <Box fontSize={20} fontWeight="bold" margin="5px 0px 5px 0px">
+            {props.libraryData.Name}
+          </Box>
+          <Box>Total Object: {props.libraryData.TotalObject}</Box>
+          <Box>Owner Name: {props.libraryData.OwnerName}</Box>
+          <Box>Owner Username: {props.libraryData.OwnerUsername}</Box>
+          <Box>Access Level: {props.libraryData.AccessType}</Box>
         </CardActionArea>
       </Link>
       <Grid container style={{ justifyContent: "right" }}>

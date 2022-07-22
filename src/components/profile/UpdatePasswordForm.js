@@ -75,7 +75,7 @@ const UpdatePasswordForm = (props) => {
     const passRegex =
       /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9\s])^.{9,100}/;
 
-    if (event.target.value != confirmPass) {
+    if (event.target.value !== confirmPass) {
       setConfirmPassValid(true);
     } else {
       setConfirmPassValid(false);
@@ -90,7 +90,7 @@ const UpdatePasswordForm = (props) => {
   //CONFIRM PASSWORD HANDLER
   const confirmPasswordHandler = (event) => {
     setConfirmPass(event.target.value);
-    if (event.target.value != password) {
+    if (event.target.value !== password) {
       setConfirmPassValid(true);
     } else {
       setConfirmPassValid(false);

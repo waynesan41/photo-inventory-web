@@ -32,7 +32,7 @@ const ObjectDetail = (props) => {
     }
     if (props.objData.Photo != 0) {
       setSrc(
-        `http://localhost/PhotoInventory/Backend/api/readImageObject.php?id1=${props.objData.LibraryID}&id2=${props.objData.ObjectID}`
+        `http://localhost/PhotoInventory/Backend/api/image/readImageObject.php?id1=${props.objData.LibraryID}&id2=${props.objData.ObjectID}`
       );
     }
   }, []);

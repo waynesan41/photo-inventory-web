@@ -52,13 +52,49 @@ const OwnHeader = (props) => {
 
   return (
     <>
-      <Box>Library Name: {libInfo.Name}</Box>
-      <Box>Total Objects: {libInfo.TotalObject}</Box>
-      <Button variant="contained" onClick={openHandler}>
-        Add New Object
-      </Button>
-      {/* <Button variant="contained">Edit User</Button>
-      <Button variant="contained">Add User</Button> */}
+      <Box margin="5px">
+        <Box
+          component={Button}
+          fontSize={25}
+          border="2px solid #0394fc"
+          style={{
+            display: "inline-block",
+            margin: "5px",
+            padding: "5px",
+            borderRadius: "10px",
+            textTransform: "none",
+          }}
+        >
+          Library:
+          <b
+            onClick={() => {
+              window.location.reload();
+            }}
+          >
+            {libInfo.Name}
+          </b>
+        </Box>
+        <Box
+          fontSize={20}
+          style={{
+            color: "#0394fc",
+            border: "2px solid #0394fc",
+            margin: "5px",
+            padding: "5px",
+            borderRadius: "10px",
+            display: "inline-block",
+          }}
+        >
+          Total Objects: <b>{libInfo.TotalObject}</b>
+        </Box>
+        <Button
+          variant="contained"
+          onClick={openHandler}
+          style={{ float: "right" }}
+        >
+          Add New Object
+        </Button>
+      </Box>
 
       <Dialog open={open} onClose={closeHandler}>
         <FormAddObject />

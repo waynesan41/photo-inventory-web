@@ -2,7 +2,7 @@ import { Box, Button, TextField } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useLibraryContex } from "../../ObjectLibrary";
 const FormAddObject = () => {
-  const { libraryID, libType, accessLvl } = useLibraryContex();
+  const { libraryID, libType } = useLibraryContex();
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
 
@@ -12,10 +12,10 @@ const FormAddObject = () => {
     const data = new FormData(event.currentTarget);
     data.append("libraryID", libraryID);
     data.append("libType", libType);
-    if (data.get("description").length == 0) {
+    if (data.get("description").length === 0) {
       data.delete("description");
     }
-    if (selectedFile != undefined) {
+    if (selectedFile !== undefined) {
       data.append("photo", 1);
       data.append("img1", selectedFile);
     }
@@ -37,7 +37,7 @@ const FormAddObject = () => {
       const result = await response.json();
 
       console.log(result);
-      if (result === "0") {
+      if (result === 0) {
         window.location = window.location.origin + "/Login";
       } else if (result === "ADD") {
         window.location.reload();
@@ -97,6 +97,7 @@ const FormAddObject = () => {
         {selectedFile && (
           <Box>
             <img
+              alt="This is image"
               style={{ maxHeight: "200px", maxWidth: "200px" }}
               src={preview}
             />

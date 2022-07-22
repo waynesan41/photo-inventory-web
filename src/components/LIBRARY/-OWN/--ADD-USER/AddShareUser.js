@@ -58,6 +58,11 @@ const AddShareUser = (props) => {
             />
           </Box>
         ))}
+      {addUser.length == 0 && (
+        <Box fontSize={20} padding="10px">
+          There is no More Connected User to Share With!
+        </Box>
+      )}
     </Box>
   );
 };

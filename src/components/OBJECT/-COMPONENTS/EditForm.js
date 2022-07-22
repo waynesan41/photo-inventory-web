@@ -32,9 +32,9 @@ const EditForm = (props) => {
       data.append("img1", selectedFile);
     }
 
-    for (var pair of data.entries()) {
+    /* for (var pair of data.entries()) {
       console.log(pair[0] + ": " + pair[1]);
-    }
+    } */
     try {
       const response = await fetch(
         "http://localhost/PhotoInventory/Backend/api/object/updateObject.php",
@@ -49,7 +49,7 @@ const EditForm = (props) => {
       }
       const result = await response.json();
 
-      if (result === "0") {
+      if (result === 0) {
         window.location = window.location.origin + "/Login";
       } else if (result === "UPDATED") {
         window.location.reload();
@@ -64,6 +64,7 @@ const EditForm = (props) => {
   const fetchOrignalImage = async (url) => {
     const res = await fetch(url, {
       method: "GET",
+      credentials: "include",
     });
     const imgBlob = await res.blob();
     setSelectedFile(imgBlob);
@@ -81,9 +82,11 @@ const EditForm = (props) => {
     setSelectedFile(e.target.files[0]);
   };
 
+  //+++++++++++++++++++++++++++++++++++++
+  //USE EFFECT
   useEffect(() => {
     if (props.objData.Photo != 0) {
-      const src = `http://localhost/PhotoInventory/Backend/api/readImageObject.php?id1=${props.objData.LibraryID}&id2=${props.objData.ObjectID}`;
+      const src = `http://localhost/PhotoInventory/Backend/api/image/readImageObject.php?id1=${props.objData.LibraryID}&id2=${props.objData.ObjectID}`;
       fetchOrignalImage(src);
       setPreview(src);
     }

@@ -1,7 +1,6 @@
-import { Card, CardContent, CardHeader, Popover, Button } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { Card, CardHeader, Popover, Button } from "@mui/material";
+import React, { useState } from "react";
 
-import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -42,7 +41,7 @@ const RequestToOne = (props) => {
       }
       const result = await response.json();
 
-      if (result === "0") {
+      if (result === 0) {
         window.location = window.location.origin + "/Login";
       } else if (result === "CANCEL") {
         window.location.reload();

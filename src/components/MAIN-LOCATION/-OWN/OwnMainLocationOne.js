@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Button, Card, CardActionArea, Dialog, Grid } from "@mui/material";
+import { Button, Card, CardActionArea, Dialog, Box, Grid } from "@mui/material";
 
 import { Link } from "react-router-dom";
 import AddShareUser from "./--ADD-USER/AddShareUser";
@@ -21,42 +21,37 @@ const OwnMainLocationOne = (props) => {
   };
   return (
     <>
-      <Card elevation={5}>
+      <Card elevation={5} style={{ backgroundColor: "#d0ffcf" }}>
         <Link
           to={`${props.mainData.MainLocationID}/0`}
           style={{ textDecoration: "none", color: "black" }}
         >
-          <CardActionArea style={{ padding: "5px" }}>
-            <h3>{props.mainData.Name}</h3>
-            <div>ID: {props.mainData.MainLocationID}</div>
-            <div>Total Location: {props.mainData.TotalLocation}</div>
-            <div>Total Layer: {props.mainData.TotalLayer}</div>
-            <div>Total Object: {props.mainData.TotalObjectType}</div>
-            <div>Total NumPeople: {props.mainData.NumPeople}</div>
+          <CardActionArea style={{ padding: "5px 5px 35px 5px" }}>
+            <Box fontSize={20} fontWeight="bold" margin="10px 0px 10px 0px">
+              {props.mainData.Name}
+            </Box>
+            <Box>Total Location: {props.mainData.TotalLocation}</Box>
+            <Box>Total NumPeople: {props.mainData.NumPeople}</Box>
           </CardActionArea>
         </Link>
-        <Grid container style={{ justifyContent: "center" }}>
-          <Button
-            variant="contained"
-            color="info"
-            onClick={() => openHandler(1)}
-          >
-            Edit Name
-          </Button>
-
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => openHandler(2)}
-            disabled={!props.mainData.NumPeople}
-          >
-            Edit User
-          </Button>
-          <Button variant="contained" onClick={() => openHandler(3)}>
-            ADD User
-          </Button>
-        </Grid>
       </Card>
+      <Grid container style={{ justifyContent: "center" }}>
+        <Button variant="contained" color="info" onClick={() => openHandler(1)}>
+          Edit Name
+        </Button>
+
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => openHandler(2)}
+          disabled={!props.mainData.NumPeople}
+        >
+          Edit User
+        </Button>
+        <Button variant="contained" onClick={() => openHandler(3)}>
+          ADD User
+        </Button>
+      </Grid>
       <Dialog open={open} onClose={closeHandler}>
         {formType == 1 && (
           <EditLibraryForm data={props.mainData} closeForm={closeHandler} />

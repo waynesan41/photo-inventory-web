@@ -10,8 +10,7 @@ const RequestFromOne = (props) => {
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
-    props.setCurrentID(event.currentTarget.id);
-    setDirect(event.currentTarget.value);
+    setDirect(event.currentTarget.value * 1);
   };
 
   const handleClose = () => {
@@ -23,7 +22,7 @@ const RequestFromOne = (props) => {
   const acceptFetch = async () => {
     const formData = new FormData();
 
-    formData.append("userID", props.currentID);
+    formData.append("userID", props.user.UserID);
     formData.append("update", "A");
 
     try {
@@ -40,7 +39,7 @@ const RequestFromOne = (props) => {
       }
       const result = await response.json();
 
-      if (result === "0") {
+      if (result === 0) {
         window.location = window.location.origin + "/Login";
       } else if (result === "ACCEPT") {
         window.location.reload();
@@ -56,7 +55,7 @@ const RequestFromOne = (props) => {
   const denyFetch = async () => {
     const formData = new FormData();
 
-    formData.append("userID", props.currentID);
+    formData.append("userID", props.user.UserID);
     formData.append("update", "D");
 
     try {
@@ -89,7 +88,7 @@ const RequestFromOne = (props) => {
   const blockFetch = async () => {
     const formData = new FormData();
 
-    formData.append("userID", props.currentID);
+    formData.append("userID", props.user.UserID);
     formData.append("update", "B");
 
     try {
@@ -106,7 +105,7 @@ const RequestFromOne = (props) => {
       }
       const result = await response.json();
 
-      if (result === "0") {
+      if (result === 0) {
         window.location = window.location.origin + "/Login";
       } else if (result === "BLOCK") {
         window.location.reload();
@@ -152,12 +151,12 @@ const RequestFromOne = (props) => {
                   horizontal: "left",
                 }}
               >
-                {direct == 1 && (
+                {direct === 1 && (
                   <Button onClick={acceptFetch} variant="contained">
                     Accept Request
                   </Button>
                 )}
-                {direct == 2 && (
+                {direct === 2 && (
                   <>
                     <Button
                       onClick={blockFetch}

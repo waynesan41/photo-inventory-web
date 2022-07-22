@@ -1,11 +1,4 @@
-import {
-  Button,
-  Card,
-  CardActionArea,
-  CardHeader,
-  Dialog,
-  Grid,
-} from "@mui/material";
+import { Button, Card, CardHeader, Dialog } from "@mui/material";
 import React, { useState } from "react";
 import EditAccessForm from "./EditAccessForm";
 
@@ -30,7 +23,7 @@ const ShareUserOne = (props) => {
         subheader={
           <>
             Username: {props.user.Username}
-            <br /> Access Level: {props.user.AccessType} ID: {props.user.UserID}
+            <br /> Access Level: {props.user.AccessType}
           </>
         }
       >

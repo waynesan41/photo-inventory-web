@@ -93,8 +93,10 @@ const LocationPage = () => {
   };
 
   useEffect(() => {
+    if (locationID !== "0") {
+      fetchLocationInfo();
+    }
     fetchMainAccessInfo();
-    fetchLocationInfo();
   }, []);
   return (
     <>

@@ -2,7 +2,7 @@ import React from "react";
 
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import ObjectLocation from "./Pages/ObjectLocation";
+
 import MainLocation from "./Pages/MainLocation";
 import Profile from "./Pages/Profile";
 import Library from "./Pages/Library";
@@ -30,8 +30,8 @@ function App() {
         <Routes>
           <Route path="/Login" element={<LogInPage />} />
           <Route path="/" element={<NavBar />}>
-            <Route path="/" element={<ObjectLocation />} />
-            <Route path="/ObjectLocation" element={<ObjectLocation />} />
+            <Route path="/" element={<MainLocation />} />
+
             <Route path="/MainLocation/" element={<MainLocation />} />
             <Route path="/MainLocation/:mainID" element={<LocationPage />} />
             <Route

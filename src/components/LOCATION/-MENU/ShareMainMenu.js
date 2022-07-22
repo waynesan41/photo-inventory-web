@@ -4,8 +4,8 @@ import { useParams } from "react-router-dom";
 import NewLocationForm from "../-COMPONENTS/--FORM/NewLocationForm";
 import { useMainLocationContex } from "../LocationPage";
 const ShareMainMenu = (props) => {
-  const { mainType, accessLvl } = useMainLocationContex();
-  let { mainID, locationID } = useParams(); // Value from URL
+  const { accessLvl } = useMainLocationContex();
+  let { locationID } = useParams(); // Value from URL
   const [open, setOpen] = useState(false);
   const [mainInfo, setMainInfo] = useState({});
 
@@ -38,9 +38,9 @@ const ShareMainMenu = (props) => {
       console.log(result);
       console.log("Share Main Fetch");
 
-      if (result === "0") {
+      if (result === 0) {
         window.location = window.location.origin + "/Login";
-      } else if (result == "DENY") {
+      } else if (result === "DENY") {
         console.log("Access Deny");
         console.log(result);
         setMainInfo({});
@@ -55,35 +55,71 @@ const ShareMainMenu = (props) => {
     fetchLibraryInfo();
   }, []);
   return (
-    <Box style={{ display: "inline-block", float: "right" }}>
-      <Box>
-        Main Location: <b>{mainInfo.Name}</b>
+    <Box>
+      <Box
+        component={Button}
+        fontSize={20}
+        color="#259c3f"
+        border="2px solid #259c3f"
+        style={{
+          display: "inline-block",
+          margin: "5px",
+          padding: "5px",
+          borderRadius: "10px",
+          textTransform: "none",
+        }}
+        onClick={() => {
+          window.location.reload();
+        }}
+      >
+        Main Location:
+        <b>{mainInfo.Name}</b>
       </Box>
-      <Box>
-        Access Lvl: <b>{accessLvl}</b>
-      </Box>
-      <Box>
-        Total Objects:
-        {mainInfo.TotalObjectType}
-      </Box>
-      <Box>
+      <Box
+        style={{
+          color: "#259c3f",
+          border: "2px solid #259c3f",
+          margin: "5px",
+          padding: "5px",
+          borderRadius: "10px",
+          display: "inline-block",
+        }}
+      >
         Total Locations: <b>{mainInfo.TotalLocation}</b>
       </Box>
-      <Box>
-        Owner Name:
-        <b>{mainInfo.FullName}</b>
-      </Box>
-      <Box>Owner Username: {mainInfo.Username}</Box>
 
+      <Box
+        style={{
+          color: "#6600ff",
+          border: "2px solid #6600ff",
+          margin: "5px",
+          padding: "5px",
+          borderRadius: "10px",
+          display: "inline-block",
+        }}
+      >
+        Owner: <b>{mainInfo.FullName}</b>
+      </Box>
+      <Box
+        style={{
+          color: "#6600ff",
+          border: "2px solid #6600ff",
+          margin: "5px",
+          padding: "5px",
+          borderRadius: "10px",
+          display: "inline-block",
+        }}
+      >
+        Access Level: <b>{accessLvl}</b>
+      </Box>
       <Button
         variant="contained"
         onClick={openHandler}
+        style={{ margin: "10px", float: "right" }}
         disabled={accessLvl < 2}
       >
         Add New Location
       </Button>
-      {/* <Button variant="contained">Edit User</Button>
-  <Button variant="contained">Add User</Button> */}
 
       <Dialog open={open} onClose={closeHandler}>
         <NewLocationForm topID={locationID} close={closeHandler} />

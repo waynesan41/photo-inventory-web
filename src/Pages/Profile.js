@@ -1,4 +1,4 @@
-import { Button, Card, Grid, Dialog } from "@mui/material";
+import { Button, Box, Dialog, Grid } from "@mui/material";
 import UpdateProfileForm from "../components/profile/UpdateProfileForm";
 import UpdatePasswordForm from "../components/profile/UpdatePasswordForm";
 
@@ -25,7 +25,7 @@ const Profile = () => {
           throw new Error(response.statusText);
         }
         const result = await response.json();
-        if (result === "0") {
+        if (result === 0) {
           console.log("User is not login");
           window.location = window.location.origin + "/Login";
         } else {
@@ -41,16 +41,50 @@ const Profile = () => {
     };
     firstFetch();
   }, []);
+  const generalStyle = {
+    border: "2px solid gray",
+    borderRadius: "5px",
+    margin: "5px",
+    padding: "5px",
+    fontSize: 25,
+  };
+  const titleStyle = {
+    fontSize: 25,
+    fontWeight: "bold",
+    borderRadius: "5px",
+    margin: "5px 0px 15px 0px",
+    fontSize: 35,
+    display: "flex",
+    justifyContent: "center",
+    alignItem: "center",
+  };
 
   return (
-    <Grid container>
-      <Card>
-        <Card>UserID: {profileData.UserID}</Card>
-        <Card>Full Name: {profileData.FullName}</Card>
-        <Card>Email: {profileData.Email}</Card>
-        <Card>Username: {profileData.Username}</Card>
-        <Card>Unit: {profileData.UnitSystem}</Card>
-        <Card>Sign Up Date: {profileData.SignUpDate}</Card>
+    <Grid
+      container
+      style={{
+        width: "auto",
+        maxWidth: 900,
+        margin: "30px auto auto auto",
+        justifyContent: "center",
+        alignItem: "center",
+      }}
+    >
+      <Box>
+        <Box style={titleStyle}>Profile Information</Box>
+        <Box style={generalStyle}>
+          Full Name:<b> {profileData.FullName}</b>
+        </Box>
+        <Box style={generalStyle}>
+          Email:
+          <b> {profileData.Email}</b>
+        </Box>
+        <Box style={generalStyle}>
+          Username:
+          <b> {profileData.Username}</b>
+        </Box>
+        <Box style={generalStyle}>Unit: {profileData.UnitSystem}</Box>
+        <Box style={generalStyle}>Sign Up Date: {profileData.SignUpDate}</Box>
         <Button
           variant="contained"
           color="secondary"
@@ -71,7 +105,7 @@ const Profile = () => {
             closeForm={setPassForm}
           />
         </Dialog>
-      </Card>
+      </Box>
     </Grid>
   );
 };

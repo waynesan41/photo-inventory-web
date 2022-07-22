@@ -1,6 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 
-import { Box, Button, Card, CardMedia, Dialog } from "@mui/material";
+import { Button, Image, Box, Dialog } from "@mui/material";
 import { useParams } from "react-router-dom";
 import EditLocationForm from "../--FORM/EditLocationForm";
 import PlaceObjectForm from "../../-OBJECT-LOCATION/--FORM/PlaceObjectForm";
@@ -82,36 +82,42 @@ const LocationCurrent = () => {
   }, []); */
   return (
     <>
-      <Card
+      <Box
+        fullWidth
         style={{
-          display: "flex",
-          padding: "4px",
+          padding: "10px 10px 10px 0px",
           margin: "5px",
+          borderRadius: "5px",
           backgroundColor: "#b3d8f8",
+          display: "flex",
+          flexDirection: "row",
         }}
       >
-        <Box sx={{ display: "flex", flexDirection: "column" }}>
+        <Box>
           {locationInfo.Photo != 0 && (
-            <CardMedia
+            <Box
+              marginLeft="10px"
               component="img"
-              height="250"
-              image={`http://localhost/PhotoInventory/Backend/api/readImageLocation.php?id1=${mainID}&id2=${locationID}`}
+              fullWidth
+              maxHeight="300px"
+              maxWidth="300px"
+              src={`http://localhost/PhotoInventory/Backend/api/image/readImageLocation.php?id1=${mainID}&id2=${locationID}`}
             />
           )}
         </Box>
-        <Box sx={{ display: "flex", flexDirection: "column", margin: "3px" }}>
+        <Box marginLeft="10px">
           {locationInfo && (
-            <>
-              <Box>
-                <i>Location Name: </i> <b>{locationInfo.Name}</b>
+            <Box>
+              <Box fontSize={18}>
+                Location: <b>{locationInfo.Name}</b>
               </Box>
-              <Box>
-                <i>Description: </i>
+              <Box marginTop="10px">
+                Description:
                 {locationInfo.Description}
               </Box>
-            </>
+            </Box>
           )}
-          <Box>
+          <Box marginTop="10px">
             <Button
               variant="contained"
               onClick={openHandler}
@@ -136,7 +142,7 @@ const LocationCurrent = () => {
             </Button>
           </Box>
         </Box>
-      </Card>
+      </Box>
       <Dialog open={open} onClose={closeHandler}>
         <EditLocationForm locData={locationInfo} closeHandler={closeHandler} />
       </Dialog>

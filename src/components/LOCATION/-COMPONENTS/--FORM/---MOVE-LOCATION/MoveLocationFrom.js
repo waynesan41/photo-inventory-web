@@ -78,7 +78,7 @@ const MoveLocationForm = (props) => {
                 style={{ border: "4px solid green" }}
                 component="img"
                 height="250"
-                src={`http://localhost/PhotoInventory/Backend/api/readImageLocation.php?id1=${mainID}&id2=${locationID}`}
+                src={`http://localhost/PhotoInventory/Backend/api/image/readImageLocation.php?id1=${mainID}&id2=${locationID}`}
               />
             )}
           </Box>
@@ -91,7 +91,7 @@ const MoveLocationForm = (props) => {
                 style={{ border: "4px solid orange" }}
                 component="img"
                 height="250"
-                src={`http://localhost/PhotoInventory/Backend/api/readImageLocation.php?id1=${props.locData.MainLocationID}&id2=${props.locData.LocationID}`}
+                src={`http://localhost/PhotoInventory/Backend/api/image/readImageLocation.php?id1=${props.locData.MainLocationID}&id2=${props.locData.LocationID}`}
               />
             )}
           </Box>

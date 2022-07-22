@@ -1,11 +1,4 @@
-import {
-  Button,
-  Card,
-  CardActionArea,
-  Dialog,
-  Grid,
-  Paper,
-} from "@mui/material";
+import { Button, Card, CardActionArea, Dialog, Grid, Box } from "@mui/material";
 import React, { useState } from "react";
 import ConfirmLeaveForm from "./ConfirmLeaveForm";
 import { Link } from "react-router-dom";
@@ -20,18 +13,19 @@ const ShareMainLocationOne = (props) => {
   };
 
   return (
-    <Card elevation={5}>
+    <Card elevation={5} style={{ backgroundColor: "#e9ffe8" }}>
       <Link
         to={`${props.mainData.MainLocationID}/0`}
         style={{ textDecoration: "none", color: "black" }}
       >
         <CardActionArea style={{ padding: "5px" }}>
-          <h3>{props.mainData.Name}</h3>
-          <div>Total Location: {props.mainData.TotalLocation}</div>
-          <div>Total Object: {props.mainData.TotalObjectType}</div>
-          <div>Owner Name: {props.mainData.FullName}</div>
-          <div>Owner Username: {props.mainData.Username}</div>
-          <div>Access Level: {props.mainData.AccessType}</div>
+          <Box fontSize={20} fontWeight="bold" margin="5px 0px 5px 0px">
+            {props.mainData.Name}
+          </Box>
+          <Box>Total Location: {props.mainData.TotalLocation}</Box>
+          <Box>Access Level: {props.mainData.AccessType}</Box>
+          <Box>Owner Name: {props.mainData.FullName}</Box>
+          <Box>Owner Username: {props.mainData.Username}</Box>
         </CardActionArea>
       </Link>
       <Grid container style={{ justifyContent: "right" }}>
@@ -41,7 +35,7 @@ const ShareMainLocationOne = (props) => {
           fullWidth={true}
           onClick={openHandler}
         >
-          Leave Share Main Location
+          Leave Main Location
         </Button>
       </Grid>
       <Dialog open={open} onClose={closeHandler}>
