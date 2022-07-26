@@ -69,7 +69,7 @@ const LocationList = () => {
         window.location = window.location.origin + "/Login";
       } else if (result === "DENY" || result == "FAIL" || result == "INVALID") {
         setLocationList([]);
-        console.log("No Access or No Location Here");
+        console.log("NO ACCESS OR NO LOCATION FOUND.");
       } else {
         setLocationList([...result]);
       }
@@ -98,7 +98,9 @@ const LocationList = () => {
           Search
         </Button>
       </Box>
-      {!locationList.length && <>There NO locationList Found</>}
+      {!locationList.length && (
+        <Box marginLeft={1}>There NO locationList Found!</Box>
+      )}
       <Box
         style={{
           display: "grid",

@@ -63,6 +63,7 @@ const SearchUserOne = (props) => {
     } catch (error) {
       console.log(error.message);
     }
+    console.log(props.user.UserID);
   };
 
   return (
@@ -90,26 +91,26 @@ const SearchUserOne = (props) => {
               >
                 {status === "C" && (
                   <Disconnect
-                    currentID={props.user.userID}
+                    currentID={props.user.UserID}
                     removeBlockUser={props.removeBlockUser}
                     close={setAnchorEl}
                   />
                 )}
                 {status === "T" && (
                   <CancelRequest
-                    currentID={props.user.userID}
+                    currentID={props.user.UserID}
                     close={setAnchorEl}
                   />
                 )}
                 {status === "F" && (
                   <AcceptDenied
-                    currentID={props.user.userID}
+                    currentID={props.user.UserID}
                     close={setAnchorEl}
                   />
                 )}
                 {status === "N" && (
                   <SendRequestBlock
-                    currentID={props.currentID}
+                    currentID={props.user.UserID}
                     removeBlockUser={props.removeBlockUser}
                     close={setAnchorEl}
                   />

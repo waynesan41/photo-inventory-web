@@ -6,7 +6,7 @@ const SendRequestBlock = (props) => {
   const sendRequestFetch = async () => {
     setSending(!sending);
     const formData = new FormData();
-
+    console.log(props.currentID);
     formData.append("userID", props.currentID);
     formData.append("update", "S");
 

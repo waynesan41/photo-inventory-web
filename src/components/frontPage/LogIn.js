@@ -80,7 +80,6 @@ export default function SignIn() {
             required
             fullWidth
             label="Email or Username"
-            // defaultValue="health77"
             name="login"
             onChange={incorrectHandler}
           />
@@ -92,7 +91,6 @@ export default function SignIn() {
             name="password"
             label="Password"
             type="password"
-            defaultValue="qwerR`qwe12"
             onChange={incorrectHandler}
             helperText={loginMessage}
           />

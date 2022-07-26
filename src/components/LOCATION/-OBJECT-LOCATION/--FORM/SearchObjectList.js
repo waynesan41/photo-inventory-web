@@ -8,8 +8,10 @@ import {
   Radio,
 } from "@mui/material";
 import ObjectPlaceOne from "../--COMPONENTS/ObjectPlaceOne";
+import ShareMainLocationOne from "../../../MAIN-LOCATION/-SHARE/ShareMainLocationOne";
 const SearchObjectList = (props) => {
   const [object, setObject] = useState([]);
+  const [noObject, setNoObject] = useState(false);
 
   const fetchSearchObject = async (event) => {
     event.preventDefault();
@@ -35,8 +37,10 @@ const SearchObjectList = (props) => {
         window.location = window.location.origin + "/Login";
       } else if (result === "NO OBJECT") {
         setObject([]);
+        setNoObject(true);
         console.log("No Object");
       } else {
+        setNoObject(false);
         setObject([...result]);
       }
     } catch (error) {
@@ -84,6 +88,7 @@ const SearchObjectList = (props) => {
           gridTemplateColumns: "1fr 1fr 1fr 1fr",
         }}
       >
+        {noObject && <Box>No Object Found.</Box>}
         {object.map((obj) => (
           <Box
             sx={{ boxShadow: 5 }}

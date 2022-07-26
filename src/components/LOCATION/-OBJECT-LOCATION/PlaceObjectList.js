@@ -70,7 +70,9 @@ const PlaceObjectList = () => {
         component="form"
         onSubmit={fetchSearchLocation}
       ></Box>
-      {!placeObjList.length && <>There NO placeObjList Found</>}
+      {!placeObjList.length && (
+        <Box marginLeft={1}>There No Object Placed in this Location!</Box>
+      )}
       <Box
         style={{
           display: "grid",

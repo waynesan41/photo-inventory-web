@@ -62,7 +62,7 @@ const LinkObjLocForm = (props) => {
         }}
       >
         <Box>
-          <Box component="b">{props.objData.Name}</Box>
+          <Box component="b">{props.objData.Name} ==&gt;</Box>
           <Box>LibraryID: {props.objData.LibraryID}</Box>
           <Box>ObjectID: {props.objData.ObjectID}</Box>
           {props.objData.Photo > 0 && (
@@ -70,12 +70,12 @@ const LinkObjLocForm = (props) => {
               style={{ border: "4px solid orange" }}
               component="img"
               height="250"
-              src={`http://localhost/PhotoInventory/Backend/api/readImageObject.php?id1=${props.objData.LibraryID}&id2=${props.objData.ObjectID}`}
+              src={`http://localhost/PhotoInventory/Backend/api/image/readImageObject.php?id1=${props.objData.LibraryID}&id2=${props.objData.ObjectID}`}
             />
           )}
         </Box>
         <Box>
-          <Box component="b">{locationInfo.Name}</Box>
+          <Box component="b">==&gt; {locationInfo.Name}</Box>
           <Box>MainID: {mainID}</Box>
           <Box>LocationID: {locationID}</Box>
           {locationInfo.Photo > 0 && (
@@ -83,7 +83,7 @@ const LinkObjLocForm = (props) => {
               style={{ border: "4px solid green" }}
               component="img"
               height="250"
-              src={`http://localhost/PhotoInventory/Backend/api/readImageLocation.php?id1=${mainID}&id2=${locationID}`}
+              src={`http://localhost/PhotoInventory/Backend/api/image/readImageLocation.php?id1=${mainID}&id2=${locationID}`}
             />
           )}
         </Box>

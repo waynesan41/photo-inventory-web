@@ -70,8 +70,8 @@ const MainLocationList = () => {
   };
 
   useEffect(() => {
-    if (window.location.pathname !== "/MainLocation/") {
-      window.location = window.location.origin + "/MainLocation/";
+    if (window.location.pathname !== "/MainLocation") {
+      window.location = window.location.origin + "/MainLocation";
     }
 
     fetchLibrary(1);

@@ -50,14 +50,16 @@ const LibraryCardList = () => {
         throw new Error(response.statusText);
       }
       const result = await response.json();
-
+      console.log(result);
       if (result === 0) {
         window.location = window.location.origin + "/Login";
       } else {
         if (libType === 1) {
-          setOwnLibrary([...result]);
+          if (result === "NO LIBRARY") setOwnLibrary([]);
+          else setOwnLibrary([...result]);
         } else if (libType === 2) {
-          setShareLibrary([...result]);
+          if (result === "NO LIBRARY") setShareLibrary([]);
+          else setShareLibrary([...result]);
         }
       }
     } catch (error) {

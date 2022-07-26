@@ -45,7 +45,7 @@ function a11yProps(index) {
 
 function LogInPage() {
   const theme = useTheme();
-  const [value, setValue] = useState(1);
+  const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -72,6 +72,7 @@ function LogInPage() {
         if (result === 1) {
           window.location = window.location.origin + "/MainLocation";
         } else {
+          console.log(result);
           console.log("Not LogIn!");
         }
       } catch (error) {

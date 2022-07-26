@@ -57,6 +57,7 @@ export default function SignUp() {
         throw new Error(response.statusText);
       }
       const result = await response.json();
+
       console.log(result);
 
       if (result.fullName !== "GOOD!") {
@@ -75,7 +76,7 @@ export default function SignUp() {
       }
       console.log(result);
       if (result === 1) {
-        window.location = window.location.origin + "/ObjectLocation";
+        window.location = window.location.origin + "/MainLocation";
       }
     } catch (error) {
       console.log(error.message);
