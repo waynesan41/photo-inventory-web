@@ -3,9 +3,11 @@ import { Box, TextField, Button } from "@mui/material";
 import { useMainLocationContex } from "../../../LocationPage";
 import { useParams } from "react-router-dom";
 import OneLocationMoveTo from "./OneLocationMoveTo";
+import { useApiURLContex } from "../../../../../App";
 
 const MoveLocationSearch = (props) => {
-  let { mainID, locationID } = useParams();
+  const { ApiURL } = useApiURLContex();
+  let { mainID } = useParams();
   const { mainType } = useMainLocationContex();
   const [locationList, setLocationList] = useState([]);
   const baseLocation = {
@@ -19,16 +21,14 @@ const MoveLocationSearch = (props) => {
     const data = new FormData(event.currentTarget);
     data.append("mainID", mainID);
     data.append("locType", mainType);
+    const fetchURL = `${ApiURL}/location/searchLocation.php`;
 
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/location/searchLocation.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: data,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: data,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

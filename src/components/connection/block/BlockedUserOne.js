@@ -2,8 +2,10 @@ import { Button, Card, CardHeader, Popover } from "@mui/material";
 import React, { useState } from "react";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useApiURLContex } from "../../../App";
 
 const BlockedUserOne = (props) => {
+  const { ApiURL } = useApiURLContex();
   const [unBlocking, setUnBlocking] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -25,16 +27,13 @@ const BlockedUserOne = (props) => {
 
     formData.append("userID", props.currentID);
     formData.append("update", "U");
-
+    const fetchURL = `${ApiURL}/Connection/updateConnection.php`;
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/Connection/updateConnection.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: formData,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

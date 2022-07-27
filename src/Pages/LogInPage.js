@@ -9,6 +9,7 @@ import Box from "@mui/material/Box";
 
 import LogIn from "../components/frontPage/LogIn";
 import Register from "../components/frontPage/Register";
+import { useApiURLContex } from "../App";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -44,6 +45,7 @@ function a11yProps(index) {
 }
 
 function LogInPage() {
+  const { ApiURL } = useApiURLContex();
   const theme = useTheme();
   const [value, setValue] = useState(0);
 
@@ -57,14 +59,13 @@ function LogInPage() {
 
   useEffect(() => {
     const checkLogin = async () => {
+      const fetchUrl = `${ApiURL}/checkNotLogin.php`;
+
       try {
-        const response = await fetch(
-          "http://localhost/PhotoInventory/Backend/api/checkNotLogin.php",
-          {
-            method: "POST",
-            credentials: "include",
-          }
-        );
+        const response = await fetch(fetchUrl, {
+          method: "POST",
+          credentials: "include",
+        });
         if (!response.ok) {
           throw new Error(response.statusText);
         }

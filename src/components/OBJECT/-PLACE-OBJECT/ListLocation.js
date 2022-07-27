@@ -1,10 +1,12 @@
 import { Box } from "@mui/system";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useApiURLContex } from "../../../App";
 
 import { useLibraryContex } from "../ObjectLibrary";
 import OneLocation from "./OneLocation";
 
 const ListLocation = (props) => {
+  const { ApiURL } = useApiURLContex();
   const { libType } = useLibraryContex();
   const [locationList, setLocationList] = useState([]);
   //+++++++++++++++++++++++++++++++++++++++++
@@ -15,16 +17,14 @@ const ListLocation = (props) => {
     data.append("libraryID", props.objData.LibraryID);
     data.append("objectID", props.objData.ObjectID);
     data.append("libType", libType);
+    const fetchURL = `${ApiURL}/object/findLocation.php`;
 
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/Object/findLocation.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: data,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: data,
+      });
 
       if (!response.ok) {
         throw new Error(response.statusText);

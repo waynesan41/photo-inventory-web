@@ -7,9 +7,11 @@ import {
   Dialog,
 } from "@mui/material";
 import { useState } from "react";
+import { useApiURLContex } from "../../../App";
 import ObjectDetail from "./ObjectDetail";
 
 const ObjectOne = (props) => {
+  const { ApiURL } = useApiURLContex();
   const [open, setOpen] = useState(false);
 
   const openDetail = () => {
@@ -26,7 +28,7 @@ const ObjectOne = (props) => {
           <CardMedia
             component="img"
             height="250"
-            image={`http://localhost/PhotoInventory/Backend/api/image/readImageObject.php?id1=${props.objData.LibraryID}&id2=${props.objData.ObjectID}`}
+            image={`${ApiURL}/image/readImageObject.php?id1=${props.objData.LibraryID}&id2=${props.objData.ObjectID}`}
           />
         )}
       </CardActionArea>

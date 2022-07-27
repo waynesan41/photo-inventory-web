@@ -10,8 +10,10 @@ import {
 import { useMainLocationContex } from "../../LocationPage";
 import { useParams } from "react-router-dom";
 import SearchObjectList from "./SearchObjectList";
+import { useApiURLContex } from "../../../../App";
 
 const PlaceObjectForm = () => {
+  const { ApiURL } = useApiURLContex();
   const { mainID } = useParams();
   const { mainType } = useMainLocationContex();
   const [libraryList, setLibraryList] = useState([]);
@@ -28,16 +30,14 @@ const PlaceObjectForm = () => {
     const data = new FormData();
     data.append("mainID", mainID);
     data.append("type", mainType);
+    const fetchURL = `${ApiURL}/objectLocation/getAccessLibrary.php`;
 
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/ObjectLocation/getAccessLibrary.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: data,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: data,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useApiURLContex } from "../../App";
 import LocationBread from "./-COMPONENTS/--FETCH/LocationBread";
 import LocationCurrent from "./-COMPONENTS/--FETCH/LocationCurrent";
 import LocationList from "./-COMPONENTS/--FETCH/LocationList";
@@ -18,6 +19,7 @@ export const useMainLocationContex = () => {
 };
 
 const LocationPage = () => {
+  const { ApiURL } = useApiURLContex();
   let { mainID, locationID } = useParams(); // Value from URL
   const [mainType, setMainType] = useState();
   const [accessLvl, setAccessLvl] = useState();
@@ -28,15 +30,13 @@ const LocationPage = () => {
     data.append("mainID", mainID);
     data.append("locationID", locationID);
 
+    const fetchURL = `${ApiURL}/Location/getLocationInfo.php`;
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/Location/getLocationInfo.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: data,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: data,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }
@@ -59,16 +59,14 @@ const LocationPage = () => {
   const fetchMainAccessInfo = async () => {
     const data = new FormData();
     data.append("mainID", mainID);
+    const fetchURL = `${ApiURL}/Location/checkAccess.php`;
 
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/Location/checkAccess.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: data,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: data,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import ConnectedUserOne from "./ConnectedUserOne";
+import { useApiURLContex } from "../../../App";
 
 const ConnectedUserList = () => {
+  const { ApiURL } = useApiURLContex();
   const [noUser, setNoUser] = useState(false);
   const [connectUser, setConnectUser] = useState([]);
   const [currentID, setCurrentID] = useState();
@@ -11,16 +13,13 @@ const ConnectedUserList = () => {
     const getConnectRequest = async () => {
       const formData = new FormData();
       formData.append("type", "C");
-
+      const fetchURL = `${ApiURL}/Connection/getConnection.php`;
       try {
-        const response = await fetch(
-          "http://localhost/PhotoInventory/Backend/api/Connection/getConnection.php",
-          {
-            method: "POST",
-            credentials: "include",
-            body: formData,
-          }
-        );
+        const response = await fetch(fetchURL, {
+          method: "POST",
+          credentials: "include",
+          body: formData,
+        });
         if (!response.ok) {
           throw new Error(response.statusText);
         }

@@ -3,8 +3,10 @@ import React, { useState } from "react";
 
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
+import { useApiURLContex } from "../../../App";
 
 const RequestFromOne = (props) => {
+  const { ApiURL } = useApiURLContex();
   const [anchorEl, setAnchorEl] = useState(null);
   const [direct, setDirect] = useState(null);
 
@@ -24,16 +26,13 @@ const RequestFromOne = (props) => {
 
     formData.append("userID", props.user.UserID);
     formData.append("update", "A");
-
+    const fetchURL = `${ApiURL}/Connection/updateConnection.php`;
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/Connection/updateConnection.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: formData,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }
@@ -57,16 +56,13 @@ const RequestFromOne = (props) => {
 
     formData.append("userID", props.user.UserID);
     formData.append("update", "D");
-
+    const fetchURL = `${ApiURL}/Connection/updateConnection.php`;
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/Connection/updateConnection.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: formData,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }
@@ -90,16 +86,13 @@ const RequestFromOne = (props) => {
 
     formData.append("userID", props.user.UserID);
     formData.append("update", "B");
-
+    const fetchURL = `${ApiURL}/Connection/updateConnection.php`;
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/Connection/updateConnection.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: formData,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

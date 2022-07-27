@@ -1,6 +1,7 @@
 import React from "react";
 
 import { TextField, Box, Button } from "@mui/material";
+import { useApiURLContex } from "../../../App";
 
 const style = {
   padding: 10,
@@ -11,19 +12,17 @@ const style = {
   p: 4,
 };
 const NewLibraryForm = () => {
+  const { ApiURL } = useApiURLContex();
   const fetchAddNewLibrary = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-
+    const fetchURL = `${ApiURL}/Library/addLibrary.php`;
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/Library/addLibrary.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: data,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: data,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

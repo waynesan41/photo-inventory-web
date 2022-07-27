@@ -2,15 +2,16 @@ import {
   FormControlLabel,
   Radio,
   RadioGroup,
-  Box,
   Button,
   FormControl,
 } from "@mui/material";
+import { useApiURLContex } from "../../../../App";
 
 import { useChangePeople } from "../../MainLocationList";
 import { useShareFormChange } from "./EditShareUser.js";
 
 const EditAccessForm = (props) => {
+  const { ApiURL } = useApiURLContex();
   const changeTotalPeople = useChangePeople();
   const { removeUser, changeAccess, mainID } = useShareFormChange();
   //UPDATE API CALL Edit / Remove
@@ -22,15 +23,14 @@ const EditAccessForm = (props) => {
       data.delete("access");
       data.append("mainID", mainID);
       data.append("userID", props.user.UserID);
+      const fetchURL = `${ApiURL}/mainLocation/removeShareUser.php`;
+
       try {
-        const response = await fetch(
-          "http://localhost/PhotoInventory/Backend/api/MainLocation/removeShareUser.php",
-          {
-            method: "POST",
-            credentials: "include",
-            body: data,
-          }
-        );
+        const response = await fetch(fetchURL, {
+          method: "POST",
+          credentials: "include",
+          body: data,
+        });
         if (!response.ok) {
           throw new Error(response.statusText);
         }
@@ -56,16 +56,14 @@ const EditAccessForm = (props) => {
       }
       data.append("mainID", mainID);
       data.append("userID", props.user.UserID);
+      const fetchURL = `${ApiURL}/mainLocation/shareMainLocation.php`;
 
       try {
-        const response = await fetch(
-          "http://localhost/PhotoInventory/Backend/api/MainLocation/shareMainLocation.php",
-          {
-            method: "POST",
-            credentials: "include",
-            body: data,
-          }
-        );
+        const response = await fetch(fetchURL, {
+          method: "POST",
+          credentials: "include",
+          body: data,
+        });
         if (!response.ok) {
           throw new Error(response.statusText);
         }

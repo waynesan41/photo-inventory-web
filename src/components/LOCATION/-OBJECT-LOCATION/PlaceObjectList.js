@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 
 import { useParams } from "react-router-dom";
-import { Box, TextField, Button } from "@mui/material";
+import { Box } from "@mui/material";
 
 import { useMainLocationContex } from "../LocationPage";
 import PlacedObjectOne from "./--COMPONENTS/PlacedObjectOne";
-import { useCurrentLocationData } from "../-COMPONENTS/--FETCH/LocationCurrent";
+import { useApiURLContex } from "../../../App";
 
 const PlaceObjectList = () => {
+  const { ApiURL } = useApiURLContex();
   let { mainID, locationID } = useParams();
   const { mainType } = useMainLocationContex();
 
@@ -22,15 +23,14 @@ const PlaceObjectList = () => {
     data.append("mainID", mainID);
     data.append("locID", locationID);
     data.append("type", mainType);
+    const fetchURL = `${ApiURL}/objectLocation/getObjLoc.php`;
+
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/objectLocation/getObjLoc.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: data,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: data,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

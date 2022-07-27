@@ -1,10 +1,12 @@
 import { Box, TextField, Button, Dialog } from "@mui/material";
 
 import { useState, useEffect } from "react";
+import { useApiURLContex } from "../../../App";
 import { useLibraryContex } from "../ObjectLibrary";
 import DeleteConfirm from "./DeleteConfirm";
 
 const EditForm = (props) => {
+  const { ApiURL } = useApiURLContex();
   const { libraryID, libType } = useLibraryContex();
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
@@ -35,15 +37,14 @@ const EditForm = (props) => {
     /* for (var pair of data.entries()) {
       console.log(pair[0] + ": " + pair[1]);
     } */
+    const fetchURL = `${ApiURL}/object/updateObject.php`;
+
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/object/updateObject.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: data,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: data,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }
@@ -86,7 +87,7 @@ const EditForm = (props) => {
   //USE EFFECT
   useEffect(() => {
     if (props.objData.Photo != 0) {
-      const src = `http://localhost/PhotoInventory/Backend/api/image/readImageObject.php?id1=${props.objData.LibraryID}&id2=${props.objData.ObjectID}`;
+      const src = `${ApiURL}/image/readImageObject.php?id1=${props.objData.LibraryID}&id2=${props.objData.ObjectID}`;
       fetchOrignalImage(src);
       setPreview(src);
     }

@@ -9,6 +9,7 @@ import {
   useMainLocationContex,
 } from "../../LocationPage";
 import MoveLocationSearch from "../--FORM/---MOVE-LOCATION/MoveLocationSearch";
+import { useApiURLContex } from "../../../../App";
 
 /* const CurrentLocationDataContex = React.createContext();
 export const useCurrentLocationData = () => {
@@ -16,6 +17,7 @@ export const useCurrentLocationData = () => {
 }; */
 
 const LocationCurrent = () => {
+  const { ApiURL } = useApiURLContex();
   let { mainID, locationID } = useParams();
   // const [locationInfo, setLocationInfo] = useState({});
   const { accessLvl } = useMainLocationContex();
@@ -101,7 +103,7 @@ const LocationCurrent = () => {
               fullWidth
               maxHeight="300px"
               maxWidth="300px"
-              src={`http://localhost/PhotoInventory/Backend/api/image/readImageLocation.php?id1=${mainID}&id2=${locationID}`}
+              src={`${ApiURL}/image/readImageLocation.php?id1=${mainID}&id2=${locationID}`}
             />
           )}
         </Box>

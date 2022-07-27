@@ -3,6 +3,7 @@ import { Button, Dialog, Box, Grid } from "@mui/material";
 import LibraryCardOwn from "./-OWN/LibraryCardOwn";
 import LibraryCardShare from "./-SHARE/LibraryCardShare";
 import NewLibraryForm from "./-NEWLIBRARY/NewLibraryForm";
+import { useApiURLContex } from "../../App";
 
 const ChangePeopleContex = React.createContext();
 export const useChangePeople = () => {
@@ -10,6 +11,7 @@ export const useChangePeople = () => {
 };
 
 const LibraryCardList = () => {
+  const { ApiURL } = useApiURLContex();
   const [ownLibrary, setOwnLibrary] = useState([]);
   const [shareLibrary, setShareLibrary] = useState([]);
 
@@ -36,16 +38,14 @@ const LibraryCardList = () => {
   const fetchLibrary = async (libType) => {
     const formData = new FormData();
     formData.append("library", libType);
+    const fetchURL = `${ApiURL}/Library/getLibrary.php`;
 
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/Library/getLibrary.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: formData,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

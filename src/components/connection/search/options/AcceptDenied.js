@@ -1,22 +1,21 @@
 import { Button } from "@mui/material";
 import React from "react";
+import { useApiURLContex } from "../../../../App";
 const AcceptDenied = (props) => {
+  const { ApiURL } = useApiURLContex();
   // ACCEPT REQUEST HANDLER
   const acceptFetch = async () => {
     const formData = new FormData();
 
     formData.append("userID", props.currentID);
     formData.append("update", "A");
-
+    const fetchURL = `${ApiURL}/Connection/updateConnection.php`;
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/Connection/updateConnection.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: formData,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }
@@ -41,16 +40,13 @@ const AcceptDenied = (props) => {
 
     formData.append("userID", props.currentID);
     formData.append("update", "D");
-
+    const fetchURL = `${ApiURL}/Connection/updateConnection.php`;
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/Connection/updateConnection.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: formData,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

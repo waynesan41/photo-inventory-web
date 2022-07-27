@@ -1,5 +1,6 @@
 import { Box, Button, Grid } from "@mui/material";
 import React, { useState, useEffect, useContext } from "react";
+import { useApiURLContex } from "../../../../App";
 import ShareUserOne from "./ShareUserOne";
 
 const ShareFormChangeContex = React.createContext();
@@ -9,6 +10,7 @@ export const useShareFormChange = () => {
 };
 
 const EditShareUser = (props) => {
+  const { ApiURL } = useApiURLContex();
   const [shareUser, setShareUser] = useState([]);
 
   const changeAccess = (id, access) => {
@@ -33,15 +35,14 @@ const EditShareUser = (props) => {
   const fetchShareUser = async () => {
     const data = new FormData();
     data.append("libraryID", props.data.LibraryID);
+    const fetchURL = `${ApiURL}/Library/getUser.php`;
+
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/Library/getUser.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: data,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: data,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

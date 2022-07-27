@@ -4,6 +4,7 @@ import OwnHeader from "./-HEADER/OwnHeader";
 import ShareHeader from "./-HEADER/ShareHeader";
 
 import ObjectList from "./-COMPONENTS/ObjectList";
+import { useApiURLContex } from "../../App";
 
 const LibraryContex = React.createContext();
 export const useLibraryContex = () => {
@@ -11,6 +12,7 @@ export const useLibraryContex = () => {
 };
 
 const ObjectLibrary = () => {
+  const { ApiURL } = useApiURLContex();
   let { libraryID } = useParams();
   const [libType, setLibType] = useState();
   const [accessLvl, setAccessLvl] = useState();
@@ -19,16 +21,14 @@ const ObjectLibrary = () => {
     const data = new FormData();
 
     data.append("libraryID", libraryID);
+    const fetchURL = `${ApiURL}/object/checkAccess.php`;
 
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/OBject/checkAccess.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: data,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: data,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

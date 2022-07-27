@@ -6,11 +6,13 @@ import {
   Button,
   FormControl,
 } from "@mui/material";
+import { useApiURLContex } from "../../../../App";
 
 import { useChangePeople } from "../../LibraryCardList";
 import { useShareFormChange } from "./EditShareUser.js";
 
 const EditAccessForm = (props) => {
+  const { ApiURL } = useApiURLContex();
   const changeTotalPeople = useChangePeople();
   const { removeUser, changeAccess } = useShareFormChange();
   //UPDATE API CALL Edit / Remove
@@ -22,15 +24,14 @@ const EditAccessForm = (props) => {
       data.delete("access");
       data.append("libraryID", props.libraryID);
       data.append("userID", props.user.UserID);
+      const fetchURL = `${ApiURL}/Library/removeShareUser.php`;
+
       try {
-        const response = await fetch(
-          "http://localhost/PhotoInventory/Backend/api/library/removeShareUser.php",
-          {
-            method: "POST",
-            credentials: "include",
-            body: data,
-          }
-        );
+        const response = await fetch(fetchURL, {
+          method: "POST",
+          credentials: "include",
+          body: data,
+        });
         if (!response.ok) {
           throw new Error(response.statusText);
         }
@@ -56,16 +57,14 @@ const EditAccessForm = (props) => {
       }
       data.append("libraryID", props.libraryID);
       data.append("userID", props.user.UserID);
+      const fetchURL = `${ApiURL}/Library/shareLibrary.php`;
 
       try {
-        const response = await fetch(
-          "http://localhost/PhotoInventory/Backend/api/Library/shareLibrary.php",
-          {
-            method: "POST",
-            credentials: "include",
-            body: data,
-          }
-        );
+        const response = await fetch(fetchURL, {
+          method: "POST",
+          credentials: "include",
+          body: data,
+        });
         if (!response.ok) {
           throw new Error(response.statusText);
         }
@@ -94,11 +93,7 @@ const EditAccessForm = (props) => {
       <RadioGroup name="access">
         <FormControlLabel value="0" control={<Radio />} label="Remove User" />
         <FormControlLabel value="1" control={<Radio />} label="1 View Only" />
-        <FormControlLabel
-          value="2"
-          control={<Radio />}
-          label="2 Edit Objects"
-        />
+        <FormControlLabel value="2" control={<Radio />} label="2 Add Objects" />
         <FormControlLabel
           value="3"
           control={<Radio />}

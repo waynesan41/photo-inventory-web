@@ -12,17 +12,18 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import AllInboxIcon from "@mui/icons-material/AllInbox";
 import GroupsIcon from "@mui/icons-material/Groups";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import { useApiURLContex } from "../App";
 
 const NavBar = () => {
+  const { ApiURL } = useApiURLContex();
   const logOutphp = async () => {
+    const fetchURL = `${ApiURL}/account/logout.php`;
+
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/account/logout.php",
-        {
-          mode: "cors",
-          credentials: "include",
-        }
-      );
+      const response = await fetch(fetchURL, {
+        mode: "cors",
+        credentials: "include",
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

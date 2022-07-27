@@ -7,11 +7,13 @@ import {
   Radio,
 } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useApiURLContex } from "../../../App";
 import { useLibraryContex } from "../ObjectLibrary";
 
 import ObjectOne from "./ObjectOne";
 
 const ObjectList = () => {
+  const { ApiURL } = useApiURLContex();
   const { libraryID, libType, accessLvl } = useLibraryContex();
   const [object, setObject] = useState([]);
 
@@ -27,16 +29,14 @@ const ObjectList = () => {
     /*  for (var pair of data.entries()) {
       console.log(pair[0], pair[1]);
     } */
+    const fetchURL = `${ApiURL}/object/searchObject.php`;
 
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/object/searchObject.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: data,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: data,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

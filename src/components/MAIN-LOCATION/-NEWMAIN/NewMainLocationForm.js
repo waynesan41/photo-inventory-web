@@ -1,6 +1,7 @@
 import React from "react";
 
 import { TextField, Box, Button, Grid, Alert, Dialog } from "@mui/material";
+import { useApiURLContex } from "../../../App";
 
 const style = {
   padding: 10,
@@ -10,20 +11,20 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
+
 const NewMainLocationForm = () => {
+  const { ApiURL } = useApiURLContex();
   const fetchAddNewLibrary = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    const fetchURL = `${ApiURL}/mainLocation/addNewMainLocation.php`;
 
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/MainLocation/addNewMainLocation.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: data,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: data,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

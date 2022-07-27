@@ -1,6 +1,7 @@
 import { Button, Grid, Box, TextField } from "@mui/material";
 
 import React, { useState } from "react";
+import { useApiURLContex } from "../../App";
 const style = {
   padding: 10,
   width: 400,
@@ -11,6 +12,7 @@ const style = {
 };
 
 const UpdateProfileForm = (props) => {
+  const { ApiURL } = useApiURLContex();
   const updatehandler = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -42,17 +44,14 @@ const UpdateProfileForm = (props) => {
       data.delete("username");
     }
 
-    console.log(data);
+    const fetchURL = `${ApiURL}/account/updateUserProfile.php`;
 
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/account/updateUserProfile.php",
-        {
-          method: "POST",
-          body: data,
-          credentials: "include",
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        body: data,
+        credentials: "include",
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

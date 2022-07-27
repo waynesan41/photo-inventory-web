@@ -1,8 +1,10 @@
 import { Button, Dialog, Box } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useApiURLContex } from "../../../App";
 import FormAddObject from "./--FORM/FormAddObject";
 
 const OwnHeader = (props) => {
+  const { ApiURL } = useApiURLContex();
   const [open, setOpen] = useState(false);
   const [libInfo, setLibInfo] = useState({});
 
@@ -18,15 +20,14 @@ const OwnHeader = (props) => {
     const data = new FormData();
     data.append("libraryID", props.libraryID);
     data.append("type", 1);
+    const fetchURL = `${ApiURL}/library/getLibraryInfo.php`;
+
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/library/getLibraryInfo.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: data,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: data,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

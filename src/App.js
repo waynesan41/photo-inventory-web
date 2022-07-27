@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -20,45 +20,60 @@ import SearchUserList from "./components/connection/search/SearchUserList";
 import ObjectLibrary from "./components/OBJECT/ObjectLibrary";
 import LocationPage from "./components/LOCATION/LocationPage";
 
+const ApiURLContex = React.createContext();
+export const useApiURLContex = () => {
+  return useContext(ApiURLContex);
+};
+
 function App() {
+  // const ApiURL = "http://localhost/PhotoInventory/Backend/api";
+
+  const [ApiURL, setApiURL] = useState(
+    window.location.origin + "/PhotoInventory/Backend/api"
+  );
   const yourHandler = () => {
     console.log("Router Change is Called!");
   };
   return (
-    <div>
-      <Router onChange={yourHandler}>
-        <Routes>
-          <Route path="/Login" element={<LogInPage />} />
-          <Route path="/" element={<NavBar />}>
-            <Route path="/" element={<MainLocation />} />
+    <>
+      <ApiURLContex.Provider value={{ ApiURL }}>
+        <Router onChange={yourHandler}>
+          <Routes>
+            <Route path="/Login" element={<LogInPage />} />
+            <Route path="/" element={<NavBar />}>
+              <Route path="/" element={<MainLocation />} />
 
-            <Route path="/MainLocation/" element={<MainLocation />} />
-            <Route path="/MainLocation/:mainID" element={<LocationPage />} />
-            <Route
-              path="/MainLocation/:mainID/:locationID"
-              element={<LocationPage />}
-            />
-
-            <Route path="/Library" element={<Library />} />
-            <Route path="/Library/:libraryID" element={<ObjectLibrary />} />
-
-            <Route path="/Connection" element={<Connection />}>
-              <Route path="/Connection/" element={<ConnectedUser />} />
-              <Route path="/Connection/Search" element={<SearchUserList />} />
-              <Route path="/Connection/Connect" element={<ConnectedUser />} />
-              <Route path="/Connection/RequestTo" element={<RequestToList />} />
+              <Route path="/MainLocation/" element={<MainLocation />} />
+              <Route path="/MainLocation/:mainID" element={<LocationPage />} />
               <Route
-                path="/Connection/RequestFrom"
-                element={<RequestFromList />}
+                path="/MainLocation/:mainID/:locationID"
+                element={<LocationPage />}
               />
-              <Route path="/Connection/Block" element={<BlockedUserList />} />
+
+              <Route path="/Library" element={<Library />} />
+              <Route path="/Library/:libraryID" element={<ObjectLibrary />} />
+
+              <Route path="/Connection" element={<Connection />}>
+                <Route path="/Connection/" element={<ConnectedUser />} />
+                <Route path="/Connection/Search" element={<SearchUserList />} />
+                <Route path="/Connection/Connect" element={<ConnectedUser />} />
+                <Route
+                  path="/Connection/RequestTo"
+                  element={<RequestToList />}
+                />
+                <Route
+                  path="/Connection/RequestFrom"
+                  element={<RequestFromList />}
+                />
+                <Route path="/Connection/Block" element={<BlockedUserList />} />
+              </Route>
+              <Route path="/Profile" element={<Profile />} />
+              <Route path="/*" element={<ErrorPage />} />
             </Route>
-            <Route path="/Profile" element={<Profile />} />
-            <Route path="/*" element={<ErrorPage />} />
-          </Route>
-        </Routes>
-      </Router>
-    </div>
+          </Routes>
+        </Router>
+      </ApiURLContex.Provider>
+    </>
   );
 }
 

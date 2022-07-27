@@ -3,8 +3,10 @@ import UpdateProfileForm from "../components/profile/UpdateProfileForm";
 import UpdatePasswordForm from "../components/profile/UpdatePasswordForm";
 
 import React, { useEffect, useState } from "react";
+import { useApiURLContex } from "../App";
 
 const Profile = () => {
+  const { ApiURL } = useApiURLContex();
   const [open, setOpen] = useState(false);
   const [passForm, setPassForm] = useState(false);
   const profileFormOpener = () => setOpen(!open);
@@ -13,14 +15,13 @@ const Profile = () => {
 
   useEffect(() => {
     const firstFetch = async () => {
+      const fetchURL = `${ApiURL}/account/getUserProfile.php`;
+
       try {
-        const response = await fetch(
-          "http://localhost/PhotoInventory/Backend/api/account/getUserProfile.php",
-          {
-            method: "POST",
-            credentials: "include",
-          }
-        );
+        const response = await fetch(fetchURL, {
+          method: "POST",
+          credentials: "include",
+        });
         if (!response.ok) {
           throw new Error(response.statusText);
         }

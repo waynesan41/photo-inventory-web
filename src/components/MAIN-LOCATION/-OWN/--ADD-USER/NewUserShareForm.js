@@ -9,8 +9,10 @@ import {
 } from "@mui/material";
 import { useChangePeople } from "../../MainLocationList";
 import { useMainLocationID } from "./AddShareUser";
+import { useApiURLContex } from "../../../../App";
 
 const NewUserShareForm = (props) => {
+  const { ApiURL } = useApiURLContex();
   const changeTotalPeople = useChangePeople();
   const { changeNewUser, mainID } = useMainLocationID();
 
@@ -27,16 +29,14 @@ const NewUserShareForm = (props) => {
         for (var pair of data.entries()) {
           console.log(pair[0] + ", " + pair[1]);
         } */
+    const fetchURL = `${ApiURL}/mainLocation/shareMainLocation.php`;
 
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/MainLocation/shareMainLocation.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: data,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: data,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

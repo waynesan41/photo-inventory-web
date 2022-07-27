@@ -2,8 +2,10 @@ import { Button, Dialog, Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import NewLocationForm from "../-COMPONENTS/--FORM/NewLocationForm";
+import { useApiURLContex } from "../../../App";
 import { useMainLocationContex } from "../LocationPage";
 const ShareMainMenu = (props) => {
+  const { ApiURL } = useApiURLContex();
   const { accessLvl } = useMainLocationContex();
   let { locationID } = useParams(); // Value from URL
   const [open, setOpen] = useState(false);
@@ -21,15 +23,14 @@ const ShareMainMenu = (props) => {
     const data = new FormData();
     data.append("mainID", props.mainID);
     data.append("type", 2);
+    const fetchURL = `${ApiURL}/MainLocation/getMainInfo.php`;
+
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/MainLocation/getMainInfo.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: data,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: data,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

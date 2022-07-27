@@ -3,8 +3,11 @@ import React, { useState } from "react";
 
 import CloseIcon from "@mui/icons-material/Close";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useApiURLContex } from "../../../App";
 
 const RequestToOne = (props) => {
+  const { ApiURL } = useApiURLContex();
+
   const [loading, setLoading] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -26,16 +29,13 @@ const RequestToOne = (props) => {
 
     formData.append("userID", props.currentID);
     formData.append("update", "C");
-
+    const fetchURL = `${ApiURL}/Connection/updateConnection.php`;
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/Connection/updateConnection.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: formData,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

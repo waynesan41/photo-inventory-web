@@ -1,21 +1,21 @@
 import { Box, Button, Alert } from "@mui/material";
+import { useApiURLContex } from "../../../App";
 
 const DeleteConfirm = (props) => {
+  const { ApiURL } = useApiURLContex();
   const fetchDelete = async () => {
     const data = new FormData();
     data.append("libraryID", props.libraryID);
     data.append("libType", props.libType);
     data.append("objectID", props.objectID);
+    const fetchURL = `${ApiURL}/object/deleteObject.php`;
 
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/object/deleteObject.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: data,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: data,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

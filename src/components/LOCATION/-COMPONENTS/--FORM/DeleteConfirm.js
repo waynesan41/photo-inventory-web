@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import { TextField, Box, Button, Grid, Alert, Dialog } from "@mui/material";
 import { useMainLocationContex } from "../../LocationPage";
+import { useApiURLContex } from "../../../../App";
 const style = {
   padding: 10,
   minWidth: 400,
@@ -11,6 +12,7 @@ const style = {
   p: 4,
 };
 const DeleteConfirm = (props) => {
+  const { ApiURL } = useApiURLContex();
   const { mainType } = useMainLocationContex();
   const [open, setOpen] = useState(false);
   const [confirm, setConfirm] = useState(true);
@@ -32,17 +34,14 @@ const DeleteConfirm = (props) => {
     formData.append("mainID", props.data.MainLocationID);
     formData.append("locationID", props.data.LocationID);
     formData.append("locType", mainType);
+    const fetchURL = `${ApiURL}/location/deleteLocation.php`;
 
-    console.log(formData);
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/Location/deleteLocation.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: formData,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

@@ -1,19 +1,21 @@
 import { Button, Box, Alert } from "@mui/material";
+import { useApiURLContex } from "../../../App";
 
 const ConfirmLeaveForm = (props) => {
+  const { ApiURL } = useApiURLContex();
+
   //FETCH LEAVE SHARE Library
   const fetchLeaveLibrary = async () => {
     const data = new FormData();
     data.append("libraryID", props.libraryID);
+    const fetchURL = `${ApiURL}/Library/leaveShareLibrary.php`;
+
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/Library/leaveShareLibrary.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: data,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: data,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

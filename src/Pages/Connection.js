@@ -18,7 +18,7 @@ import BlockIcon from "@mui/icons-material/Block";
 import { Box } from "@mui/material";
 
 const Connection = () => {
-  const [value, setValue] = useState(1);
+  const [value, setValue] = useState();
   useEffect(() => {
     switch (document.URL.split("/").pop()) {
       case "Search":

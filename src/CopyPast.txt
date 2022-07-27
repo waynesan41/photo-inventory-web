@@ -1,0 +1,24 @@
+
+
+
+
+const { ApiURL } = 
+
+const fetchURL = `${ApiURL}/account/aaaaaaaaaaaa.php`;
+
+const fetchURL = `${ApiURL}/object/aaaaaaaaaaaa.php`;
+
+const fetchURL = `${ApiURL}/library/aaaaaaaaaaaa.php`;
+
+
+const fetchURL = `${ApiURL}/mainLocation/aaaaaaaaaaaa.php`;
+
+const fetchURL = `${ApiURL}/objectLocation/aaaaaaaaaaaa.php`;
+
+const fetchURL = `${ApiURL}/location/aaaaaaaaaaaa.php`;
+
+
+const fetchURL = `${ApiURL}/Connection/updateConnection.php`;
+
+const { ApiURL } = useApiURLContex();
+

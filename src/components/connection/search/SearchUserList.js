@@ -3,8 +3,10 @@ import React, { useState } from "react";
 import { TextField } from "@mui/material";
 
 import SearchUser from "./SearchUserOne";
+import { useApiURLContex } from "../../../App";
 
 const SearchUserList = () => {
+  const { ApiURL } = useApiURLContex();
   const [noUser, setNoUser] = useState(false);
   const [searchUser, setsearchUser] = useState([]);
   // const [currentID, setCurrentID] = useState();
@@ -17,16 +19,13 @@ const SearchUserList = () => {
   const fetchSearchUser = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-
+    const fetchURL = `${ApiURL}/Connection/searchUser.php`;
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/Connection/searchUser.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: data,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: data,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

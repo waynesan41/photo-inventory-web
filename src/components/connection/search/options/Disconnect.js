@@ -1,7 +1,9 @@
 import { Button } from "@mui/material";
 import React, { useState } from "react";
+import { useApiURLContex } from "../../../../App";
 
 const Disconnect = (props) => {
+  const { ApiURL } = useApiURLContex();
   const [blocking, setBlocking] = useState(false);
   //BLOCK FETCH
   const blockFetch = async () => {
@@ -10,16 +12,13 @@ const Disconnect = (props) => {
 
     formData.append("userID", props.currentID);
     formData.append("update", "B");
-
+    const fetchURL = `${ApiURL}/Connection/updateConnection.php`;
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/Connection/updateConnection.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: formData,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }
@@ -44,16 +43,13 @@ const Disconnect = (props) => {
 
     formData.append("userID", props.currentID);
     formData.append("update", "R");
-
+    const fetchURL = `${ApiURL}/Connection/updateConnection.php`;
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/Connection/updateConnection.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: formData,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

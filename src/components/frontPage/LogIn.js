@@ -11,8 +11,10 @@ import Box from "@mui/material/Box";
 
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { useApiURLContex } from "../../App";
 
 export default function SignIn() {
+  const { ApiURL } = useApiURLContex();
   const [incorrect, setIncorrect] = useState(false);
   const [loginMessage, setLoginMessage] = useState("");
 
@@ -23,21 +25,21 @@ export default function SignIn() {
   const handleSubmit = useCallback(async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    const fetchUrl = `${ApiURL}/account/login.php`;
 
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/account/login.php",
-        {
-          method: "POST",
-          body: data,
-          credentials: "include",
-        }
-      );
+      const response = await fetch(fetchUrl, {
+        method: "POST",
+        body: data,
+        credentials: "include",
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }
       const result = await response.json();
 
+      console.log("Result1");
+      console.log(result);
       if (result === 1) {
         window.location = window.location.origin + "/Profile";
       } else if (result === 0) {

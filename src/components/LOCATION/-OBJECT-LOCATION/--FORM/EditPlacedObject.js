@@ -2,8 +2,10 @@ import { useState } from "react";
 import { Box, Button, Dialog, Paper, TextField } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useCurrentLocationData } from "../../LocationPage";
+import { useApiURLContex } from "../../../../App";
 
 const EditPlacedObject = (props) => {
+  const { ApiURL } = useApiURLContex();
   const { locationInfo } = useCurrentLocationData();
   const { mainID, locationID } = useParams();
   const [open, setOpen] = useState(false);
@@ -25,16 +27,14 @@ const EditPlacedObject = (props) => {
     data.append("locID", locationID);
     data.append("libID", props.objData.LibraryID);
     data.append("objID", props.objData.ObjectID);
+    const fetchURL = `${ApiURL}/objectLocation/editObjLoc.php`;
 
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/objectLocation/editObjLoc.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: data,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: data,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }
@@ -63,16 +63,14 @@ const EditPlacedObject = (props) => {
     data.append("locID", locationID);
     data.append("libID", props.objData.LibraryID);
     data.append("objID", props.objData.ObjectID);
+    const fetchURL = `${ApiURL}/objectLocation/deleteObjLoc.php`;
 
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/objectLocation/deleteObjLoc.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: data,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: data,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }
@@ -113,7 +111,7 @@ const EditPlacedObject = (props) => {
                 style={{ border: "4px solid orange" }}
                 component="img"
                 height="250"
-                src={`http://localhost/PhotoInventory/Backend/api/image/readImageObject.php?id1=${props.objData.LibraryID}&id2=${props.objData.ObjectID}`}
+                src={`${ApiURL}/image/readImageObject.php?id1=${props.objData.LibraryID}&id2=${props.objData.ObjectID}`}
               />
             )}
           </Box>
@@ -126,7 +124,7 @@ const EditPlacedObject = (props) => {
                 style={{ border: "4px solid green" }}
                 component="img"
                 height="250"
-                src={`http://localhost/PhotoInventory/Backend/api/image/readImageLocation.php?id1=${mainID}&id2=${locationID}`}
+                src={`${ApiURL}/image/readImageLocation.php?id1=${mainID}&id2=${locationID}`}
               />
             )}
           </Box>

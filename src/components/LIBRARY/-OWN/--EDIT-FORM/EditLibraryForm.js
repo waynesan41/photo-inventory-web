@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { TextField, Box, Button, Grid, Dialog } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import DeleteConfirm from "./DeleteConfirm";
+import { useApiURLContex } from "../../../../App";
 
 const style = {
   padding: 10,
@@ -14,6 +15,7 @@ const style = {
 };
 
 const EditLibraryForm = (props) => {
+  const { ApiURL } = useApiURLContex();
   const [open, setOpen] = useState(false);
 
   const openDelete = (type) => {
@@ -31,15 +33,14 @@ const EditLibraryForm = (props) => {
     if (data.get("name") == props.data.Name) {
       props.closeForm();
     } else {
+      const fetchURL = `${ApiURL}/Library/updateLibrary.php`;
+
       try {
-        const response = await fetch(
-          "http://localhost/PhotoInventory/Backend/api/Library/updateLibrary.php",
-          {
-            method: "POST",
-            credentials: "include",
-            body: data,
-          }
-        );
+        const response = await fetch(fetchURL, {
+          method: "POST",
+          credentials: "include",
+          body: data,
+        });
         if (!response.ok) {
           throw new Error(response.statusText);
         }

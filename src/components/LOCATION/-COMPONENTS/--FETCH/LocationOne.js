@@ -7,8 +7,11 @@ import {
   Link,
 } from "@mui/material";
 import { useState } from "react";
+import { useApiURLContex } from "../../../../App";
 
 const LocationOne = (props) => {
+  const { ApiURL } = useApiURLContex();
+
   return (
     <Card>
       <Link
@@ -21,7 +24,7 @@ const LocationOne = (props) => {
             <CardMedia
               component="img"
               height="250"
-              image={`http://localhost/PhotoInventory/Backend/api/image/readImageLocation.php?id1=${props.locationData.MainLocationID}&id2=${props.locationData.LocationID}`}
+              image={`${ApiURL}/image/readImageLocation.php?id1=${props.locationData.MainLocationID}&id2=${props.locationData.LocationID}`}
             />
           )}
         </CardActionArea>

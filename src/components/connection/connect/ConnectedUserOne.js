@@ -2,10 +2,11 @@ import { Card, CardHeader, Popover, Button } from "@mui/material";
 import React, { useState } from "react";
 
 import CloseIcon from "@mui/icons-material/Close";
+import { useApiURLContex } from "../../../App";
 
 const ConnectedUserOne = (props) => {
+  const { ApiURL } = useApiURLContex();
   const [blocking, setBlocking] = useState(false);
-
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
@@ -24,16 +25,13 @@ const ConnectedUserOne = (props) => {
 
     formData.append("userID", props.user.UserID);
     formData.append("update", "B");
-
+    const fetchURL = `${ApiURL}/Connection/updateConnection.php`;
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/Connection/updateConnection.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: formData,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }
@@ -57,16 +55,13 @@ const ConnectedUserOne = (props) => {
 
     formData.append("userID", props.user.UserID);
     formData.append("update", "R");
-
+    const fetchURL = `${ApiURL}/Connection/updateConnection.php`;
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/Connection/updateConnection.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: formData,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

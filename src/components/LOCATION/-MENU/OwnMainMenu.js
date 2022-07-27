@@ -2,7 +2,9 @@ import { Button, Dialog, Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import NewLocationForm from "../-COMPONENTS/--FORM/NewLocationForm";
+import { useApiURLContex } from "../../../App";
 const OwnMainMenu = (props) => {
+  const { ApiURL } = useApiURLContex();
   let { locationID } = useParams(); // Value from URL
   const [open, setOpen] = useState(false);
   const [mainInfo, setMainInfo] = useState({});
@@ -19,15 +21,14 @@ const OwnMainMenu = (props) => {
     const data = new FormData();
     data.append("mainID", props.mainID);
     data.append("type", 1);
+    const fetchURL = `${ApiURL}/mainLocation/getMainInfo.php`;
+
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/MainLocation/getMainInfo.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: data,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: data,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }
@@ -70,6 +71,18 @@ const OwnMainMenu = (props) => {
       >
         Main Location:
         <b>{mainInfo.Name}</b>
+      </Box>
+      <Box
+        style={{
+          color: "#259c3f",
+          border: "2px solid #259c3f",
+          margin: "5px",
+          padding: "5px",
+          borderRadius: "10px",
+          display: "inline-block",
+        }}
+      >
+        Total Locations: <b>{mainInfo.TotalLocation}</b>
       </Box>
 
       <Button

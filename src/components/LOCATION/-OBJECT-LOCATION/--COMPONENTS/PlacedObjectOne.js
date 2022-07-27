@@ -8,8 +8,10 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import EditPlacedObject from "../--FORM/EditPlacedObject";
+import { useApiURLContex } from "../../../../App";
 
 const PlaceObjectOne = (props) => {
+  const { ApiURL } = useApiURLContex();
   const [open, setOpen] = useState(false);
 
   const openDetail = () => {
@@ -26,7 +28,7 @@ const PlaceObjectOne = (props) => {
           <CardMedia
             component="img"
             height="250"
-            image={`http://localhost/PhotoInventory/Backend/api/image/readImageObject.php?id1=${props.objData.LibraryID}&id2=${props.objData.ObjectID}`}
+            image={`${ApiURL}/image/readImageObject.php?id1=${props.objData.LibraryID}&id2=${props.objData.ObjectID}`}
           />
         )}
         <CardContent>

@@ -5,8 +5,10 @@ import { Box, TextField, Button } from "@mui/material";
 
 import { useMainLocationContex } from "../../LocationPage";
 import LocationOne from "./LocationOne";
+import { useApiURLContex } from "../../../../App";
 
 const LocationList = () => {
+  const { ApiURL } = useApiURLContex();
   let { mainID, locationID } = useParams();
   const { mainType } = useMainLocationContex();
   const [locationList, setLocationList] = useState([]);
@@ -16,16 +18,14 @@ const LocationList = () => {
     const data = new FormData(event.currentTarget);
     data.append("mainID", mainID);
     data.append("locType", mainType);
+    const fetchURL = `${ApiURL}/location/searchLocation.php`;
 
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/location/searchLocation.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: data,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: data,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }
@@ -49,16 +49,14 @@ const LocationList = () => {
     data.append("mainID", mainID);
     data.append("locType", mainType);
     data.append("topID", locationID);
+    const fetchURL = `${ApiURL}/Location/getLocation.php`;
 
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/location/getLocation.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: data,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: data,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

@@ -1,21 +1,20 @@
 import { Button } from "@mui/material";
 import React from "react";
+import { useApiURLContex } from "../../../../App";
 const CancelRequest = (props) => {
+  const { ApiURL } = useApiURLContex();
   const cancelFetch = async () => {
     const formData = new FormData();
 
     formData.append("userID", props.currentID);
     formData.append("update", "C");
-
+    const fetchURL = `${ApiURL}/Connection/updateConnection.php`;
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/Connection/updateConnection.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: formData,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

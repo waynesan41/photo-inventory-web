@@ -1,7 +1,10 @@
 import { Box, Button, TextField } from "@mui/material";
 import { useState, useEffect } from "react";
+import { useApiURLContex } from "../../../../App";
 import { useLibraryContex } from "../../ObjectLibrary";
+
 const FormAddObject = () => {
+  const { ApiURL } = useApiURLContex();
   const { libraryID, libType } = useLibraryContex();
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
@@ -22,15 +25,14 @@ const FormAddObject = () => {
     /* for (var pair of data.entries()) {
       console.log(pair[0] + ": " + pair[1]);
     } */
+    const fetchURL = `${ApiURL}/object/addNewObject.php`;
+
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/object/addNewObject.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: data,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: data,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

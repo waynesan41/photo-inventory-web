@@ -1,6 +1,7 @@
 import { Button, Grid, Box, TextField } from "@mui/material";
 
 import React, { useEffect, useState, useCallback } from "react";
+import { useApiURLContex } from "../../App";
 
 const style = {
   padding: 10,
@@ -12,6 +13,7 @@ const style = {
 };
 
 const UpdatePasswordForm = (props) => {
+  const { ApiURL } = useApiURLContex();
   const [password, setPassword] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
 
@@ -29,16 +31,14 @@ const UpdatePasswordForm = (props) => {
     if (oldPassValid || confirmPassValid || newPassValid) {
       return 0;
     }
+    const fetchURL = `${ApiURL}/account/updateUserProfile.php`;
 
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/account/updateUserProfile.php",
-        {
-          method: "POST",
-          body: data,
-          credentials: "include",
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        body: data,
+        credentials: "include",
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

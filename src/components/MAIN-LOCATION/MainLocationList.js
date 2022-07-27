@@ -4,6 +4,7 @@ import { Box, Button, Dialog, Grid } from "@mui/material";
 import NewMainLocationForm from "./-NEWMAIN/NewMainLocationForm";
 import OwnMainLocationOne from "./-OWN/OwnMainLocationOne";
 import ShareMainLocationOne from "./-SHARE/ShareMainLocationOne";
+import { useApiURLContex } from "../../App";
 
 const ChangePeopleContex = React.createContext();
 export const useChangePeople = () => {
@@ -11,6 +12,7 @@ export const useChangePeople = () => {
 };
 
 const MainLocationList = () => {
+  const { ApiURL } = useApiURLContex();
   const [ownLibrary, setOwnLibrary] = useState([]);
   const [shareLibrary, setShareLibrary] = useState([]);
 
@@ -37,16 +39,14 @@ const MainLocationList = () => {
   const fetchLibrary = async (libType) => {
     const formData = new FormData();
     formData.append("mainLocation", libType);
+    const fetchURL = `${ApiURL}/mainLocation/getMainLocation.php`;
 
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/mainLocation/getMainLocation.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: formData,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }
@@ -63,7 +63,6 @@ const MainLocationList = () => {
           else setShareLibrary([...result]);
         }
       }
-      console.log(result);
     } catch (error) {
       console.log(error.message);
     }

@@ -10,8 +10,10 @@ import Box from "@mui/material/Box";
 
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { useApiURLContex } from "../../App";
 
 export default function SignUp() {
+  const { ApiURL } = useApiURLContex();
   const [fullName, setFullName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
@@ -44,15 +46,13 @@ export default function SignUp() {
     ) {
       return 0;
     }
+    const fetchUrl = `${ApiURL}/account/signUp.php`;
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/account/signUp.php",
-        {
-          method: "POST",
-          body: data,
-          credentials: "include",
-        }
-      );
+      const response = await fetch(fetchUrl, {
+        method: "POST",
+        body: data,
+        credentials: "include",
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }
@@ -126,7 +126,7 @@ export default function SignUp() {
     const passRegex =
       /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9\s])^.{9,100}/;
     setPassword(event.target.value);
-    if (event.target.value != confirmPass) {
+    if (event.target.value !== confirmPass) {
       setConfirmPassValid(true);
     } else {
       setConfirmPassValid(false);
@@ -142,7 +142,7 @@ export default function SignUp() {
   const confirmPasswordHandler = (event) => {
     setConfirmPass(event.target.value);
 
-    if (event.target.value != password) {
+    if (event.target.value !== password) {
       setConfirmPassValid(true);
     } else {
       setConfirmPassValid(false);

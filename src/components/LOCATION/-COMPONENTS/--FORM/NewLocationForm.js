@@ -1,9 +1,11 @@
 import { Box, Button, TextField } from "@mui/material";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { useApiURLContex } from "../../../../App";
 import { useMainLocationContex } from "../../LocationPage";
 
 const NewLocationForm = (props) => {
+  const { ApiURL } = useApiURLContex();
   const { mainID, mainType, accessLvl } = useMainLocationContex();
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
@@ -24,15 +26,14 @@ const NewLocationForm = (props) => {
     for (var pair of data.entries()) {
       console.log(pair[0] + ": " + pair[1]);
     }
+    const fetchURL = `${ApiURL}/location/addNewLocation.php`;
+
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/location/addNewLocation.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: data,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: data,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { Box, Button, Grid } from "@mui/material";
+import { Box } from "@mui/material";
 import NewUserOne from "./NewUserOne";
+import { useApiURLContex } from "../../../../App";
 
 const AddShareUser = (props) => {
+  const { ApiURL } = useApiURLContex();
   const [addUser, setAddUser] = useState([]);
   const changeNewUser = (id) => {
     const items = addUser.filter((user) => {
@@ -15,15 +17,14 @@ const AddShareUser = (props) => {
   const fetchConnectedUser = async () => {
     const data = new FormData();
     data.append("libraryID", props.data.LibraryID);
+    const fetchURL = `${ApiURL}/Library/getNewUser.php`;
+
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/Library/getNewUser.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: data,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: data,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

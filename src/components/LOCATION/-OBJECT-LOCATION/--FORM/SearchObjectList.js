@@ -8,8 +8,10 @@ import {
   Radio,
 } from "@mui/material";
 import ObjectPlaceOne from "../--COMPONENTS/ObjectPlaceOne";
-import ShareMainLocationOne from "../../../MAIN-LOCATION/-SHARE/ShareMainLocationOne";
+import { useApiURLContex } from "../../../../App";
+
 const SearchObjectList = (props) => {
+  const { ApiURL } = useApiURLContex();
   const [object, setObject] = useState([]);
   const [noObject, setNoObject] = useState(false);
 
@@ -18,16 +20,14 @@ const SearchObjectList = (props) => {
     const data = new FormData(event.currentTarget);
     data.append("libraryID", props.libraryID);
     data.append("libType", props.libType);
+    const fetchURL = `${ApiURL}/object/searchObject.php`;
 
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/object/searchObject.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: data,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: data,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

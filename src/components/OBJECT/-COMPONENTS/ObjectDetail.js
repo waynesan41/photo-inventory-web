@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 import EditForm from "./EditForm";
 import { useLibraryContex } from "../ObjectLibrary";
 import ListLocation from "../-PLACE-OBJECT/ListLocation";
+import { useApiURLContex } from "../../../App";
 
 const ObjectDetail = (props) => {
+  const { ApiURL } = useApiURLContex();
   const { libType, accessLvl } = useLibraryContex();
   const [edit, setEdit] = useState(true);
   const [src, setSrc] = useState("");
@@ -32,7 +34,7 @@ const ObjectDetail = (props) => {
     }
     if (props.objData.Photo != 0) {
       setSrc(
-        `http://localhost/PhotoInventory/Backend/api/image/readImageObject.php?id1=${props.objData.LibraryID}&id2=${props.objData.ObjectID}`
+        `${ApiURL}/image/readImageObject.php?id1=${props.objData.LibraryID}&id2=${props.objData.ObjectID}`
       );
     }
   }, []);

@@ -1,11 +1,13 @@
 import { Button, Box, Dialog } from "@mui/material";
 
 import { useState, useEffect } from "react";
+import { useApiURLContex } from "../../../App";
 import { useLibraryContex } from "../ObjectLibrary";
 
 import FormAddObject from "./--FORM/FormAddObject";
 
 const ShareHeader = () => {
+  const { ApiURL } = useApiURLContex();
   const [open, setOpen] = useState(false);
   const [libInfo, setLibInfo] = useState({});
   const [addable, setAddable] = useState(true);
@@ -23,15 +25,14 @@ const ShareHeader = () => {
     const data = new FormData();
     data.append("libraryID", libraryID);
     data.append("type", 2);
+    const fetchURL = `${ApiURL}/library/getLibraryInfo.php`;
+
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/library/getLibraryInfo.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: data,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: data,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

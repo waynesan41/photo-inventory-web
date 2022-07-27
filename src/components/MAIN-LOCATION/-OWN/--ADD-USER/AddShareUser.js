@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 
 import { Box } from "@mui/material";
 import NewUserOne from "./NewUserOne";
+import { useApiURLContex } from "../../../../App";
 
 const MainLocationIDContext = React.createContext();
 export const useMainLocationID = () => {
@@ -9,6 +10,7 @@ export const useMainLocationID = () => {
 };
 
 const AddShareUser = (props) => {
+  const { ApiURL } = useApiURLContex();
   const [addUser, setAddUser] = useState([]); //Lists of Users That can be ADD/SHARE
   const [mainID, setMainID] = useState(props.data.MainLocationID);
   //Should be Pass as Context
@@ -23,15 +25,14 @@ const AddShareUser = (props) => {
   const fetchConnectedUser = async () => {
     const data = new FormData();
     data.append("mainID", props.data.MainLocationID);
+    const fetchURL = `${ApiURL}/mainLocation/getNewUser.php`;
+
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/MainLocation/getNewUser.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: data,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: data,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

@@ -5,8 +5,10 @@ import {
   useCurrentLocationData,
   useMainLocationContex,
 } from "../../../LocationPage";
+import { useApiURLContex } from "../../../../../App";
 
 const MoveLocationForm = (props) => {
+  const { ApiURL } = useApiURLContex();
   const { mainType } = useMainLocationContex();
   const { locationInfo } = useCurrentLocationData();
   const { mainID, locationID } = useParams();
@@ -30,16 +32,14 @@ const MoveLocationForm = (props) => {
     data.append("locationID", locationID);
     data.append("locType", mainType);
     data.append("topID", props.locData.LocationID);
+    const fetchURL = `${ApiURL}/location/moveLocation.php`;
 
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/location/moveLocation.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: data,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: data,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }
@@ -78,7 +78,7 @@ const MoveLocationForm = (props) => {
                 style={{ border: "4px solid green" }}
                 component="img"
                 height="250"
-                src={`http://localhost/PhotoInventory/Backend/api/image/readImageLocation.php?id1=${mainID}&id2=${locationID}`}
+                src={`${ApiURL}/image/readImageLocation.php?id1=${mainID}&id2=${locationID}`}
               />
             )}
           </Box>
@@ -91,7 +91,7 @@ const MoveLocationForm = (props) => {
                 style={{ border: "4px solid orange" }}
                 component="img"
                 height="250"
-                src={`http://localhost/PhotoInventory/Backend/api/image/readImageLocation.php?id1=${props.locData.MainLocationID}&id2=${props.locData.LocationID}`}
+                src={`${ApiURL}/image/readImageLocation.php?id1=${props.locData.MainLocationID}&id2=${props.locData.LocationID}`}
               />
             )}
           </Box>

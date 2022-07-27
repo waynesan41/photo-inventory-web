@@ -1,24 +1,24 @@
 import { Box, Breadcrumbs, Link } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useApiURLContex } from "../../../../App";
 
 const LocationBread = () => {
+  const { ApiURL } = useApiURLContex();
   let { mainID, locationID } = useParams();
   const [breadList, setBreadList] = useState([]);
   const fetchBread = async () => {
     const data = new FormData();
     data.append("mainID", mainID);
     data.append("locationID", locationID);
+    const fetchURL = `${ApiURL}/Location/getBread.php`;
 
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/Location/getBread.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: data,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: data,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import { TextField, Box, Button, Grid, Alert, Dialog } from "@mui/material";
+import { useApiURLContex } from "../../../../App";
 const style = {
   padding: 10,
   minWidth: 400,
@@ -11,6 +12,7 @@ const style = {
 };
 
 const DeleteConfirm = (props) => {
+  const { ApiURL } = useApiURLContex();
   const [libName, setLibName] = useState("");
   const [open, setOpen] = useState(false);
   const [confirm, setConfirm] = useState(true);
@@ -36,16 +38,14 @@ const DeleteConfirm = (props) => {
     formData.append("libraryID", props.data.LibraryID);
     formData.append("name", libName);
 
-    console.log(formData);
+    const fetchURL = `${ApiURL}/Library/deleteLibrary.php`;
+
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/Library/deleteLibrary.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: formData,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import RequestToOne from "./RequestToOne";
+import { useApiURLContex } from "../../../App";
 
 const RequestToList = () => {
+  const { ApiURL } = useApiURLContex();
   const [noUser, setNoUser] = useState();
   const [requestToUser, setrequestToUser] = useState([]);
   const [editUserID, setEdituserID] = useState();
@@ -11,16 +13,13 @@ const RequestToList = () => {
     const getBlockRequest = async () => {
       const formData = new FormData();
       formData.append("type", "T");
-
+      const fetchURL = `${ApiURL}/Connection/getConnection.php`;
       try {
-        const response = await fetch(
-          "http://localhost/PhotoInventory/Backend/api/Connection/getConnection.php",
-          {
-            method: "POST",
-            credentials: "include",
-            body: formData,
-          }
-        );
+        const response = await fetch(fetchURL, {
+          method: "POST",
+          credentials: "include",
+          body: formData,
+        });
         if (!response.ok) {
           throw new Error(response.statusText);
         }

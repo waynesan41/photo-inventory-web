@@ -1,8 +1,10 @@
 import { Box, Button, Paper, TextField } from "@mui/material";
 import { useParams } from "react-router-dom";
+import { useApiURLContex } from "../../../../App";
 import { useCurrentLocationData } from "../../LocationPage";
 
 const LinkObjLocForm = (props) => {
+  const { ApiURL } = useApiURLContex();
   const { locationInfo } = useCurrentLocationData();
   const { mainID, locationID } = useParams();
 
@@ -19,16 +21,14 @@ const LinkObjLocForm = (props) => {
     if (data.get("description").length == 0) {
       data.delete("description");
     }
+    const fetchURL = `${ApiURL}/objectLocation/addObjLoc.php`;
 
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/objectLocation/addObjLoc.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: data,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: data,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }
@@ -70,7 +70,7 @@ const LinkObjLocForm = (props) => {
               style={{ border: "4px solid orange" }}
               component="img"
               height="250"
-              src={`http://localhost/PhotoInventory/Backend/api/image/readImageObject.php?id1=${props.objData.LibraryID}&id2=${props.objData.ObjectID}`}
+              src={`${ApiURL}/image/readImageObject.php?id1=${props.objData.LibraryID}&id2=${props.objData.ObjectID}`}
             />
           )}
         </Box>
@@ -83,7 +83,7 @@ const LinkObjLocForm = (props) => {
               style={{ border: "4px solid green" }}
               component="img"
               height="250"
-              src={`http://localhost/PhotoInventory/Backend/api/image/readImageLocation.php?id1=${mainID}&id2=${locationID}`}
+              src={`${ApiURL}/image/readImageLocation.php?id1=${mainID}&id2=${locationID}`}
             />
           )}
         </Box>

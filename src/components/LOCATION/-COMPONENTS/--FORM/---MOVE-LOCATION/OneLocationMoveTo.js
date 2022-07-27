@@ -7,7 +7,9 @@ import {
   Dialog,
 } from "@mui/material";
 import MoveLocationForm from "./MoveLocationFrom";
+import { useApiURLContex } from "../../../../../App";
 const OneLocationMoveTo = (props) => {
+  const { ApiURL } = useApiURLContex();
   const [open, setOpen] = useState(false);
 
   const openDetail = () => {
@@ -16,6 +18,7 @@ const OneLocationMoveTo = (props) => {
   const closeDetail = () => {
     setOpen(false);
   };
+
   return (
     <Card>
       <CardActionArea onClick={openDetail}>
@@ -24,7 +27,7 @@ const OneLocationMoveTo = (props) => {
           <CardMedia
             component="img"
             height="250"
-            image={`http://localhost/PhotoInventory/Backend/api/readImageLocation.php?id1=${props.locationData.MainLocationID}&id2=${props.locationData.LocationID}`}
+            image={`${ApiURL}/image/readImageLocation.php?id1=${props.locationData.MainLocationID}&id2=${props.locationData.LocationID}`}
           />
         )}
       </CardActionArea>

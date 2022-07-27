@@ -7,8 +7,10 @@ import AcceptDenied from "./options/AcceptDenied";
 import CancelRequest from "./options/CancelRequest";
 import Disconnect from "./options/Disconnect";
 import SendRequestBlock from "./options/SendRequestBlock";
+import { useApiURLContex } from "../../../App";
 
 const SearchUserOne = (props) => {
+  const { ApiURL } = useApiURLContex();
   const [status, setStatus] = useState("R");
   const [loading, setLoading] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -30,16 +32,13 @@ const SearchUserOne = (props) => {
     const formData = new FormData();
 
     formData.append("userID", fetchID);
-
+    const fetchURL = `${ApiURL}/Connection/checkSearch.php`;
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/Connection/checkSearch.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: formData,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

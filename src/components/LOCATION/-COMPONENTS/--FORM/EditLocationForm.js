@@ -1,9 +1,11 @@
 import { Box, TextField, Button, Dialog } from "@mui/material";
 import { useState, useEffect } from "react";
+import { useApiURLContex } from "../../../../App";
 import { useMainLocationContex } from "../../LocationPage";
 import DeleteConfirm from "./DeleteConfirm";
 
 const EditLocationForm = (props) => {
+  const { ApiURL } = useApiURLContex();
   const { mainType, accessLvl } = useMainLocationContex();
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
@@ -25,15 +27,14 @@ const EditLocationForm = (props) => {
     /* for (var pair of data.entries()) {
       console.log(pair[0] + ": " + pair[1]);
     } */
+    const fetchURL = `${ApiURL}/location/updateLocation.php`;
+
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/location/updateLocation.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: data,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: data,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }
@@ -77,7 +78,7 @@ const EditLocationForm = (props) => {
   //USE EFFECT
   useEffect(() => {
     if (props.locData.Photo != 0) {
-      const src = `http://localhost/PhotoInventory/Backend/api/image/readImageLocation.php?id1=${props.locData.MainLocationID}&id2=${props.locData.LocationID}`;
+      const src = `${ApiURL}/image/readImageLocation.php?id1=${props.locData.MainLocationID}&id2=${props.locData.LocationID}`;
       fetchOrignalImage(src);
       setPreview(src);
     }

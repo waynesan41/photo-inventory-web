@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 
 import { Box } from "@mui/material";
 import BlockedUserOne from "./BlockedUserOne";
+import { useApiURLContex } from "../../../App";
 
 const BlockedUserList = () => {
+  const { ApiURL } = useApiURLContex();
   const [noBlockuser, setNoBlockUser] = useState();
   const [blockUser, setBlockUser] = useState([]);
   const [editUserID, setEdituserID] = useState();
@@ -12,16 +14,13 @@ const BlockedUserList = () => {
     const getBlockRequest = async () => {
       const formData = new FormData();
       formData.append("type", "B");
-
+      const fetchURL = `${ApiURL}/Connection/getConnection.php`;
       try {
-        const response = await fetch(
-          "http://localhost/PhotoInventory/Backend/api/Connection/getConnection.php",
-          {
-            method: "POST",
-            credentials: "include",
-            body: formData,
-          }
-        );
+        const response = await fetch(fetchURL, {
+          method: "POST",
+          credentials: "include",
+          body: formData,
+        });
         if (!response.ok) {
           throw new Error(response.statusText);
         }
