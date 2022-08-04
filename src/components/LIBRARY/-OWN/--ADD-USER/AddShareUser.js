@@ -17,7 +17,7 @@ const AddShareUser = (props) => {
   const fetchConnectedUser = async () => {
     const data = new FormData();
     data.append("libraryID", props.data.LibraryID);
-    const fetchURL = `${ApiURL}/Library/getNewUser.php`;
+    const fetchURL = `${ApiURL}/library/getNewUser.php`;
 
     try {
       const response = await fetch(fetchURL, {

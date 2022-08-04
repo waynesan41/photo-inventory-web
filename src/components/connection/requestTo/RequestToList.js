@@ -13,7 +13,7 @@ const RequestToList = () => {
     const getBlockRequest = async () => {
       const formData = new FormData();
       formData.append("type", "T");
-      const fetchURL = `${ApiURL}/Connection/getConnection.php`;
+      const fetchURL = `${ApiURL}/connection/getConnection.php`;
       try {
         const response = await fetch(fetchURL, {
           method: "POST",

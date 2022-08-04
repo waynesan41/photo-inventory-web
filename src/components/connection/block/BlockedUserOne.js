@@ -27,7 +27,7 @@ const BlockedUserOne = (props) => {
 
     formData.append("userID", props.currentID);
     formData.append("update", "U");
-    const fetchURL = `${ApiURL}/Connection/updateConnection.php`;
+    const fetchURL = `${ApiURL}/connection/updateConnection.php`;
     try {
       const response = await fetch(fetchURL, {
         method: "POST",

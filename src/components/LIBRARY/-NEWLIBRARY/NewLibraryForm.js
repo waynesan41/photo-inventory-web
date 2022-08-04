@@ -16,7 +16,7 @@ const NewLibraryForm = () => {
   const fetchAddNewLibrary = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const fetchURL = `${ApiURL}/Library/addLibrary.php`;
+    const fetchURL = `${ApiURL}/library/addLibrary.php`;
     try {
       const response = await fetch(fetchURL, {
         method: "POST",

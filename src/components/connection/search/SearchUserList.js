@@ -19,7 +19,7 @@ const SearchUserList = () => {
   const fetchSearchUser = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const fetchURL = `${ApiURL}/Connection/searchUser.php`;
+    const fetchURL = `${ApiURL}/connection/searchUser.php`;
     try {
       const response = await fetch(fetchURL, {
         method: "POST",

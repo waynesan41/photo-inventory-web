@@ -35,7 +35,7 @@ const EditShareUser = (props) => {
   const fetchShareUser = async () => {
     const data = new FormData();
     data.append("libraryID", props.data.LibraryID);
-    const fetchURL = `${ApiURL}/Library/getUser.php`;
+    const fetchURL = `${ApiURL}/library/getUser.php`;
 
     try {
       const response = await fetch(fetchURL, {

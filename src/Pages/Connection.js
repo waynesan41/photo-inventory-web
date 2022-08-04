@@ -1,10 +1,4 @@
 import React, { useEffect, useState } from "react";
-/* import { Grid, Card, ButtonGroup, Button } from "@mui/material";
-
-import ConnectedUser from "../components/connection/connect/ConnectedUser";
-import RequestToOne from "../components/connection/requestTo/RequestToOne";
-import RequestFromList from "../components/connection/requestFrom/RequestFromList";
-import SearchUser from "../components/connection/search/SearchUserList"; */
 
 import { NavLink, Outlet } from "react-router-dom";
 

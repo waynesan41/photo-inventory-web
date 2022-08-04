@@ -30,7 +30,7 @@ const LocationPage = () => {
     data.append("mainID", mainID);
     data.append("locationID", locationID);
 
-    const fetchURL = `${ApiURL}/Location/getLocationInfo.php`;
+    const fetchURL = `${ApiURL}/location/getLocationInfo.php`;
     try {
       const response = await fetch(fetchURL, {
         method: "POST",
@@ -59,7 +59,7 @@ const LocationPage = () => {
   const fetchMainAccessInfo = async () => {
     const data = new FormData();
     data.append("mainID", mainID);
-    const fetchURL = `${ApiURL}/Location/checkAccess.php`;
+    const fetchURL = `${ApiURL}/location/checkAccess.php`;
 
     try {
       const response = await fetch(fetchURL, {

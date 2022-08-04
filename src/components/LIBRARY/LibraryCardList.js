@@ -38,7 +38,7 @@ const LibraryCardList = () => {
   const fetchLibrary = async (libType) => {
     const formData = new FormData();
     formData.append("library", libType);
-    const fetchURL = `${ApiURL}/Library/getLibrary.php`;
+    const fetchURL = `${ApiURL}/library/getLibrary.php`;
 
     try {
       const response = await fetch(fetchURL, {

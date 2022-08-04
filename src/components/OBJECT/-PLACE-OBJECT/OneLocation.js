@@ -12,7 +12,7 @@ const OneLocation = (props) => {
   return (
     <Card style={{ border: "2px solid green" }}>
       <Link
-        href={`/MainLocation/${props.locationData.MainLocationID}/${props.locationData.LocationID}`}
+        href={`/mainLocation/${props.locationData.MainLocationID}/${props.locationData.LocationID}`}
         style={{ textDecoration: "none", color: "black" }}
       >
         <CardActionArea>

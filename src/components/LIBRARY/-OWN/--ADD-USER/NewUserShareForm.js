@@ -27,7 +27,7 @@ const NewUserShareForm = (props) => {
         for (var pair of data.entries()) {
           console.log(pair[0] + ", " + pair[1]);
         } */
-    const fetchURL = `${ApiURL}/Library/shareLibrary.php`;
+    const fetchURL = `${ApiURL}/library/shareLibrary.php`;
     try {
       const response = await fetch(fetchURL, {
         method: "POST",

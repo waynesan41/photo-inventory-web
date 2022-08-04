@@ -23,7 +23,7 @@ const ShareMainMenu = (props) => {
     const data = new FormData();
     data.append("mainID", props.mainID);
     data.append("type", 2);
-    const fetchURL = `${ApiURL}/MainLocation/getMainInfo.php`;
+    const fetchURL = `${ApiURL}/mainLocation/getMainInfo.php`;
 
     try {
       const response = await fetch(fetchURL, {

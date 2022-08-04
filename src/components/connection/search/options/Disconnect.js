@@ -12,7 +12,7 @@ const Disconnect = (props) => {
 
     formData.append("userID", props.currentID);
     formData.append("update", "B");
-    const fetchURL = `${ApiURL}/Connection/updateConnection.php`;
+    const fetchURL = `${ApiURL}/connection/updateConnection.php`;
     try {
       const response = await fetch(fetchURL, {
         method: "POST",
@@ -43,7 +43,7 @@ const Disconnect = (props) => {
 
     formData.append("userID", props.currentID);
     formData.append("update", "R");
-    const fetchURL = `${ApiURL}/Connection/updateConnection.php`;
+    const fetchURL = `${ApiURL}/connection/updateConnection.php`;
     try {
       const response = await fetch(fetchURL, {
         method: "POST",

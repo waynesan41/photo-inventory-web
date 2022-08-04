@@ -29,7 +29,7 @@ const RequestToOne = (props) => {
 
     formData.append("userID", props.currentID);
     formData.append("update", "C");
-    const fetchURL = `${ApiURL}/Connection/updateConnection.php`;
+    const fetchURL = `${ApiURL}/connection/updateConnection.php`;
     try {
       const response = await fetch(fetchURL, {
         method: "POST",

@@ -11,7 +11,7 @@ const SendRequestBlock = (props) => {
     console.log(props.currentID);
     formData.append("userID", props.currentID);
     formData.append("update", "S");
-    const fetchURL = `${ApiURL}/Connection/updateConnection.php`;
+    const fetchURL = `${ApiURL}/connection/updateConnection.php`;
     try {
       const response = await fetch(fetchURL, {
         method: "POST",
@@ -42,7 +42,7 @@ const SendRequestBlock = (props) => {
 
     formData.append("userID", props.currentID);
     formData.append("update", "B");
-    const fetchURL = `${ApiURL}/Connection/updateConnection.php`;
+    const fetchURL = `${ApiURL}/connection/updateConnection.php`;
     try {
       const response = await fetch(fetchURL, {
         method: "POST",

@@ -49,7 +49,7 @@ const LocationList = () => {
     data.append("mainID", mainID);
     data.append("locType", mainType);
     data.append("topID", locationID);
-    const fetchURL = `${ApiURL}/Location/getLocation.php`;
+    const fetchURL = `${ApiURL}/location/getLocation.php`;
 
     try {
       const response = await fetch(fetchURL, {

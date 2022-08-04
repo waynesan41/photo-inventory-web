@@ -8,7 +8,7 @@ const ConfirmLeaveForm = (props) => {
   const fetchLeaveLibrary = async () => {
     const data = new FormData();
     data.append("libraryID", props.libraryID);
-    const fetchURL = `${ApiURL}/Library/leaveShareLibrary.php`;
+    const fetchURL = `${ApiURL}/library/leaveShareLibrary.php`;
 
     try {
       const response = await fetch(fetchURL, {

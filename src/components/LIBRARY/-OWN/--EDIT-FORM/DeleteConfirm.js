@@ -38,7 +38,7 @@ const DeleteConfirm = (props) => {
     formData.append("libraryID", props.data.LibraryID);
     formData.append("name", libName);
 
-    const fetchURL = `${ApiURL}/Library/deleteLibrary.php`;
+    const fetchURL = `${ApiURL}/library/deleteLibrary.php`;
 
     try {
       const response = await fetch(fetchURL, {

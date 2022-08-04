@@ -42,7 +42,6 @@ function App() {
             <Route path="/Login" element={<LogInPage />} />
             <Route path="/" element={<NavBar />}>
               <Route path="/" element={<MainLocation />} />
-
               <Route path="/MainLocation/" element={<MainLocation />} />
               <Route path="/MainLocation/:mainID" element={<LocationPage />} />
               <Route

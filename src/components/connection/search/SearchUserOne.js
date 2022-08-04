@@ -32,7 +32,7 @@ const SearchUserOne = (props) => {
     const formData = new FormData();
 
     formData.append("userID", fetchID);
-    const fetchURL = `${ApiURL}/Connection/checkSearch.php`;
+    const fetchURL = `${ApiURL}/connection/checkSearch.php`;
     try {
       const response = await fetch(fetchURL, {
         method: "POST",

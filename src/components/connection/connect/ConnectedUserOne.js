@@ -25,7 +25,7 @@ const ConnectedUserOne = (props) => {
 
     formData.append("userID", props.user.UserID);
     formData.append("update", "B");
-    const fetchURL = `${ApiURL}/Connection/updateConnection.php`;
+    const fetchURL = `${ApiURL}/connection/updateConnection.php`;
     try {
       const response = await fetch(fetchURL, {
         method: "POST",
@@ -55,7 +55,7 @@ const ConnectedUserOne = (props) => {
 
     formData.append("userID", props.user.UserID);
     formData.append("update", "R");
-    const fetchURL = `${ApiURL}/Connection/updateConnection.php`;
+    const fetchURL = `${ApiURL}/connection/updateConnection.php`;
     try {
       const response = await fetch(fetchURL, {
         method: "POST",

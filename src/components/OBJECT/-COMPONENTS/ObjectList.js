@@ -60,15 +60,13 @@ const ObjectList = () => {
     data.append("libraryID", libraryID);
     data.append("libType", libType);
 
+    const fetchURL = `${ApiURL}/object/getObject.php`;
     try {
-      const response = await fetch(
-        "http://localhost/PhotoInventory/Backend/api/object/getObject.php",
-        {
-          method: "POST",
-          credentials: "include",
-          body: data,
-        }
-      );
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: data,
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }

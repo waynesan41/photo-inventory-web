@@ -33,7 +33,7 @@ const EditLibraryForm = (props) => {
     if (data.get("name") == props.data.Name) {
       props.closeForm();
     } else {
-      const fetchURL = `${ApiURL}/Library/updateLibrary.php`;
+      const fetchURL = `${ApiURL}/library/updateLibrary.php`;
 
       try {
         const response = await fetch(fetchURL, {

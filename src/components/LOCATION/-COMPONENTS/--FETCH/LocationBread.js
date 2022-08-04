@@ -11,7 +11,7 @@ const LocationBread = () => {
     const data = new FormData();
     data.append("mainID", mainID);
     data.append("locationID", locationID);
-    const fetchURL = `${ApiURL}/Location/getBread.php`;
+    const fetchURL = `${ApiURL}/location/getBread.php`;
 
     try {
       const response = await fetch(fetchURL, {

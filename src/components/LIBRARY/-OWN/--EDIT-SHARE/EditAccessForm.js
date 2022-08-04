@@ -24,7 +24,7 @@ const EditAccessForm = (props) => {
       data.delete("access");
       data.append("libraryID", props.libraryID);
       data.append("userID", props.user.UserID);
-      const fetchURL = `${ApiURL}/Library/removeShareUser.php`;
+      const fetchURL = `${ApiURL}/library/removeShareUser.php`;
 
       try {
         const response = await fetch(fetchURL, {
@@ -57,7 +57,7 @@ const EditAccessForm = (props) => {
       }
       data.append("libraryID", props.libraryID);
       data.append("userID", props.user.UserID);
-      const fetchURL = `${ApiURL}/Library/shareLibrary.php`;
+      const fetchURL = `${ApiURL}/library/shareLibrary.php`;
 
       try {
         const response = await fetch(fetchURL, {
