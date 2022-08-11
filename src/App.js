@@ -26,11 +26,11 @@ export const useApiURLContex = () => {
 };
 
 function App() {
-  // const ApiURL = "http://localhost/PhotoInventory/Backend/api";
+  const ApiURL = "http://localhost/PhotoInventory/Backend/api";
 
-  const [ApiURL, setApiURL] = useState(
+  /* const [ApiURL, setApiURL] = useState(
     window.location.origin + "/PhotoInventory/Backend/api"
-  );
+  ); */
   const yourHandler = () => {
     console.log("Router Change is Called!");
   };

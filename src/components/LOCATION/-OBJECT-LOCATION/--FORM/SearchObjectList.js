@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   TextField,
@@ -47,11 +47,49 @@ const SearchObjectList = (props) => {
       console.log(error.message);
     }
   };
+  const fetchPreSearch = async () => {
+    const data = new FormData();
+    data.append("filter", 3);
+    data.append("search", "");
+    data.append("libraryID", props.libraryID);
+    data.append("libType", props.libType);
+    const fetchURL = `${ApiURL}/object/searchObject.php`;
+
+    try {
+      const response = await fetch(fetchURL, {
+        method: "POST",
+        credentials: "include",
+        body: data,
+      });
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      const result = await response.json();
+      console.log(result);
+      if (result === "0") {
+        window.location = window.location.origin + "/Login";
+      } else if (result === "NO OBJECT") {
+        setObject([]);
+        setNoObject(true);
+        console.log("No Object");
+      } else {
+        setNoObject(false);
+        setObject([...result]);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchPreSearch();
+  }, []);
+
   return (
     <Box style={{ padding: "5px" }}>
       <Box component="form" onSubmit={fetchSearchObject}>
         <RadioGroup
-          defaultValue="1"
+          defaultValue="3"
           name="filter"
           required
           style={{ display: "inline" }}

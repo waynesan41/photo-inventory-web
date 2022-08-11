@@ -34,7 +34,7 @@ const ObjectDetail = (props) => {
     }
     if (props.objData.Photo != 0) {
       setSrc(
-        `${ApiURL}/image/readImageObject.php?id1=${props.objData.LibraryID}&id2=${props.objData.ObjectID}`
+        `${ApiURL}/image/readOgImageObject.php?id1=${props.objData.LibraryID}&id2=${props.objData.ObjectID}`
       );
     }
   }, []);

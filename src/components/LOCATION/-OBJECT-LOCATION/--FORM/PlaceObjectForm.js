@@ -49,6 +49,7 @@ const PlaceObjectForm = () => {
         setLibraryList([]);
       } else {
         setLibraryList([...result]);
+        setSelectLibID(result[0].LibraryID);
       }
       console.log(result);
       console.log(libraryList);
