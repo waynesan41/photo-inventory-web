@@ -1,4 +1,10 @@
-import { Button, Card, CardHeader, Popover } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardHeader,
+  LinearProgress,
+  Popover,
+} from "@mui/material";
 import React, { useState } from "react";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -6,7 +12,7 @@ import { useApiURLContex } from "../../../App";
 
 const BlockedUserOne = (props) => {
   const { ApiURL } = useApiURLContex();
-  const [unBlocking, setUnBlocking] = useState(false);
+  const [loadUnblock, setLoadUnblock] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
@@ -14,15 +20,15 @@ const BlockedUserOne = (props) => {
     props.setCurrentID(event.currentTarget.id);
   };
   const handleClose = () => {
-    setUnBlocking(false);
+    setLoadUnblock(false);
     setAnchorEl(null);
   };
 
   const open = Boolean(anchorEl);
 
   const unBlockFetch = async () => {
+    setLoadUnblock(true);
     console.log("Button unBlock: " + props.currentID);
-    setUnBlocking(!unBlocking);
     const formData = new FormData();
 
     formData.append("userID", props.currentID);
@@ -46,10 +52,10 @@ const BlockedUserOne = (props) => {
       } else {
         window.location.reload();
       }
+      setLoadUnblock(false);
     } catch (error) {
       console.log(error.message);
     }
-    setUnBlocking(false);
   };
 
   return (
@@ -80,10 +86,11 @@ const BlockedUserOne = (props) => {
                   variant="contained"
                   color="error"
                   onClick={unBlockFetch}
+                  disabled={loadUnblock}
                 >
-                  {unBlocking && <CircularProgress size={25} />}
-                  {!unBlocking && <>UnBlock</>}
+                  Unblock
                 </Button>
+                {loadUnblock && <LinearProgress size={25} />}
               </Popover>
             </>
           }

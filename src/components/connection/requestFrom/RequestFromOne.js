@@ -1,14 +1,20 @@
 import { Card, CardHeader, Popover, Button } from "@mui/material";
 import React, { useState } from "react";
 
+import { useApiURLContex } from "../../../App";
+
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
-import { useApiURLContex } from "../../../App";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const RequestFromOne = (props) => {
   const { ApiURL } = useApiURLContex();
   const [anchorEl, setAnchorEl] = useState(null);
   const [direct, setDirect] = useState(null);
+
+  const [loadAccept, setLoadAccept] = useState(false);
+  const [loadBlock, setLoadBlock] = useState(false);
+  const [loadDenied, setLoadDenied] = useState(false);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -22,6 +28,7 @@ const RequestFromOne = (props) => {
 
   // ACCEPT REQUEST HANDLER
   const acceptFetch = async () => {
+    setLoadAccept(true);
     const formData = new FormData();
 
     formData.append("userID", props.user.UserID);
@@ -45,6 +52,7 @@ const RequestFromOne = (props) => {
       } else {
         window.location.reload();
       }
+      setLoadAccept(false);
     } catch (error) {
       console.log(error.message);
     }
@@ -52,6 +60,7 @@ const RequestFromOne = (props) => {
 
   // DENIED REQUEST HANDLER
   const denyFetch = async () => {
+    setLoadDenied(true);
     const formData = new FormData();
 
     formData.append("userID", props.user.UserID);
@@ -75,6 +84,7 @@ const RequestFromOne = (props) => {
       } else {
         window.location.reload();
       }
+      setLoadDenied(false);
     } catch (error) {
       console.log(error.message);
     }
@@ -82,6 +92,7 @@ const RequestFromOne = (props) => {
 
   // BLOCK REQUEST HANDLER
   const blockFetch = async () => {
+    setLoadBlock(true);
     const formData = new FormData();
 
     formData.append("userID", props.user.UserID);
@@ -105,6 +116,7 @@ const RequestFromOne = (props) => {
       } else {
         window.location.reload();
       }
+      setLoadBlock(true);
     } catch (error) {
       console.log(error.message);
     }
@@ -145,7 +157,11 @@ const RequestFromOne = (props) => {
                 }}
               >
                 {direct === 1 && (
-                  <Button onClick={acceptFetch} variant="contained">
+                  <Button
+                    onClick={acceptFetch}
+                    disabled={loadAccept}
+                    variant="contained"
+                  >
                     Accept Request
                   </Button>
                 )}
@@ -155,6 +171,7 @@ const RequestFromOne = (props) => {
                       onClick={blockFetch}
                       variant="contained"
                       color="error"
+                      disabled={loadBlock}
                     >
                       Block User
                     </Button>
@@ -162,11 +179,13 @@ const RequestFromOne = (props) => {
                       onClick={denyFetch}
                       variant="contained"
                       color="warning"
+                      disabled={loadDenied}
                     >
                       Denied Request
                     </Button>
                   </>
                 )}
+                {(loadAccept || loadBlock || loadDenied) && <LinearProgress />}
               </Popover>
             </>
           }

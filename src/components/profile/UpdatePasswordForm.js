@@ -1,7 +1,9 @@
-import { Button, Grid, Box, TextField } from "@mui/material";
-
 import React, { useEffect, useState, useCallback } from "react";
+
 import { useApiURLContex } from "../../App";
+
+import { Button, Grid, Box, TextField } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const style = {
   padding: 10,
@@ -21,7 +23,10 @@ const UpdatePasswordForm = (props) => {
   const [oldPassValid, setOldPassValid] = useState(false);
   const [confirmPassValid, setConfirmPassValid] = useState(false);
 
+  const [loadUpdate, setLoadUpdate] = useState(false);
+
   const updatehandler = async (event) => {
+    setLoadUpdate(true);
     event.preventDefault();
 
     const data = new FormData(event.currentTarget);
@@ -52,6 +57,7 @@ const UpdatePasswordForm = (props) => {
       } else {
         setOldPassValid(false);
       }
+      setLoadUpdate(false);
 
       if (result.PASSWORD === "GOOD") {
         window.location = window.location.origin + "/Profile";
@@ -158,9 +164,16 @@ const UpdatePasswordForm = (props) => {
           />
         </Grid>
       </Grid>
-      <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+      <Button
+        type="submit"
+        fullWidth
+        disabled={loadUpdate}
+        variant="contained"
+        sx={{ mt: 3, mb: 2 }}
+      >
         Update Profile
       </Button>
+      {loadUpdate && <LinearProgress />}
     </Box>
   );
 };

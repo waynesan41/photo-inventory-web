@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
+
+import { useApiURLContex } from "../../../App";
 
 import { TextField, Box, Button } from "@mui/material";
-import { useApiURLContex } from "../../../App";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const style = {
   padding: 10,
@@ -13,7 +15,10 @@ const style = {
 };
 const NewLibraryForm = () => {
   const { ApiURL } = useApiURLContex();
+  const [loadAdd, setLoadAdd] = useState(false);
+
   const fetchAddNewLibrary = async (event) => {
+    setLoadAdd(true);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const fetchURL = `${ApiURL}/library/addLibrary.php`;
@@ -35,6 +40,7 @@ const NewLibraryForm = () => {
       } else {
         console.log("Fail to Add New Library.");
       }
+      setLoadAdd(false);
     } catch (error) {
       console.log(error.message);
     }
@@ -53,9 +59,10 @@ const NewLibraryForm = () => {
           autoFocus
         />
       </Box>
-      <Button variant="outlined" type="submit">
+      <Button variant="outlined" disabled={loadAdd} type="submit">
         Add New Library
       </Button>
+      {loadAdd && <LinearProgress />}
     </Box>
   );
 };

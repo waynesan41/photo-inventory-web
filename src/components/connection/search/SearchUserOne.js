@@ -1,6 +1,6 @@
+import React, { useState } from "react";
 import { Button, Card, Popover, CardHeader } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
-import React, { useState } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 import AcceptDenied from "./options/AcceptDenied";
@@ -16,10 +16,9 @@ const SearchUserOne = (props) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
     console.log(event.currentTarget.id);
     // props.setCurrentID(event.currentTarget.id);
-    fetchConnectionStatus(event.currentTarget.id);
+    fetchConnectionStatus(event.currentTarget.id, event.currentTarget);
   };
   const handleClose = () => {
     setLoading(false);
@@ -27,8 +26,9 @@ const SearchUserOne = (props) => {
   };
   const open = Boolean(anchorEl);
 
-  const fetchConnectionStatus = async (fetchID) => {
+  const fetchConnectionStatus = async (fetchID, target) => {
     setLoading(true);
+
     const formData = new FormData();
 
     formData.append("userID", fetchID);
@@ -43,6 +43,7 @@ const SearchUserOne = (props) => {
         throw new Error(response.statusText);
       }
       const result = await response.json();
+      setAnchorEl(target);
 
       console.log(result);
 
@@ -77,7 +78,8 @@ const SearchUserOne = (props) => {
                 id={props.user.UserID}
                 onClick={handleClick}
               >
-                <MoreVertIcon />
+                {!loading && <MoreVertIcon />}
+                {loading && <CircularProgress color="action" size={21} />}
               </Button>
               <Popover
                 open={open}
@@ -114,7 +116,6 @@ const SearchUserOne = (props) => {
                     close={setAnchorEl}
                   />
                 )}
-                {loading && <CircularProgress size={35} />}
               </Popover>
             </>
           }

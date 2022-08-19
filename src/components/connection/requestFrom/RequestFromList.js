@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-import { Box } from "@mui/material";
-import RequestFromOne from "./RequestFromOne";
 import { useApiURLContex } from "../../../App";
+import RequestFromOne from "./RequestFromOne";
+
+import { Box } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const RequestFromList = () => {
   const { ApiURL } = useApiURLContex();
@@ -10,8 +12,11 @@ const RequestFromList = () => {
   const [requestFromUser, setrequestFromUser] = useState([]);
   const [editUserID, setEditUserID] = useState();
 
+  const [loadList, setLoadList] = useState(false);
+
   useEffect(() => {
     const getBlockRequest = async () => {
+      setLoadList(true);
       const formData = new FormData();
       formData.append("type", "F");
       const fetchURL = `${ApiURL}/connection/getConnection.php`;
@@ -33,6 +38,7 @@ const RequestFromList = () => {
           setrequestFromUser([...result]);
           setNoUser(false);
         }
+        setLoadList(false);
       } catch (error) {
         console.log(error.message);
       }
@@ -52,6 +58,7 @@ const RequestFromList = () => {
   return (
     <>
       <Box style={titleStyle}>Request Send From User</Box>
+      {loadList && <LinearProgress />}
       {noUser && <h2>No Request from Any User.</h2>}
       {!noUser &&
         requestFromUser.map((user) => (

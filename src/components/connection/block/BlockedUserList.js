@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
 
-import { Box } from "@mui/material";
 import BlockedUserOne from "./BlockedUserOne";
 import { useApiURLContex } from "../../../App";
+
+import { Box, List } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const BlockedUserList = () => {
   const { ApiURL } = useApiURLContex();
   const [noBlockuser, setNoBlockUser] = useState();
   const [blockUser, setBlockUser] = useState([]);
   const [editUserID, setEdituserID] = useState();
+  const [loadList, setLoadList] = useState(false);
 
   useEffect(() => {
     const getBlockRequest = async () => {
+      setLoadList(true);
       const formData = new FormData();
       formData.append("type", "B");
       const fetchURL = `${ApiURL}/connection/getConnection.php`;
@@ -33,6 +37,7 @@ const BlockedUserList = () => {
         } else {
           setBlockUser([...result]);
         }
+        setLoadList(false);
       } catch (error) {
         console.log(error.message);
       }
@@ -52,7 +57,8 @@ const BlockedUserList = () => {
   return (
     <>
       <Box style={titleStyle}>Blocked User</Box>
-      {noBlockuser && <h2>You don't have any Blocked User.</h2>}
+      {loadList && <LinearProgress />}
+      {noBlockuser && !loadList && <h2>You don't have any Blocked User.</h2>}
       {!noBlockuser &&
         blockUser.map((user) => (
           <BlockedUserOne

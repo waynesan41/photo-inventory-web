@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   FormControlLabel,
   Radio,
@@ -7,11 +7,15 @@ import {
   Button,
   FormControl,
 } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
+
 import { useChangePeople } from "../../LibraryCardList";
 import { useApiURLContex } from "../../../../App";
 
 const NewUserShareForm = (props) => {
   const { ApiURL } = useApiURLContex();
+  const [loadUser, setLoadUser] = useState(false);
+
   const changeTotalPeople = useChangePeople();
 
   //FETCH API TO Add New User to the Library
@@ -69,8 +73,9 @@ const NewUserShareForm = (props) => {
       </RadioGroup>
 
       <Button variant="outlined" style={{ float: "right" }} type="submit">
-        Update Edit
+        Update Access
       </Button>
+      {loadUser && <LinearProgress />}
     </FormControl>
   );
 };

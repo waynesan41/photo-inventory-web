@@ -1,11 +1,14 @@
-import { Button } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { useApiURLContex } from "../../../../App";
+import { Button } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
+
 const CancelRequest = (props) => {
   const { ApiURL } = useApiURLContex();
+  const [loadCancel, setLoadCancel] = useState(false);
   const cancelFetch = async () => {
+    setLoadCancel(true);
     const formData = new FormData();
-
     formData.append("userID", props.currentID);
     formData.append("update", "C");
     const fetchURL = `${ApiURL}/connection/updateConnection.php`;
@@ -27,15 +30,22 @@ const CancelRequest = (props) => {
       } else {
         window.location.reload();
       }
+      setLoadCancel(false);
     } catch (error) {
       console.log(error.message);
     }
   };
   return (
     <>
-      <Button variant="contained" color="error" onClick={cancelFetch}>
+      <Button
+        variant="contained"
+        disabled={loadCancel}
+        color="error"
+        onClick={cancelFetch}
+      >
         Cancel Request
       </Button>
+      {loadCancel && <LinearProgress />}
     </>
   );
 };

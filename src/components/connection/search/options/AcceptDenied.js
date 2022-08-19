@@ -1,12 +1,16 @@
-import { Button } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { useApiURLContex } from "../../../../App";
+import { Button } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
+
 const AcceptDenied = (props) => {
   const { ApiURL } = useApiURLContex();
+  const [loadAccept, setLoadAccept] = useState(false);
+  const [loadDeny, setLoadDeny] = useState(false);
   // ACCEPT REQUEST HANDLER
   const acceptFetch = async () => {
+    setLoadAccept(true);
     const formData = new FormData();
-
     formData.append("userID", props.currentID);
     formData.append("update", "A");
     const fetchURL = `${ApiURL}/Connection/updateConnection.php`;
@@ -29,6 +33,7 @@ const AcceptDenied = (props) => {
       } else {
         console.log("Accepted");
       }
+      setLoadAccept(false);
     } catch (error) {
       console.log(error.message);
     }
@@ -36,6 +41,7 @@ const AcceptDenied = (props) => {
 
   // DENIED REQUEST HANDLER
   const denyFetch = async () => {
+    setLoadDeny(true);
     const formData = new FormData();
 
     formData.append("userID", props.currentID);
@@ -60,6 +66,7 @@ const AcceptDenied = (props) => {
       } else {
         console.log("Deny Went Wrong");
       }
+      setLoadDeny(false);
     } catch (error) {
       console.log(error.message);
     }
@@ -67,12 +74,18 @@ const AcceptDenied = (props) => {
 
   return (
     <>
-      <Button variant="contained" onClick={acceptFetch}>
+      <Button variant="contained" disabled={loadAccept} onClick={acceptFetch}>
         Accept
       </Button>
-      <Button variant="contained" onClick={denyFetch} color="warning">
+      <Button
+        variant="contained"
+        disabled={loadDeny}
+        onClick={denyFetch}
+        color="warning"
+      >
         Denied
       </Button>
+      {(loadAccept || loadDeny) && <LinearProgress />}
     </>
   );
 };

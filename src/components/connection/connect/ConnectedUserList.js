@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Box } from "@mui/material";
+
 import ConnectedUserOne from "./ConnectedUserOne";
 import { useApiURLContex } from "../../../App";
+
+import { Box } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const ConnectedUserList = () => {
   const { ApiURL } = useApiURLContex();
@@ -9,8 +12,11 @@ const ConnectedUserList = () => {
   const [connectUser, setConnectUser] = useState([]);
   const [currentID, setCurrentID] = useState();
 
+  const [loadList, setLoadList] = useState(false);
+
   useEffect(() => {
     const getConnectRequest = async () => {
+      setLoadList(true);
       const formData = new FormData();
       formData.append("type", "C");
       const fetchURL = `${ApiURL}/connection/getConnection.php`;
@@ -24,6 +30,7 @@ const ConnectedUserList = () => {
           throw new Error(response.statusText);
         }
         const result = await response.json();
+        setLoadList(false);
         if (result === 0) {
           window.location = window.location.origin + "/Login";
         } else if (result === "NO USER") {
@@ -52,7 +59,8 @@ const ConnectedUserList = () => {
   return (
     <>
       <Box style={titleStyle}>Connected User</Box>
-      {noUser && <h2>No Connected User.</h2>}
+      {loadList && <LinearProgress />}
+      {noUser && !loadList && <h2>No Connected User.</h2>}
       {!noUser &&
         connectUser.map((user) => (
           <ConnectedUserOne

@@ -1,12 +1,15 @@
-import { Button } from "@mui/material";
 import React, { useState } from "react";
 import { useApiURLContex } from "../../../../App";
+import { Button } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
+
 const SendRequestBlock = (props) => {
   const { ApiURL } = useApiURLContex();
-  const [sending, setSending] = useState(false);
-  const [blocking, setBlocking] = useState(false);
+  const [loadSend, setLoadSend] = useState(false);
+  const [loadBlock, setLoadBlock] = useState(false);
+
   const sendRequestFetch = async () => {
-    setSending(!sending);
+    setLoadSend(true);
     const formData = new FormData();
     console.log(props.currentID);
     formData.append("userID", props.currentID);
@@ -33,11 +36,11 @@ const SendRequestBlock = (props) => {
     } catch (error) {
       console.log(error.message);
     }
-    setSending(false);
+    setLoadSend(false);
   };
 
   const blockFetch = async () => {
-    setBlocking(!blocking);
+    setLoadBlock(true);
     const formData = new FormData();
 
     formData.append("userID", props.currentID);
@@ -65,16 +68,26 @@ const SendRequestBlock = (props) => {
     } catch (error) {
       console.log(error.message);
     }
-    setBlocking(false);
+    setLoadBlock(false);
   };
   return (
     <>
-      <Button variant="contained" color="error" onClick={blockFetch}>
+      <Button
+        variant="contained"
+        color="error"
+        disabled={loadBlock}
+        onClick={blockFetch}
+      >
         Block
       </Button>
-      <Button variant="contained" onClick={sendRequestFetch}>
+      <Button
+        variant="contained"
+        disabled={loadSend}
+        onClick={sendRequestFetch}
+      >
         Send Request
       </Button>
+      {(loadBlock || loadSend) && <LinearProgress />}
     </>
   );
 };

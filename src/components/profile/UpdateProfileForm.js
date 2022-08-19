@@ -1,4 +1,4 @@
-import { Button, Grid, Box, TextField } from "@mui/material";
+import { Button, Grid, Box, TextField, LinearProgress } from "@mui/material";
 
 import React, { useState } from "react";
 import { useApiURLContex } from "../../App";
@@ -14,6 +14,7 @@ const style = {
 const UpdateProfileForm = (props) => {
   const { ApiURL } = useApiURLContex();
   const updatehandler = async (event) => {
+    setLoadUpdate(true);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // console.log(data.get("confirm-password"));
@@ -68,6 +69,7 @@ const UpdateProfileForm = (props) => {
         window.location = window.location.origin + "/Profile";
       }
 
+      setLoadUpdate(false);
       if (result.NAME === "INVALID") {
         setNameValid(true);
         setNameMessage("Invalid Name!");
@@ -147,6 +149,8 @@ const UpdateProfileForm = (props) => {
   const [userTaken, setUserTaken] = useState(false);
   const [userMessage, setUserMessage] = useState("");
   const [userValid, setUserValid] = useState(false);
+
+  const [loadUpdate, setLoadUpdate] = useState(false);
   return (
     <Box
       style={style}
@@ -197,9 +201,16 @@ const UpdateProfileForm = (props) => {
           />
         </Grid>
       </Grid>
-      <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+      <Button
+        type="submit"
+        fullWidth
+        variant="contained"
+        disabled={loadUpdate}
+        sx={{ mt: 3, mb: 2 }}
+      >
         Update Profile
       </Button>
+      {loadUpdate && <LinearProgress />}
     </Box>
   );
 };

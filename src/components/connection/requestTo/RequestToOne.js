@@ -1,14 +1,15 @@
-import { Card, CardHeader, Popover, Button } from "@mui/material";
 import React, { useState } from "react";
 
-import CloseIcon from "@mui/icons-material/Close";
-import CircularProgress from "@mui/material/CircularProgress";
 import { useApiURLContex } from "../../../App";
+
+import { Card, CardHeader, Popover, Button } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const RequestToOne = (props) => {
   const { ApiURL } = useApiURLContex();
 
-  const [loading, setLoading] = useState(false);
+  const [loadCancel, setLoadCancel] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
@@ -16,7 +17,7 @@ const RequestToOne = (props) => {
     props.setCurrentID(event.currentTarget.id);
   };
   const handleClose = () => {
-    setLoading(false);
+    setLoadCancel(false);
     setAnchorEl(null);
   };
 
@@ -24,7 +25,7 @@ const RequestToOne = (props) => {
 
   const cancelRequestFetch = async () => {
     // console.log("Button unBlock: " + props.currentID);
-    setLoading(true);
+    setLoadCancel(true);
     const formData = new FormData();
 
     formData.append("userID", props.currentID);
@@ -81,10 +82,11 @@ const RequestToOne = (props) => {
                   variant="contained"
                   color="error"
                   onClick={cancelRequestFetch}
+                  disabled={loadCancel}
                 >
-                  {loading && <CircularProgress size={25} />}
-                  {!loading && <>Cancel Request</>}
+                  Cancel Request
                 </Button>
+                {loadCancel && <LinearProgress />}
               </Popover>
             </>
           }

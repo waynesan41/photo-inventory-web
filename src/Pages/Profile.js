@@ -2,6 +2,8 @@ import { Button, Box, Dialog, Grid } from "@mui/material";
 import UpdateProfileForm from "../components/profile/UpdateProfileForm";
 import UpdatePasswordForm from "../components/profile/UpdatePasswordForm";
 
+import LinearProgress from "@mui/material/LinearProgress";
+
 import React, { useEffect, useState } from "react";
 import { useApiURLContex } from "../App";
 
@@ -12,9 +14,11 @@ const Profile = () => {
   const profileFormOpener = () => setOpen(!open);
   const passFormOpener = () => setPassForm(!passForm);
   const [profileData, setProfileData] = useState({});
+  const [loadProfile, setLoadProfile] = useState(false);
 
   useEffect(() => {
     const firstFetch = async () => {
+      setLoadProfile(true);
       const fetchURL = `${ApiURL}/account/getUserProfile.php`;
 
       try {
@@ -36,6 +40,7 @@ const Profile = () => {
 
           // console.log(profileData);
         }
+        setLoadProfile(false);
       } catch (error) {
         console.log(error.message);
       }
@@ -73,6 +78,7 @@ const Profile = () => {
     >
       <Box>
         <Box style={titleStyle}>Profile Information</Box>
+        {loadProfile && <LinearProgress />}
         <Box style={generalStyle}>
           Full Name:<b> {profileData.FullName}</b>
         </Box>

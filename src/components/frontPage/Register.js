@@ -8,6 +8,8 @@ import Checkbox from "@mui/material/Checkbox";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 
+import LinearProgress from "@mui/material/LinearProgress";
+
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useApiURLContex } from "../../App";
@@ -30,7 +32,10 @@ export default function SignUp() {
   const [userTaken, setUserTaken] = useState(false);
   const [userMessage, setUserMessage] = useState("");
 
+  const [loadSignUp, setLoadSignUp] = useState(false);
+
   const handleSubmit = useCallback(async (event) => {
+    setLoadSignUp(true);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // console.log(data.get("confirm-password"));
@@ -78,6 +83,7 @@ export default function SignUp() {
       if (result === 1) {
         window.location = window.location.origin + "/MainLocation";
       }
+      setLoadSignUp(false);
     } catch (error) {
       console.log(error.message);
     }
@@ -98,7 +104,7 @@ export default function SignUp() {
   const validateUsername = (event) => {
     const usernameRegex = /^[0-9a-z_.]{3,20}$/;
     const email = event.target.value;
-    setEmailTaken(false);
+    setUserTaken(false);
     if (usernameRegex.test(email)) {
       setUserValid(false);
       setUserMessage("");
@@ -263,10 +269,12 @@ export default function SignUp() {
             type="submit"
             fullWidth
             variant="contained"
+            disabled={loadSignUp}
             sx={{ mt: 3, mb: 2 }}
           >
             Sign Up
           </Button>
+          {loadSignUp && <LinearProgress />}
         </Box>
       </Box>
     </Container>

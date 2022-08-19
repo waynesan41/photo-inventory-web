@@ -6,6 +6,7 @@ import { useApiURLContex } from "../../../../App";
 const AddShareUser = (props) => {
   const { ApiURL } = useApiURLContex();
   const [addUser, setAddUser] = useState([]);
+
   const changeNewUser = (id) => {
     const items = addUser.filter((user) => {
       if (user.UserID != id) {

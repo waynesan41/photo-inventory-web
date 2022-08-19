@@ -1,6 +1,6 @@
-import { Button, Paper, Box } from "@mui/material";
 import React, { useState } from "react";
-import { TextField } from "@mui/material";
+import { Button, Paper, Box, TextField } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
 
 import SearchUser from "./SearchUserOne";
 import { useApiURLContex } from "../../../App";
@@ -9,6 +9,7 @@ const SearchUserList = () => {
   const { ApiURL } = useApiURLContex();
   const [noUser, setNoUser] = useState(false);
   const [searchUser, setsearchUser] = useState([]);
+  const [loadSearch, setLoadSearch] = useState(false);
   // const [currentID, setCurrentID] = useState();
 
   const removeBlockUser = (userID) => {
@@ -17,6 +18,7 @@ const SearchUserList = () => {
   };
 
   const fetchSearchUser = async (event) => {
+    setLoadSearch(true);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const fetchURL = `${ApiURL}/connection/searchUser.php`;
@@ -30,6 +32,7 @@ const SearchUserList = () => {
         throw new Error(response.statusText);
       }
       const result = await response.json();
+      setLoadSearch(false);
       if (result === 0) {
         window.location = window.location.origin + "/Login";
       } else {
@@ -64,10 +67,12 @@ const SearchUserList = () => {
           variant="outlined"
           style={{ marginRight: "10px" }}
         />
-        <Button variant="outlined" type="submit">
+
+        <Button variant="outlined" type="submit" disabled={loadSearch}>
           Search
         </Button>
       </Box>
+      <Box>{loadSearch && <LinearProgress />}</Box>
       <Paper>
         {noUser && <h2>No Users Found in Search.</h2>}
         {!noUser &&

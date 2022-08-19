@@ -1,13 +1,16 @@
-import { Button } from "@mui/material";
 import React, { useState } from "react";
 import { useApiURLContex } from "../../../../App";
+import { Button } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const Disconnect = (props) => {
   const { ApiURL } = useApiURLContex();
-  const [blocking, setBlocking] = useState(false);
+
+  const [loadBlock, setLoadBlock] = useState(false);
+  const [loadDC, setLoadDC] = useState(false);
   //BLOCK FETCH
   const blockFetch = async () => {
-    setBlocking(!blocking);
+    setLoadBlock(true);
     const formData = new FormData();
 
     formData.append("userID", props.currentID);
@@ -35,10 +38,11 @@ const Disconnect = (props) => {
     } catch (error) {
       console.log(error.message);
     }
-    setBlocking(false);
+    setLoadBlock(false);
   };
   //DISCONNECT FETCH
   const disconnectFetch = async () => {
+    setLoadDC(true);
     const formData = new FormData();
 
     formData.append("userID", props.currentID);
@@ -62,18 +66,30 @@ const Disconnect = (props) => {
       } else {
         window.location.reload();
       }
+      setLoadDC(false);
     } catch (error) {
       console.log(error.message);
     }
   };
   return (
     <>
-      <Button variant="contained" color="error" onClick={blockFetch}>
+      <Button
+        variant="contained"
+        disabled={loadBlock}
+        color="error"
+        onClick={blockFetch}
+      >
         Block
       </Button>
-      <Button variant="contained" color="warning" onClick={disconnectFetch}>
+      <Button
+        variant="contained"
+        disabled={loadDC}
+        color="warning"
+        onClick={disconnectFetch}
+      >
         Disconnect
       </Button>
+      {(loadDC || loadBlock) && <LinearProgress />}
     </>
   );
 };

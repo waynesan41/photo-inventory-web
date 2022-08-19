@@ -1,13 +1,22 @@
-import { Card, CardHeader, Popover, Button } from "@mui/material";
+import {
+  Card,
+  CardHeader,
+  Popover,
+  Button,
+  LinearProgress,
+} from "@mui/material";
 import React, { useState } from "react";
 
-import CloseIcon from "@mui/icons-material/Close";
 import { useApiURLContex } from "../../../App";
+
+import CloseIcon from "@mui/icons-material/Close";
 
 const ConnectedUserOne = (props) => {
   const { ApiURL } = useApiURLContex();
-  const [blocking, setBlocking] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+
+  const [loadBlock, setLoadBlock] = useState(false);
+  const [loadDC, setLoadDC] = useState(false);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -20,7 +29,7 @@ const ConnectedUserOne = (props) => {
 
   //BLOCK FETCH
   const blockFetch = async () => {
-    setBlocking(!blocking);
+    setLoadBlock(true);
     const formData = new FormData();
 
     formData.append("userID", props.user.UserID);
@@ -47,10 +56,11 @@ const ConnectedUserOne = (props) => {
     } catch (error) {
       console.log(error.message);
     }
-    setBlocking(false);
+    setLoadBlock(false);
   };
   //DISCONNECT FETCH
   const disconnectFetch = async () => {
+    setLoadDC(true);
     const formData = new FormData();
 
     formData.append("userID", props.user.UserID);
@@ -74,6 +84,7 @@ const ConnectedUserOne = (props) => {
       } else {
         window.location.reload();
       }
+      setLoadDC(false);
     } catch (error) {
       console.log(error.message);
     }
@@ -102,16 +113,23 @@ const ConnectedUserOne = (props) => {
                   horizontal: "left",
                 }}
               >
-                <Button variant="contained" color="error" onClick={blockFetch}>
+                <Button
+                  variant="contained"
+                  disabled={loadBlock}
+                  color="error"
+                  onClick={blockFetch}
+                >
                   Block
                 </Button>
                 <Button
                   variant="contained"
                   color="warning"
+                  disabled={loadDC}
                   onClick={disconnectFetch}
                 >
                   Disconnect
                 </Button>
+                {(loadBlock || loadDC) && <LinearProgress />}
               </Popover>
             </>
           }

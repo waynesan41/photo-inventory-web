@@ -13,16 +13,21 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useApiURLContex } from "../../App";
 
+import LinearProgress from "@mui/material/LinearProgress";
+
 export default function SignIn() {
   const { ApiURL } = useApiURLContex();
   const [incorrect, setIncorrect] = useState(false);
   const [loginMessage, setLoginMessage] = useState("");
+
+  const [loadLogin, setLoadLogin] = useState(false);
 
   const incorrectHandler = () => {
     setIncorrect(false);
   };
 
   const handleSubmit = useCallback(async (event) => {
+    setLoadLogin(true);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const fetchUrl = `${ApiURL}/account/login.php`;
@@ -46,6 +51,7 @@ export default function SignIn() {
         setIncorrect(true);
         setLoginMessage("Incorrect Username, Email or Password!");
       }
+      setLoadLogin(false);
     } catch (error) {
       console.log(error.message);
     }
@@ -104,10 +110,12 @@ export default function SignIn() {
             type="submit"
             fullWidth
             variant="contained"
+            disabled={loadLogin}
             sx={{ mt: 3, mb: 2 }}
           >
             Log In
           </Button>
+          {loadLogin && <LinearProgress />}
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">
