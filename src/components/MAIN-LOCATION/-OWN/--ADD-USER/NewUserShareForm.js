@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   FormControlLabel,
   Radio,
@@ -7,6 +7,8 @@ import {
   Button,
   FormControl,
 } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
+
 import { useChangePeople } from "../../MainLocationList";
 import { useMainLocationID } from "./AddShareUser";
 import { useApiURLContex } from "../../../../App";
@@ -15,9 +17,11 @@ const NewUserShareForm = (props) => {
   const { ApiURL } = useApiURLContex();
   const changeTotalPeople = useChangePeople();
   const { changeNewUser, mainID } = useMainLocationID();
+  const [loadUpdate, seteLoadUpdate] = useState(false);
 
   //FETCH API TO Add New User to the Library
   const fetchUpdateUser = async (event) => {
+    seteLoadUpdate(true);
     event.preventDefault();
 
     const data = new FormData(event.currentTarget);
@@ -26,9 +30,9 @@ const NewUserShareForm = (props) => {
     data.append("userID", props.user.UserID);
 
     /* console.log("data");
-        for (var pair of data.entries()) {
-          console.log(pair[0] + ", " + pair[1]);
-        } */
+    for (var pair of data.entries()) {
+      console.log(pair[0] + ", " + pair[1]);
+    } */
     const fetchURL = `${ApiURL}/mainLocation/shareMainLocation.php`;
 
     try {
@@ -53,6 +57,7 @@ const NewUserShareForm = (props) => {
     } catch (error) {
       console.log(error.message);
     }
+    seteLoadUpdate(false);
   };
   return (
     <FormControl
@@ -75,9 +80,15 @@ const NewUserShareForm = (props) => {
         />
       </RadioGroup>
 
-      <Button variant="outlined" style={{ float: "right" }} type="submit">
+      <Button
+        variant="outlined"
+        disabled={loadUpdate}
+        style={{ float: "right" }}
+        type="submit"
+      >
         Update Edit
       </Button>
+      {loadUpdate && <LinearProgress />}
     </FormControl>
   );
 };

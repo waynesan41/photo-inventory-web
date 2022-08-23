@@ -1,15 +1,20 @@
-import { Button, Dialog, Box } from "@mui/material";
 import { useEffect, useState } from "react";
+
 import { useParams } from "react-router-dom";
 import NewLocationForm from "../-COMPONENTS/--FORM/NewLocationForm";
 import { useApiURLContex } from "../../../App";
 import { useMainLocationContex } from "../LocationPage";
+
+import { Button, Dialog, Box } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
+
 const ShareMainMenu = (props) => {
   const { ApiURL } = useApiURLContex();
   const { accessLvl } = useMainLocationContex();
   let { locationID } = useParams(); // Value from URL
   const [open, setOpen] = useState(false);
   const [mainInfo, setMainInfo] = useState({});
+  const [loadInfo, setLoadInfo] = useState(false);
 
   const openHandler = () => {
     setOpen(true);
@@ -20,6 +25,7 @@ const ShareMainMenu = (props) => {
 
   //FETCH LIBRARY INFO
   const fetchLibraryInfo = async () => {
+    setLoadInfo(true);
     const data = new FormData();
     data.append("mainID", props.mainID);
     data.append("type", 2);
@@ -51,6 +57,7 @@ const ShareMainMenu = (props) => {
     } catch (error) {
       console.log(error.message);
     }
+    setLoadInfo(false);
   };
   useEffect(() => {
     fetchLibraryInfo();
@@ -121,7 +128,7 @@ const ShareMainMenu = (props) => {
       >
         Add New Location
       </Button>
-
+      {loadInfo && <LinearProgress />}
       <Dialog open={open} onClose={closeHandler}>
         <NewLocationForm topID={locationID} close={closeHandler} />
       </Dialog>

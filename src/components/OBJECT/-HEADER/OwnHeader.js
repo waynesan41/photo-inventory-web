@@ -1,12 +1,16 @@
-import { Button, Dialog, Box } from "@mui/material";
 import { useEffect, useState } from "react";
+
 import { useApiURLContex } from "../../../App";
 import FormAddObject from "./--FORM/FormAddObject";
+
+import { Button, Dialog, Box } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const OwnHeader = (props) => {
   const { ApiURL } = useApiURLContex();
   const [open, setOpen] = useState(false);
   const [libInfo, setLibInfo] = useState({});
+  const [loadInfo, setLoadInfo] = useState(false);
 
   const openHandler = () => {
     setOpen(true);
@@ -17,6 +21,7 @@ const OwnHeader = (props) => {
 
   //FETCH LIBRARY INFO
   const fetchLibraryInfo = async () => {
+    setLoadInfo(true);
     const data = new FormData();
     data.append("libraryID", props.libraryID);
     data.append("type", 1);
@@ -46,6 +51,7 @@ const OwnHeader = (props) => {
     } catch (error) {
       console.log(error.message);
     }
+    setLoadInfo(false);
   };
   useEffect(() => {
     fetchLibraryInfo();
@@ -53,6 +59,7 @@ const OwnHeader = (props) => {
 
   return (
     <>
+      {loadInfo && <LinearProgress />}
       <Box margin="5px">
         <Box
           component={Button}

@@ -7,6 +7,8 @@ import {
   FormControlLabel,
   Radio,
 } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
+
 import ObjectPlaceOne from "../--COMPONENTS/ObjectPlaceOne";
 import { useApiURLContex } from "../../../../App";
 
@@ -14,8 +16,10 @@ const SearchObjectList = (props) => {
   const { ApiURL } = useApiURLContex();
   const [object, setObject] = useState([]);
   const [noObject, setNoObject] = useState(false);
+  const [loadList, setLoadList] = useState(false);
 
   const fetchSearchObject = async (event) => {
+    setLoadList(true);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     data.append("libraryID", props.libraryID);
@@ -46,8 +50,11 @@ const SearchObjectList = (props) => {
     } catch (error) {
       console.log(error.message);
     }
+    setLoadList(false);
   };
   const fetchPreSearch = async () => {
+    setLoadList(true);
+
     const data = new FormData();
     data.append("filter", 3);
     data.append("search", "");
@@ -79,6 +86,7 @@ const SearchObjectList = (props) => {
     } catch (error) {
       console.log(error.message);
     }
+    setLoadList(false);
   };
 
   useEffect(() => {
@@ -120,13 +128,20 @@ const SearchObjectList = (props) => {
           </Button>
         </Box>
       </Box>
+
+      {loadList && (
+        <>
+          <LinearProgress />
+          <Box fontSize={20}>Loading Object......</Box>
+        </>
+      )}
+      {noObject && !loadList && <Box fontSize={20}>No Object Found.</Box>}
       <Box
         style={{
           display: "grid",
           gridTemplateColumns: "1fr 1fr 1fr 1fr",
         }}
       >
-        {noObject && <Box>No Object Found.</Box>}
         {object.map((obj) => (
           <Box
             sx={{ boxShadow: 5 }}

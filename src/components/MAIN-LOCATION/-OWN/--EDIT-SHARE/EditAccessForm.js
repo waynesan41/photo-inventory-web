@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import {
   FormControlLabel,
   Radio,
@@ -5,8 +7,9 @@ import {
   Button,
   FormControl,
 } from "@mui/material";
-import { useApiURLContex } from "../../../../App";
+import LinearProgress from "@mui/material/LinearProgress";
 
+import { useApiURLContex } from "../../../../App";
 import { useChangePeople } from "../../MainLocationList";
 import { useShareFormChange } from "./EditShareUser.js";
 
@@ -14,8 +17,11 @@ const EditAccessForm = (props) => {
   const { ApiURL } = useApiURLContex();
   const changeTotalPeople = useChangePeople();
   const { removeUser, changeAccess, mainID } = useShareFormChange();
+  const [loadEdit, setLoadEdit] = useState(false);
+
   //UPDATE API CALL Edit / Remove
   const fetchUpdateUser = async (event) => {
+    setLoadEdit(true);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
@@ -80,6 +86,7 @@ const EditAccessForm = (props) => {
         console.log(error.message);
       }
     }
+    setLoadEdit(false);
   };
 
   return (
@@ -89,7 +96,7 @@ const EditAccessForm = (props) => {
       onSubmit={fetchUpdateUser}
     >
       <h3>Edit Access Level for {props.user.FullName}</h3>
-      <RadioGroup name="access">
+      <RadioGroup name="access" defaultValue={props.user.AccessType}>
         <FormControlLabel value="0" control={<Radio />} label="Remove User" />
         <FormControlLabel value="1" control={<Radio />} label="1 View Only" />
         <FormControlLabel
@@ -104,9 +111,15 @@ const EditAccessForm = (props) => {
         />
       </RadioGroup>
 
-      <Button variant="outlined" style={{ float: "right" }} type="submit">
+      <Button
+        variant="outlined"
+        disabled={loadEdit}
+        style={{ float: "right" }}
+        type="submit"
+      >
         Update Edit
       </Button>
+      {loadEdit && <LinearProgress />}
     </FormControl>
   );
 };

@@ -3,7 +3,6 @@ import {
   FormControlLabel,
   Radio,
   RadioGroup,
-  Box,
   Button,
   FormControl,
 } from "@mui/material";
@@ -14,12 +13,12 @@ import { useApiURLContex } from "../../../../App";
 
 const NewUserShareForm = (props) => {
   const { ApiURL } = useApiURLContex();
-  const [loadUser, setLoadUser] = useState(false);
-
+  const [loadUpdate, seteLoadUpdate] = useState(false);
   const changeTotalPeople = useChangePeople();
 
   //FETCH API TO Add New User to the Library
   const fetchUpdateUser = async (event) => {
+    seteLoadUpdate(true);
     event.preventDefault();
 
     const data = new FormData(event.currentTarget);
@@ -28,9 +27,9 @@ const NewUserShareForm = (props) => {
     data.append("userID", props.user.UserID);
 
     /* console.log("data");
-        for (var pair of data.entries()) {
-          console.log(pair[0] + ", " + pair[1]);
-        } */
+    for (var pair of data.entries()) {
+      console.log(pair[0] + ", " + pair[1]);
+    } */
     const fetchURL = `${ApiURL}/library/shareLibrary.php`;
     try {
       const response = await fetch(fetchURL, {
@@ -54,6 +53,7 @@ const NewUserShareForm = (props) => {
     } catch (error) {
       console.log(error.message);
     }
+    seteLoadUpdate(false);
   };
   return (
     <FormControl
@@ -72,10 +72,15 @@ const NewUserShareForm = (props) => {
         />
       </RadioGroup>
 
-      <Button variant="outlined" style={{ float: "right" }} type="submit">
+      <Button
+        variant="outlined"
+        disabled={loadUpdate}
+        style={{ float: "right" }}
+        type="submit"
+      >
         Update Access
       </Button>
-      {loadUser && <LinearProgress />}
+      {loadUpdate && <LinearProgress />}
     </FormControl>
   );
 };

@@ -1,17 +1,22 @@
-import { Box, Button, Paper, TextField } from "@mui/material";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useApiURLContex } from "../../../../App";
 import { useCurrentLocationData } from "../../LocationPage";
+
+import { Box, Button, Paper, TextField } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const LinkObjLocForm = (props) => {
   const { ApiURL } = useApiURLContex();
   const { locationInfo } = useCurrentLocationData();
   const { mainID, locationID } = useParams();
+  const [loadPlace, setLoadPlace] = useState(false);
 
   //+++++++++++++++++++++++++++++++++++++++++++++
   // API CALL to Link Object and Location
   //++++++++++++++++++++++++++++++++++++++++++++
   const fetchPlaceObject = async (event) => {
+    setLoadPlace(true);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     data.append("mainID", mainID);
@@ -47,6 +52,7 @@ const LinkObjLocForm = (props) => {
     } catch (error) {
       console.log(error.message);
     }
+    setLoadPlace(false);
   };
 
   return (
@@ -107,9 +113,10 @@ const LinkObjLocForm = (props) => {
         label="Placement Description"
         rows={4}
       />
-      <Button type="submit" variant="outlined">
+      <Button type="submit" disabled={loadPlace} variant="outlined">
         Place Object
       </Button>
+      {loadPlace && <LinearProgress />}
     </Box>
   );
 };

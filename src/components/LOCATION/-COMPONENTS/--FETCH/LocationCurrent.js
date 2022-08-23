@@ -22,26 +22,27 @@ const LocationCurrent = () => {
   // const [locationInfo, setLocationInfo] = useState({});
   const { accessLvl } = useMainLocationContex();
   const { locationInfo } = useCurrentLocationData();
+
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
   const [open3, setOpen3] = useState(false);
 
-  const openHandler = () => {
+  const openEdit = () => {
     setOpen(true);
   };
-  const closeHandler = () => {
+  const closeEdit = () => {
     setOpen(false);
   };
-  const openHandler2 = () => {
+  const openPlace = () => {
     setOpen2(true);
   };
-  const closeHandler2 = () => {
+  const closePlace = () => {
     setOpen2(false);
   };
-  const openHandler3 = () => {
+  const openMove = () => {
     setOpen3(true);
   };
-  const closeHandler3 = () => {
+  const closeMove = () => {
     setOpen3(false);
   };
 
@@ -122,7 +123,7 @@ const LocationCurrent = () => {
           <Box marginTop="10px">
             <Button
               variant="contained"
-              onClick={openHandler}
+              onClick={openEdit}
               disabled={accessLvl < 3}
             >
               Edit Location
@@ -130,14 +131,14 @@ const LocationCurrent = () => {
             <Button
               variant="contained"
               color="success"
-              onClick={openHandler2}
+              onClick={openPlace}
               disabled={accessLvl < 2}
             >
               Place Object
             </Button>
             <Button
               variant="contained"
-              onClick={openHandler3}
+              onClick={openMove}
               disabled={accessLvl < 3}
             >
               Move Location
@@ -145,16 +146,16 @@ const LocationCurrent = () => {
           </Box>
         </Box>
       </Box>
-      <Dialog open={open} onClose={closeHandler}>
-        <EditLocationForm locData={locationInfo} closeHandler={closeHandler} />
+      <Dialog open={open} onClose={closeEdit}>
+        <EditLocationForm locData={locationInfo} closeEdit={closeEdit} />
       </Dialog>
 
-      <Dialog open={open2} onClose={closeHandler2} fullWidth maxWidth="70%">
+      <Dialog open={open2} onClose={closePlace} fullWidth maxWidth="70%">
         {/* <CurrentLocationDataContex.Provider value={{ locationInfo }}> */}
         <PlaceObjectForm />
         {/* </CurrentLocationDataContex.Provider> */}
       </Dialog>
-      <Dialog open={open3} onClose={closeHandler3} fullWidth maxWidth="70%">
+      <Dialog open={open3} onClose={closeMove} fullWidth maxWidth="70%">
         <MoveLocationSearch />
       </Dialog>
     </>

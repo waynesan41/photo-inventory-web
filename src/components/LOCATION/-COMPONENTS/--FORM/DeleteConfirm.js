@@ -1,8 +1,11 @@
 import React, { useContext, useState } from "react";
 
-import { TextField, Box, Button, Grid, Alert, Dialog } from "@mui/material";
 import { useMainLocationContex } from "../../LocationPage";
 import { useApiURLContex } from "../../../../App";
+
+import { TextField, Box, Button, Grid, Alert, Dialog } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
+
 const style = {
   padding: 10,
   minWidth: 400,
@@ -16,6 +19,7 @@ const DeleteConfirm = (props) => {
   const { mainType } = useMainLocationContex();
   const [open, setOpen] = useState(false);
   const [confirm, setConfirm] = useState(true);
+  const [loadDelete, setLoadDelete] = useState(false);
   const openConfirm = () => {
     setOpen(true);
   };
@@ -30,6 +34,7 @@ const DeleteConfirm = (props) => {
   };
 
   const fetchDeleteLibrary = async () => {
+    setLoadDelete(true);
     const formData = new FormData();
     formData.append("mainID", props.data.MainLocationID);
     formData.append("locationID", props.data.LocationID);
@@ -61,6 +66,7 @@ const DeleteConfirm = (props) => {
     } catch (error) {
       console.log(error.message);
     }
+    setLoadDelete(false);
   };
   return (
     <Box style={style}>
@@ -107,17 +113,24 @@ const DeleteConfirm = (props) => {
           container
           style={{ display: "grid", gridTemplateColumns: "10fr 1fr" }}
         >
-          <Button variant="contained" color="success" onClick={props.close}>
+          <Button
+            variant="contained"
+            disabled={loadDelete}
+            color="success"
+            onClick={props.close}
+          >
             Cancel
           </Button>
           <Button
             variant="contained"
             color="error"
             onClick={fetchDeleteLibrary}
+            disabled={loadDelete}
           >
             Delete
           </Button>
         </Grid>
+        {loadDelete && <LinearProgress />}
       </Dialog>
     </Box>
   );

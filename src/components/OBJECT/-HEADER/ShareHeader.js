@@ -1,10 +1,11 @@
-import { Button, Box, Dialog } from "@mui/material";
-
 import { useState, useEffect } from "react";
+
 import { useApiURLContex } from "../../../App";
 import { useLibraryContex } from "../ObjectLibrary";
-
 import FormAddObject from "./--FORM/FormAddObject";
+
+import { Button, Box, Dialog } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const ShareHeader = () => {
   const { ApiURL } = useApiURLContex();
@@ -12,6 +13,7 @@ const ShareHeader = () => {
   const [libInfo, setLibInfo] = useState({});
   const [addable, setAddable] = useState(true);
   const { libraryID, accessLvl } = useLibraryContex();
+  const [loadInfo, setLoadInfo] = useState(false);
 
   const openHandler = () => {
     setOpen(true);
@@ -22,6 +24,7 @@ const ShareHeader = () => {
 
   //FETCH LIBRARY INFO
   const fetchLibraryInfo = async () => {
+    setLoadInfo(true);
     const data = new FormData();
     data.append("libraryID", libraryID);
     data.append("type", 2);
@@ -51,6 +54,7 @@ const ShareHeader = () => {
     } catch (error) {
       console.log(error.message);
     }
+    setLoadInfo(false);
   };
   useEffect(() => {
     fetchLibraryInfo();
@@ -63,6 +67,7 @@ const ShareHeader = () => {
 
   return (
     <Box margin="5px">
+      {loadInfo && <LinearProgress />}
       <Box
         component={Button}
         fontSize={25}

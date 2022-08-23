@@ -18,10 +18,10 @@ const ObjectDetail = (props) => {
   const closeEdit = () => {
     setOpen(false);
   };
-  const open2Handler = () => {
+  const openList = () => {
     setOpen2(true);
   };
-  const close2Handler = () => {
+  const closeList = () => {
     setOpen2(false);
   };
 
@@ -54,7 +54,7 @@ const ObjectDetail = (props) => {
         >
           Edit
         </Button>
-        <Button variant="outlined" color="success" onClick={open2Handler}>
+        <Button variant="outlined" color="success" onClick={openList}>
           Find Ojbect Placement
         </Button>
       </Box>
@@ -68,7 +68,7 @@ const ObjectDetail = (props) => {
       <Dialog open={open} onClose={closeEdit}>
         <EditForm objData={props.objData} closeEdit={closeEdit} />
       </Dialog>
-      <Dialog open={open2} onClose={close2Handler} maxWidth="80%">
+      <Dialog open={open2} onClose={closeList} maxWidth="80%">
         <ListLocation objData={props.objData} />
       </Dialog>
     </Box>

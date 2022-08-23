@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 
-import { TextField, Box, Button, Grid, Dialog } from "@mui/material";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import DeleteConfirm from "./DeleteConfirm";
 import { useApiURLContex } from "../../../../App";
+
+import { TextField, Box, Button, Grid, Dialog } from "@mui/material";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const style = {
   padding: 10,
@@ -17,6 +19,7 @@ const style = {
 const EditLibraryForm = (props) => {
   const { ApiURL } = useApiURLContex();
   const [open, setOpen] = useState(false);
+  const [loadEdit, setLoadEdit] = useState(false);
 
   const openDelete = (type) => {
     setOpen(true);
@@ -26,6 +29,7 @@ const EditLibraryForm = (props) => {
   };
 
   const editFormSubmitHandler = async (event) => {
+    setLoadEdit(true);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     data.append("libraryID", props.data.LibraryID);
@@ -57,6 +61,7 @@ const EditLibraryForm = (props) => {
         console.log(error.message);
       }
     }
+    setLoadEdit(false);
   };
   return (
     <Box style={style} component="form" onSubmit={editFormSubmitHandler}>
@@ -77,7 +82,13 @@ const EditLibraryForm = (props) => {
           />
         </Grid>
       </Grid>
-      <Button variant="contained" color="error" onClick={openDelete}>
+      {loadEdit && <LinearProgress />}
+      <Button
+        variant="contained"
+        color="error"
+        onClick={openDelete}
+        disabled={loadEdit}
+      >
         <DeleteForeverIcon />
       </Button>
       <Button
@@ -85,6 +96,7 @@ const EditLibraryForm = (props) => {
         color="primary"
         style={{ float: "right" }}
         type="submit"
+        disabled={loadEdit}
       >
         Save
       </Button>
@@ -93,6 +105,7 @@ const EditLibraryForm = (props) => {
         color="secondary"
         style={{ float: "right" }}
         onClick={props.closeForm}
+        disabled={loadEdit}
       >
         Cancel
       </Button>

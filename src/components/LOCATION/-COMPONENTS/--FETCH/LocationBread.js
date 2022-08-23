@@ -1,13 +1,17 @@
-import { Box, Breadcrumbs, Link } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useApiURLContex } from "../../../../App";
+
+import { Box, Breadcrumbs, Link } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const LocationBread = () => {
   const { ApiURL } = useApiURLContex();
   let { mainID, locationID } = useParams();
   const [breadList, setBreadList] = useState([]);
+  const [loadBread, setLoadBread] = useState(false);
   const fetchBread = async () => {
+    setLoadBread(true);
     const data = new FormData();
     data.append("mainID", mainID);
     data.append("locationID", locationID);
@@ -35,6 +39,7 @@ const LocationBread = () => {
     } catch (error) {
       console.log(error.message);
     }
+    setLoadBread(false);
   };
   useEffect(() => {
     if (locationID != 0) fetchBread();
@@ -66,6 +71,7 @@ const LocationBread = () => {
           </Link>
         ))}
       </Breadcrumbs>
+      {loadBread && <LinearProgress />}
     </Box>
   );
 };

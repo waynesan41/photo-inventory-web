@@ -1,11 +1,16 @@
-import { Button, Box, Alert } from "@mui/material";
+import { useState } from "react";
+
 import { useApiURLContex } from "../../../App";
+
+import { Button, Box, Alert } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const ConfirmLeaveForm = (props) => {
   const { ApiURL } = useApiURLContex();
-
+  const [loadLeave, setLoadLeave] = useState(false);
   //FETCH LEAVE SHARE Library
   const fetchLeaveLibrary = async () => {
+    setLoadLeave(true);
     const data = new FormData();
     data.append("libraryID", props.libraryID);
     const fetchURL = `${ApiURL}/library/leaveShareLibrary.php`;
@@ -31,6 +36,7 @@ const ConfirmLeaveForm = (props) => {
     } catch (error) {
       console.log(error.message);
     }
+    setLoadLeave(false);
   };
   return (
     <Box minWidth={350} style={{ padding: "10px" }}>
@@ -45,13 +51,20 @@ const ConfirmLeaveForm = (props) => {
           variant="contained"
           color="primary"
           onClick={props.closeConfirm}
+          disabled={loadLeave}
         >
           Cancel
         </Button>
-        <Button variant="outlined" color="error" onClick={fetchLeaveLibrary}>
+        <Button
+          variant="outlined"
+          color="error"
+          onClick={fetchLeaveLibrary}
+          disabled={loadLeave}
+        >
           Leave
         </Button>
       </Box>
+      {loadLeave && <LinearProgress />}
     </Box>
   );
 };

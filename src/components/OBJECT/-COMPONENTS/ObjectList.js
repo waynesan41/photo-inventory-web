@@ -5,6 +5,7 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
+  FormLabel,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useApiURLContex } from "../../../App";
@@ -12,12 +13,27 @@ import { useLibraryContex } from "../ObjectLibrary";
 
 import ObjectOne from "./ObjectOne";
 
+import LinearProgress from "@mui/material/LinearProgress";
+
 const ObjectList = () => {
   const { ApiURL } = useApiURLContex();
   const { libraryID, libType, accessLvl } = useLibraryContex();
   const [object, setObject] = useState([]);
+  const [loadList, setLoadList] = useState();
 
+  //++++++++++++++++++++++++++++++++++++++++++++++++
+  //++++++++++ ADD OBJECT ++++++++++++++++++++++
+
+  //++++++++++++++++++++++++++++++++++++++++++++++++
+  //++++++++++ DELETE OBJECT ++++++++++++++++++++++
+
+  //++++++++++++++++++++++++++++++++++++++++++++++++
+  //++++++++++ EDIT OBJECT ++++++++++++++++++++++
+
+  //++++++++++++++++++++++++++++++++++++++++++++++++
+  //++++++++++ SEARCH OBJECT ++++++++++++++++++++++
   const fetchSearchObject = async (event) => {
+    setLoadList(true);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     /* if (data.get("search").length === 0) {
@@ -53,9 +69,12 @@ const ObjectList = () => {
     } catch (error) {
       console.log(error.message);
     }
+    setLoadList(false);
   };
-
+  //++++++++++++++++++++++++++++++++++++++++++++++++
+  //++++++++++ FETCH OBJECT ++++++++++++++++++++++
   const fetchObject = async () => {
+    setLoadList(true);
     const data = new FormData();
     data.append("libraryID", libraryID);
     data.append("libType", libType);
@@ -82,6 +101,7 @@ const ObjectList = () => {
     } catch (error) {
       console.log(error.message);
     }
+    setLoadList(false);
   };
 
   useEffect(() => {
@@ -91,6 +111,9 @@ const ObjectList = () => {
   return (
     <Box style={{ padding: "5px" }}>
       <Box component="form" onSubmit={fetchSearchObject}>
+        <Box fontSize={20} fontWeight="bold" display="inline">
+          Search Filter:{" "}
+        </Box>
         <RadioGroup
           defaultValue="1"
           name="filter"
@@ -122,8 +145,12 @@ const ObjectList = () => {
             Search
           </Button>
         </Box>
+        {loadList && <LinearProgress />}
       </Box>
-      {!object.length && <>There NO Object Found</>}
+      {loadList && <Box fontSize={20}>Loading Objects....</Box>}
+      {!object.length && !loadList && (
+        <Box fontSize={20}>There NO Object Found</Box>
+      )}
       <Box
         style={{
           display: "grid",

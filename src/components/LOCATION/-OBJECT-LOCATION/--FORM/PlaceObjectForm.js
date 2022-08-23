@@ -7,6 +7,8 @@ import {
   InputLabel,
   FormControl,
 } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
+
 import { useMainLocationContex } from "../../LocationPage";
 import { useParams } from "react-router-dom";
 import SearchObjectList from "./SearchObjectList";
@@ -18,6 +20,7 @@ const PlaceObjectForm = () => {
   const { mainType } = useMainLocationContex();
   const [libraryList, setLibraryList] = useState([]);
   const [selectedLibID, setSelectLibID] = useState("");
+  const [loadLibrary, setLoadLibrary] = useState(false);
 
   const handleChange = (event) => {
     setSelectLibID(event.target.value);
@@ -27,6 +30,7 @@ const PlaceObjectForm = () => {
   //++++++++++ Fetch API ++++++++++++++++++++
   //+++++++++++++++++++++++++++++++++++++++++
   const fetchAccessLibrary = async () => {
+    setLoadLibrary(true);
     const data = new FormData();
     data.append("mainID", mainID);
     data.append("type", mainType);
@@ -56,6 +60,7 @@ const PlaceObjectForm = () => {
     } catch (error) {
       console.log(error.message);
     }
+    setLoadLibrary(false);
   };
 
   //+++++++++++++++++++++++++
@@ -86,8 +91,16 @@ const PlaceObjectForm = () => {
               </MenuItem>
             ))}
         </Select>
-        {libraryList.length == 0 && <>NO LIBRARY FOUND</>}
       </FormControl>
+      {libraryList.length == 0 && !loadLibrary && (
+        <Box fontSize={20}>No Library Found.</Box>
+      )}
+      {loadLibrary && (
+        <>
+          <Box fontSize={20}>Loading Library List....</Box>
+          <LinearProgress />
+        </>
+      )}
       {selectedLibID !== "" && (
         <SearchObjectList libType={mainType} libraryID={selectedLibID} />
       )}

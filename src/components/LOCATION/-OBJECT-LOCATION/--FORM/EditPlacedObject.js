@@ -1,5 +1,8 @@
 import { useState } from "react";
+
 import { Box, Button, Dialog, Paper, TextField } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
+
 import { useParams } from "react-router-dom";
 import { useCurrentLocationData } from "../../LocationPage";
 import { useApiURLContex } from "../../../../App";
@@ -8,8 +11,10 @@ const EditPlacedObject = (props) => {
   const { ApiURL } = useApiURLContex();
   const { locationInfo } = useCurrentLocationData();
   const { mainID, locationID } = useParams();
-  const [open, setOpen] = useState(false);
+  const [loadEdit, setLoadEdit] = useState(false);
+  const [loadRemove, setLoadRemove] = useState(false);
 
+  const [open, setOpen] = useState(false);
   const openHandler = () => {
     setOpen(true);
   };
@@ -21,6 +26,7 @@ const EditPlacedObject = (props) => {
   // API CALL to Link Object and Location
   //++++++++++++++++++++++++++++++++++++++++++++
   const fetchPlaceObject = async (event) => {
+    setLoadEdit(true);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     data.append("mainID", mainID);
@@ -52,11 +58,13 @@ const EditPlacedObject = (props) => {
     } catch (error) {
       console.log(error.message);
     }
+    setLoadEdit(false);
   };
   //+++++++++++++++++++++++++++++++++++++++++++++
   // API CALL to REMOVE Placed Object
   //++++++++++++++++++++++++++++++++++++++++++++
   const fetchRemovePlacedObject = async (event) => {
+    setLoadRemove(true);
     event.preventDefault();
     const data = new FormData();
     data.append("mainID", mainID);
@@ -88,6 +96,7 @@ const EditPlacedObject = (props) => {
     } catch (error) {
       console.log(error.message);
     }
+    setLoadRemove(false);
   };
   return (
     <>
@@ -152,7 +161,7 @@ const EditPlacedObject = (props) => {
         />
 
         <Box style={{ margin: "10px 0px 10px 0px" }}>
-          <Button type="submit" variant="outlined">
+          <Button type="submit" disabled={loadEdit} variant="outlined">
             Upadate Placement
           </Button>
           <Button
@@ -160,10 +169,12 @@ const EditPlacedObject = (props) => {
             color="error"
             style={{ marginLeft: "10px" }}
             onClick={openHandler}
+            disabled={loadEdit}
           >
             Remove Object
           </Button>
         </Box>
+        {loadEdit && <LinearProgress />}
       </Box>
       <Dialog open={open} onClose={closeHandler}>
         <Box
@@ -178,7 +189,12 @@ const EditPlacedObject = (props) => {
             Remove Item from this Location!
           </Box>
           <Box>
-            <Button variant="outlined" color="success" onClick={closeHandler}>
+            <Button
+              variant="outlined"
+              disabled={loadRemove}
+              color="success"
+              onClick={closeHandler}
+            >
               Cancel
             </Button>
             <Button
@@ -186,10 +202,12 @@ const EditPlacedObject = (props) => {
               color="error"
               style={{ marginLeft: "10px" }}
               type="submit"
+              disabled={loadRemove}
             >
               Remove Item
             </Button>
           </Box>
+          {loadRemove && <LinearProgress />}
         </Box>
       </Dialog>
     </>

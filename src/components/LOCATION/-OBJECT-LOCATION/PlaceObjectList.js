@@ -6,11 +6,13 @@ import { Box } from "@mui/material";
 import { useMainLocationContex } from "../LocationPage";
 import PlacedObjectOne from "./--COMPONENTS/PlacedObjectOne";
 import { useApiURLContex } from "../../../App";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const PlaceObjectList = () => {
   const { ApiURL } = useApiURLContex();
   let { mainID, locationID } = useParams();
   const { mainType } = useMainLocationContex();
+  const [loadList, setLoadList] = useState(false);
 
   const [placeObjList, setPlaceObjList] = useState([]);
 
@@ -19,6 +21,7 @@ const PlaceObjectList = () => {
   };
 
   const fetchPlaceObject = async () => {
+    setLoadList(true);
     const data = new FormData();
     data.append("mainID", mainID);
     data.append("locID", locationID);
@@ -51,6 +54,7 @@ const PlaceObjectList = () => {
     } catch (error) {
       console.log(error.message);
     }
+    setLoadList(false);
   };
 
   useEffect(() => {
@@ -70,9 +74,18 @@ const PlaceObjectList = () => {
         component="form"
         onSubmit={fetchSearchLocation}
       ></Box>
-      {!placeObjList.length && (
-        <Box marginLeft={1}>There No Object Placed in this Location!</Box>
-      )}
+      <Box marginLeft={1}>
+        {loadList && (
+          <>
+            <LinearProgress />
+            <Box fontSize={20}>Loading Object......</Box>
+          </>
+        )}
+
+        {!placeObjList.length && !loadList && (
+          <Box fontSize={20}>There No Object Placed in this Location!</Box>
+        )}
+      </Box>
       <Box
         style={{
           display: "grid",

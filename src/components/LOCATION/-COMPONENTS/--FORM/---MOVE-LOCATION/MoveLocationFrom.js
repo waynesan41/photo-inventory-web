@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Box, Button, Dialog, Paper, TextField } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
+
 import { useParams } from "react-router-dom";
 import {
   useCurrentLocationData,
@@ -14,6 +16,7 @@ const MoveLocationForm = (props) => {
   const { mainID, locationID } = useParams();
   const [open, setOpen] = useState(false);
   const [loopError, setLoopError] = useState(false);
+  const [loadMove, setLoadMove] = useState(false);
 
   const openHandler = () => {
     setOpen(true);
@@ -26,6 +29,7 @@ const MoveLocationForm = (props) => {
   // Move Location Fetch
   //++++++++++++++++++++++++++++++++++++++++++++
   const fetchMoveLocation = async (event) => {
+    setLoadMove(true);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     data.append("mainID", mainID);
@@ -58,6 +62,7 @@ const MoveLocationForm = (props) => {
     } catch (error) {
       console.log(error.message);
     }
+    setLoadMove(false);
   };
 
   return (
@@ -127,7 +132,11 @@ const MoveLocationForm = (props) => {
               </Box>
             )}
             <Box>
-              <Button variant="outlined" onClick={closeHandler}>
+              <Button
+                variant="outlined"
+                disabled={loadMove}
+                onClick={closeHandler}
+              >
                 Cancel
               </Button>
               <Button
@@ -135,10 +144,12 @@ const MoveLocationForm = (props) => {
                 variant="outlined"
                 style={{ marginLeft: "10px" }}
                 type="submit"
+                disabled={loadMove}
               >
                 Move Location
               </Button>
             </Box>
+            {loadMove && <LinearProgress />}
           </Box>
         </Dialog>
       </Box>

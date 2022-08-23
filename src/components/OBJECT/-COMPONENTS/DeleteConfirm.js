@@ -1,9 +1,14 @@
-import { Box, Button, Alert } from "@mui/material";
+import { useState } from "react";
 import { useApiURLContex } from "../../../App";
+
+import { Box, Button, Alert } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const DeleteConfirm = (props) => {
   const { ApiURL } = useApiURLContex();
+  const [loadDelete, setLoadDelete] = useState(false);
   const fetchDelete = async () => {
+    setLoadDelete(true);
     const data = new FormData();
     data.append("libraryID", props.libraryID);
     data.append("libType", props.libType);
@@ -20,7 +25,7 @@ const DeleteConfirm = (props) => {
         throw new Error(response.statusText);
       }
       const result = await response.json();
-
+      console.log(result);
       if (result === "0") {
         window.location = window.location.origin + "/Login";
       } else if (result === "DELETED") {
@@ -32,6 +37,7 @@ const DeleteConfirm = (props) => {
     } catch (error) {
       console.log(error.message);
     }
+    setLoadDelete(false);
   };
 
   return (
@@ -48,7 +54,12 @@ const DeleteConfirm = (props) => {
         }}
       >
         <Box>
-          <Button onClick={props.close} fullWidth variant="contained">
+          <Button
+            onClick={props.close}
+            disabled={loadDelete}
+            fullWidth
+            variant="contained"
+          >
             Cancel
           </Button>
         </Box>
@@ -58,11 +69,13 @@ const DeleteConfirm = (props) => {
             variant="contained"
             color="error"
             onClick={fetchDelete}
+            disabled={loadDelete}
           >
             Delete
           </Button>
         </Box>
       </Box>
+      {loadDelete && <LinearProgress />}
     </Box>
   );
 };

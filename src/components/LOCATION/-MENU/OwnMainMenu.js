@@ -1,13 +1,17 @@
-import { Button, Dialog, Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import NewLocationForm from "../-COMPONENTS/--FORM/NewLocationForm";
 import { useApiURLContex } from "../../../App";
+
+import { Button, Dialog, Box } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
+
 const OwnMainMenu = (props) => {
   const { ApiURL } = useApiURLContex();
   let { locationID } = useParams(); // Value from URL
   const [open, setOpen] = useState(false);
   const [mainInfo, setMainInfo] = useState({});
+  const [loadInfo, setLoadInfo] = useState(false);
 
   const openHandler = () => {
     setOpen(true);
@@ -18,6 +22,7 @@ const OwnMainMenu = (props) => {
 
   //FETCH LIBRARY INFO
   const fetchLibraryInfo = async () => {
+    setLoadInfo(true);
     const data = new FormData();
     data.append("mainID", props.mainID);
     data.append("type", 1);
@@ -47,6 +52,7 @@ const OwnMainMenu = (props) => {
     } catch (error) {
       console.log(error.message);
     }
+    setLoadInfo(false);
   };
   useEffect(() => {
     fetchLibraryInfo();
@@ -92,6 +98,7 @@ const OwnMainMenu = (props) => {
       >
         Add New Location
       </Button>
+      {loadInfo && <LinearProgress />}
 
       <Dialog open={open} onClose={closeHandler}>
         <NewLocationForm topID={locationID} close={closeHandler} />

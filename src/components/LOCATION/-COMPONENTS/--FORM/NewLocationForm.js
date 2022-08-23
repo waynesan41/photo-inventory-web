@@ -1,16 +1,19 @@
-import { Box, Button, TextField } from "@mui/material";
-
 import { useState, useEffect, useContext } from "react";
 import { useApiURLContex } from "../../../../App";
 import { useMainLocationContex } from "../../LocationPage";
+
+import { Box, Button, TextField } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const NewLocationForm = (props) => {
   const { ApiURL } = useApiURLContex();
   const { mainID, mainType, accessLvl } = useMainLocationContex();
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
+  const [loadAdd, setLoadAdd] = useState(false);
 
   const fetchAddLocation = async (event) => {
+    setLoadAdd(true);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     data.append("mainID", mainID);
@@ -51,6 +54,7 @@ const NewLocationForm = (props) => {
     } catch (error) {
       console.log(error.message);
     }
+    setLoadAdd(false);
   };
 
   const removePreview = () => {
@@ -129,12 +133,18 @@ const NewLocationForm = (props) => {
           rows={4}
         />
 
-        <Button variant="outlined" color="error" onClick={props.close}>
+        <Button
+          variant="outlined"
+          disabled={loadAdd}
+          color="error"
+          onClick={props.close}
+        >
           Cancel
         </Button>
-        <Button type="submit" variant="contained">
+        <Button type="submit" disabled={loadAdd} variant="contained">
           Add New Location
         </Button>
+        {loadAdd && <LinearProgress />}
       </Box>
     </>
   );

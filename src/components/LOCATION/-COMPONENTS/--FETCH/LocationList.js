@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { useParams } from "react-router-dom";
 import { Box, TextField, Button } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
 
 import { useMainLocationContex } from "../../LocationPage";
 import LocationOne from "./LocationOne";
@@ -12,8 +13,10 @@ const LocationList = () => {
   let { mainID, locationID } = useParams();
   const { mainType } = useMainLocationContex();
   const [locationList, setLocationList] = useState([]);
+  const [loadList, setLoadList] = useState(false);
 
   const fetchSearchLocation = async (event) => {
+    setLoadList(true);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     data.append("mainID", mainID);
@@ -42,9 +45,11 @@ const LocationList = () => {
     } catch (error) {
       console.log(error.message);
     }
+    setLoadList(false);
   };
 
   const fetchGetLocation = async () => {
+    setLoadList(true);
     const data = new FormData();
     data.append("mainID", mainID);
     data.append("locType", mainType);
@@ -74,6 +79,7 @@ const LocationList = () => {
     } catch (error) {
       console.log(error.message);
     }
+    setLoadList(false);
   };
 
   useEffect(() => {
@@ -96,9 +102,13 @@ const LocationList = () => {
           Search
         </Button>
       </Box>
-      {!locationList.length && (
-        <Box marginLeft={1}>There NO locationList Found!</Box>
-      )}
+      <Box marginLeft={1}>
+        {loadList && <LinearProgress />}
+        {loadList && <Box fontSize={20}>Loading Locations....</Box>}
+        {!locationList.length && !loadList && (
+          <Box fontSize={20}>There NO locationList Found!</Box>
+        )}
+      </Box>
       <Box
         style={{
           display: "grid",

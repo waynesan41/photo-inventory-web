@@ -1,10 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+
 import OwnHeader from "./-HEADER/OwnHeader";
 import ShareHeader from "./-HEADER/ShareHeader";
 
 import ObjectList from "./-COMPONENTS/ObjectList";
 import { useApiURLContex } from "../../App";
+
+import LinearProgress from "@mui/material/LinearProgress";
 
 const LibraryContex = React.createContext();
 export const useLibraryContex = () => {
@@ -16,8 +19,10 @@ const ObjectLibrary = () => {
   let { libraryID } = useParams();
   const [libType, setLibType] = useState();
   const [accessLvl, setAccessLvl] = useState();
+  const [loadCheck, setLoadCheck] = useState(false);
 
   const fetchCheckLibrary = async () => {
+    setLoadCheck(true);
     const data = new FormData();
 
     data.append("libraryID", libraryID);
@@ -50,6 +55,7 @@ const ObjectLibrary = () => {
     } catch (error) {
       console.log(error.message);
     }
+    setLoadCheck(false);
   };
 
   useEffect(() => {
@@ -58,6 +64,7 @@ const ObjectLibrary = () => {
 
   return (
     <>
+      {loadCheck && <LinearProgress />}
       <LibraryContex.Provider value={{ libraryID, libType, accessLvl }}>
         {libType == 0 && <h3>Sorry You don't have Access to the Library</h3>}
         {libType == 1 && <OwnHeader libraryID={libraryID} />}

@@ -1,18 +1,22 @@
-import { Box } from "@mui/system";
-import { useContext, useEffect, useState } from "react";
-import { useApiURLContex } from "../../../App";
+import { useEffect, useState } from "react";
 
+import { useApiURLContex } from "../../../App";
 import { useLibraryContex } from "../ObjectLibrary";
 import OneLocation from "./OneLocation";
+
+import { Box } from "@mui/system";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const ListLocation = (props) => {
   const { ApiURL } = useApiURLContex();
   const { libType } = useLibraryContex();
   const [locationList, setLocationList] = useState([]);
+  const [loadList, setLoadList] = useState();
   //+++++++++++++++++++++++++++++++++++++++++
   // API Call Search Location with Object
   //+++++++++++++++++++++++++++++++++++++++++
   const fetchLocationWithObject = async () => {
+    setLoadList(true);
     const data = new FormData();
     data.append("libraryID", props.objData.LibraryID);
     data.append("objectID", props.objData.ObjectID);
@@ -42,6 +46,7 @@ const ListLocation = (props) => {
     } catch (error) {
       console.log(error.message);
     }
+    setLoadList(false);
   };
   useEffect(() => {
     fetchLocationWithObject();
@@ -57,8 +62,26 @@ const ListLocation = (props) => {
           gridTemplateColumns: "repeat(3, 1fr)",
         }}
       >
-        {locationList.length === 0 && (
-          <Box component="h3">This Object is not Place in any Location!</Box>
+        {loadList && (
+          <>
+            <Box></Box>
+            <Box>
+              <LinearProgress />
+              <Box fontSize={15}>Searching Object In Locations.</Box>
+            </Box>
+            <Box></Box>
+          </>
+        )}
+        {locationList.length === 0 && !loadList && (
+          <>
+            <Box></Box>
+            <Box>
+              <Box component="h3">
+                This Object is not Place in any Location!
+              </Box>
+            </Box>
+            <Box></Box>
+          </>
         )}
         {locationList.map((loc) => (
           <Box key={loc.LocationID}>

@@ -1,7 +1,9 @@
-import { Box, Button, Grid } from "@mui/material";
 import React, { useState, useEffect, useContext } from "react";
 import { useApiURLContex } from "../../../../App";
 import ShareUserOne from "./ShareUserOne";
+
+import { Box, Button, Grid } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const ShareFormChangeContex = React.createContext();
 
@@ -12,6 +14,7 @@ export const useShareFormChange = () => {
 const EditShareUser = (props) => {
   const { ApiURL } = useApiURLContex();
   const [shareUser, setShareUser] = useState([]);
+  const [loadUser, setLoadUser] = useState(false);
 
   const changeAccess = (id, access) => {
     const items = shareUser.filter((el) => {
@@ -33,6 +36,7 @@ const EditShareUser = (props) => {
     setShareUser([...items]);
   };
   const fetchShareUser = async () => {
+    setLoadUser(true);
     const data = new FormData();
     data.append("libraryID", props.data.LibraryID);
     const fetchURL = `${ApiURL}/library/getUser.php`;
@@ -59,6 +63,7 @@ const EditShareUser = (props) => {
     } catch (error) {
       console.log(error.message);
     }
+    setLoadUser(false);
   };
 
   useEffect(() => {
@@ -67,12 +72,21 @@ const EditShareUser = (props) => {
   return (
     <Box minWidth={400}>
       <ShareFormChangeContex.Provider value={{ removeUser, changeAccess }}>
-        {shareUser.map((User) => (
-          <Box style={{ margin: "3px" }} key={User.UserID}>
-            <ShareUserOne user={User} libraryID={props.data.LibraryID} />
-          </Box>
-        ))}
+        {shareUser.length > 0 &&
+          shareUser.map((User) => (
+            <Box style={{ margin: "3px" }} key={User.UserID}>
+              <ShareUserOne user={User} libraryID={props.data.LibraryID} />
+            </Box>
+          ))}
       </ShareFormChangeContex.Provider>
+      {loadUser && (
+        <>
+          <Box fontSize={20} padding="10px">
+            Loading Users List
+          </Box>
+          <LinearProgress />
+        </>
+      )}
     </Box>
   );
 };

@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
-import { Box } from "@mui/material";
+
 import NewUserOne from "./NewUserOne";
 import { useApiURLContex } from "../../../../App";
+
+import { Box } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const AddShareUser = (props) => {
   const { ApiURL } = useApiURLContex();
   const [addUser, setAddUser] = useState([]);
+  const [loadUser, setLoadUser] = useState(false);
 
   const changeNewUser = (id) => {
     const items = addUser.filter((user) => {
@@ -16,6 +20,7 @@ const AddShareUser = (props) => {
     setAddUser([...items]);
   };
   const fetchConnectedUser = async () => {
+    setLoadUser(true);
     const data = new FormData();
     data.append("libraryID", props.data.LibraryID);
     const fetchURL = `${ApiURL}/library/getNewUser.php`;
@@ -44,6 +49,7 @@ const AddShareUser = (props) => {
     } catch (error) {
       console.log(error.message);
     }
+    setLoadUser(false);
   };
   useEffect(() => {
     fetchConnectedUser();
@@ -60,7 +66,15 @@ const AddShareUser = (props) => {
             />
           </Box>
         ))}
-      {addUser.length == 0 && (
+      {loadUser && (
+        <>
+          <Box fontSize={20} padding="10px">
+            Loading Connected Users
+          </Box>
+          <LinearProgress />
+        </>
+      )}
+      {addUser.length == 0 && !loadUser && (
         <Box fontSize={20} padding="10px">
           There is no More Connected User to Share With!
         </Box>

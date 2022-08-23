@@ -1,4 +1,6 @@
 import { Box, TextField, Button, Dialog } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
+
 import { useState, useEffect } from "react";
 import { useApiURLContex } from "../../../../App";
 import { useMainLocationContex } from "../../LocationPage";
@@ -9,10 +11,27 @@ const EditLocationForm = (props) => {
   const { mainType, accessLvl } = useMainLocationContex();
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
+  const [loadEdit, setLoadEdit] = useState(false);
+  const [fileChange, setFileChange] = useState(false);
 
   const fetchEditLocation = async (event) => {
+    setLoadEdit(true);
     event.preventDefault();
+    console.log(props.locData);
     const data = new FormData(event.currentTarget);
+    if (
+      data.get("name") == props.locData.Name &&
+      data.get("description") == props.locData.Description
+    ) {
+      if (props.locData.Photo === 0 && selectedFile == undefined) {
+        props.closeEdit();
+        return 0;
+      }
+      if (props.locData.Photo === 1 && !fileChange) {
+        props.closeEdit();
+        return 0;
+      }
+    }
     data.append("mainID", props.locData.MainLocationID);
     data.append("locType", mainType);
     data.append("locationID", props.locData.LocationID);
@@ -20,8 +39,15 @@ const EditLocationForm = (props) => {
       data.delete("description");
     }
     if (selectedFile != undefined) {
-      data.append("photo", 1);
-      data.append("img1", selectedFile);
+      if (fileChange) {
+        data.append("photo", 1);
+        data.append("img1", selectedFile);
+      } else {
+        // console.log("Photo DON'T Change!");
+      }
+      // console.log(selectedFile);
+    } else {
+      data.append("photo", 0);
     }
 
     /* for (var pair of data.entries()) {
@@ -52,6 +78,7 @@ const EditLocationForm = (props) => {
     } catch (error) {
       console.log(error.message);
     }
+    setLoadEdit(false);
   };
   const fetchOrignalImage = async (url) => {
     const res = await fetch(url, {
@@ -62,10 +89,12 @@ const EditLocationForm = (props) => {
     setSelectedFile(imgBlob);
   };
   const removePreview = () => {
+    setFileChange(true);
     setPreview(null);
     setSelectedFile(undefined);
   };
   const onSelectFile = (e) => {
+    setFileChange(true);
     if (!e.target.files || e.target.files.length === 0) {
       setSelectedFile(undefined);
       return;
@@ -161,12 +190,23 @@ const EditLocationForm = (props) => {
         defaultValue={props.locData.Description}
         rows={4}
       />
-      <Button variant="outlined" color="warning" onClick={props.closeHandler}>
+      <Button
+        variant="outlined"
+        disabled={loadEdit}
+        color="warning"
+        onClick={props.closeEdit}
+      >
         Cancel
       </Button>
-      <Button variant="outlined" color="success" type="submit">
+      <Button
+        variant="outlined"
+        disabled={loadEdit}
+        color="success"
+        type="submit"
+      >
         Update Location
       </Button>
+      {loadEdit && <LinearProgress />}
       <Dialog open={open} onClose={closeHandler}>
         <DeleteConfirm close={closeHandler} data={props.locData} />
       </Dialog>

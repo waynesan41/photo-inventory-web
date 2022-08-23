@@ -1,5 +1,8 @@
 import { useState } from "react";
+
 import { Box, TextField, Button } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
+
 import { useMainLocationContex } from "../../../LocationPage";
 import { useParams } from "react-router-dom";
 import OneLocationMoveTo from "./OneLocationMoveTo";
@@ -10,6 +13,7 @@ const MoveLocationSearch = (props) => {
   let { mainID } = useParams();
   const { mainType } = useMainLocationContex();
   const [locationList, setLocationList] = useState([]);
+  const [loadList, setLoadList] = useState(false);
   const baseLocation = {
     LocationID: 0,
     MainLocationID: mainID,
@@ -17,6 +21,7 @@ const MoveLocationSearch = (props) => {
   };
 
   const fetchSearchLocation = async (event) => {
+    setLoadList(true);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     data.append("mainID", mainID);
@@ -45,6 +50,7 @@ const MoveLocationSearch = (props) => {
     } catch (error) {
       console.log(error.message);
     }
+    setLoadList(false);
   };
   return (
     <Box
@@ -70,6 +76,7 @@ const MoveLocationSearch = (props) => {
           Search
         </Button>
       </Box>
+      {loadList && <LinearProgress />}
       <Box
         style={{
           display: "grid",

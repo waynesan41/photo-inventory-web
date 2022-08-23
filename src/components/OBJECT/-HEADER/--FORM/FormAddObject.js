@@ -1,16 +1,20 @@
-import { Box, Button, TextField } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useApiURLContex } from "../../../../App";
 import { useLibraryContex } from "../../ObjectLibrary";
+
+import { Box, Button, TextField } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const FormAddObject = () => {
   const { ApiURL } = useApiURLContex();
   const { libraryID, libType } = useLibraryContex();
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
+  const [loadAdd, setLoadAdd] = useState(false);
 
   //FETCH ADD New Object
   const fetchAddObject = async (event) => {
+    setLoadAdd(true);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     data.append("libraryID", libraryID);
@@ -18,13 +22,13 @@ const FormAddObject = () => {
     if (data.get("description").length === 0) {
       data.delete("description");
     }
-    if (selectedFile !== undefined) {
+    if (selectedFile != undefined) {
       data.append("photo", 1);
       data.append("img1", selectedFile);
     }
-    /* for (var pair of data.entries()) {
+    for (var pair of data.entries()) {
       console.log(pair[0] + ": " + pair[1]);
-    } */
+    }
     const fetchURL = `${ApiURL}/object/addNewObject.php`;
 
     try {
@@ -50,6 +54,7 @@ const FormAddObject = () => {
     } catch (error) {
       console.log(error.message);
     }
+    setLoadAdd(false);
   };
 
   const removePreview = () => {
@@ -124,9 +129,10 @@ const FormAddObject = () => {
         label="Description"
         rows={4}
       />
-      <Button variant="contained" type="submit">
+      <Button variant="contained" disabled={loadAdd} type="submit">
         Add New Object
       </Button>
+      {loadAdd && <LinearProgress />}
     </Box>
   );
 };

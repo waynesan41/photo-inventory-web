@@ -1,6 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useApiURLContex } from "../../App";
+
+import LinearProgress from "@mui/material/LinearProgress";
+
 import LocationBread from "./-COMPONENTS/--FETCH/LocationBread";
 import LocationCurrent from "./-COMPONENTS/--FETCH/LocationCurrent";
 import LocationList from "./-COMPONENTS/--FETCH/LocationList";
@@ -24,8 +27,10 @@ const LocationPage = () => {
   const [mainType, setMainType] = useState();
   const [accessLvl, setAccessLvl] = useState();
   const [locationInfo, setLocationInfo] = useState({});
+  const [loadCheck, setLoadCheck] = useState(false);
 
   const fetchLocationInfo = async () => {
+    setLoadCheck(true);
     const data = new FormData();
     data.append("mainID", mainID);
     data.append("locationID", locationID);
@@ -55,8 +60,10 @@ const LocationPage = () => {
     } catch (error) {
       console.log(error.message);
     }
+    setLoadCheck(false);
   };
   const fetchMainAccessInfo = async () => {
+    setLoadCheck(true);
     const data = new FormData();
     data.append("mainID", mainID);
     const fetchURL = `${ApiURL}/location/checkAccess.php`;
@@ -88,6 +95,7 @@ const LocationPage = () => {
     } catch (error) {
       console.log(error.message);
     }
+    setLoadCheck(false);
   };
 
   useEffect(() => {
@@ -98,6 +106,7 @@ const LocationPage = () => {
   }, []);
   return (
     <>
+      {loadCheck && <LinearProgress />}
       <MainLocationContex.Provider value={{ mainID, mainType, accessLvl }}>
         {mainType == 0 && <h3>Sorry You don't have Access to the Location</h3>}
         {mainType == 1 && <OwnMainMenu mainID={mainID} />}

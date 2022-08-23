@@ -2,6 +2,7 @@ import { Box, Button, Grid } from "@mui/material";
 import React, { useState, useEffect, useContext } from "react";
 import { useApiURLContex } from "../../../../App";
 import ShareUserOne from "./ShareUserOne";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const ShareFormChangeContex = React.createContext();
 
@@ -13,6 +14,7 @@ const EditShareUser = (props) => {
   const { ApiURL } = useApiURLContex();
   const [shareUser, setShareUser] = useState([]);
   const [mainID, setMainID] = useState(props.data.MainLocationID);
+  const [loadUser, setLoadUser] = useState(false);
 
   const changeAccess = (id, access) => {
     const items = shareUser.filter((el) => {
@@ -34,6 +36,7 @@ const EditShareUser = (props) => {
     setShareUser([...items]);
   };
   const fetchShareUser = async () => {
+    setLoadUser(true);
     const data = new FormData();
     data.append("mainID", props.data.MainLocationID);
     const fetchURL = `${ApiURL}/mainLocation/getSharedUser.php`;
@@ -60,6 +63,7 @@ const EditShareUser = (props) => {
     } catch (error) {
       console.log(error.message);
     }
+    setLoadUser(false);
   };
 
   useEffect(() => {
@@ -76,6 +80,14 @@ const EditShareUser = (props) => {
           </Box>
         ))}
       </ShareFormChangeContex.Provider>
+      {loadUser && (
+        <>
+          <Box fontSize={20} padding="10px">
+            Loading Users List
+          </Box>
+          <LinearProgress />
+        </>
+      )}
     </Box>
   );
 };
