@@ -33,7 +33,7 @@ const LocationBread = () => {
       } else if (result === "FAIL") {
         setBreadList([]);
       } else {
-        setBreadList([...result]);
+        setBreadList([...result.reverse()]);
       }
       console.log(result);
     } catch (error) {
