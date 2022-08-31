@@ -65,6 +65,7 @@ const ObjectDetail = (props) => {
         Description: <br />
         {props.objData.Description}
       </Typography>
+      <Box style={{ float: "right" }}>Added Date: {props.objData.AddDate}</Box>
       <Dialog open={open} onClose={closeEdit}>
         <EditForm objData={props.objData} closeEdit={closeEdit} />
       </Dialog>

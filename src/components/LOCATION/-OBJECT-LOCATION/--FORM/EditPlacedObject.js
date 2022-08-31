@@ -148,6 +148,15 @@ const EditPlacedObject = (props) => {
           defaultValue={props.objData.Quantity}
           required
         />
+        <Box display>
+          <Box display="inline">
+            Editor: <b>{props.objData.FullName}</b>
+          </Box>
+          <Box style={{ display: "inline", float: "right" }}>
+            Date: {props.objData.LastUpdate}
+          </Box>
+        </Box>
+
         <TextField
           style={{ margin: "10px 0px 5px 0px" }}
           multiline

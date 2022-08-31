@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { useParams } from "react-router-dom";
-import { Box } from "@mui/material";
+import { Box, TextField } from "@mui/material";
 
 import { useMainLocationContex } from "../LocationPage";
 import PlacedObjectOne from "./--COMPONENTS/PlacedObjectOne";
@@ -15,11 +15,11 @@ const PlaceObjectList = () => {
   const [loadList, setLoadList] = useState(false);
 
   const [placeObjList, setPlaceObjList] = useState([]);
+  const [filter, setFilter] = useState("");
 
   const fetchSearchLocation = () => {
     console.log("Search Location");
   };
-
   const fetchPlaceObject = async () => {
     setLoadList(true);
     const data = new FormData();
@@ -50,13 +50,16 @@ const PlaceObjectList = () => {
       } else {
         setPlaceObjList([...result]);
       }
-      console.log(result);
+      // console.log(result);
     } catch (error) {
       console.log(error.message);
     }
     setLoadList(false);
   };
 
+  const objectFilterHandler = (event) => {
+    setFilter(event.currentTarget.value.toLowerCase());
+  };
   useEffect(() => {
     if (locationID !== "0") {
       fetchPlaceObject();
@@ -74,15 +77,29 @@ const PlaceObjectList = () => {
         component="form"
         onSubmit={fetchSearchLocation}
       ></Box>
+
+      <Box
+        style={{
+          margin: "9px 5px 0px 5px",
+          display: "grid",
+          gridGap: "5px",
+        }}
+      >
+        <TextField
+          name="search"
+          label="Filter Object"
+          onChange={objectFilterHandler}
+        ></TextField>
+      </Box>
+
       <Box marginLeft={1}>
-        {loadList && (
+        {loadList && locationID !== "0" && (
           <>
             <LinearProgress />
             <Box fontSize={20}>Loading Object......</Box>
           </>
         )}
-
-        {!placeObjList.length && !loadList && (
+        {!placeObjList.length && locationID !== "0" && !loadList && (
           <Box fontSize={20}>There No Object Placed in this Location!</Box>
         )}
       </Box>
@@ -92,19 +109,23 @@ const PlaceObjectList = () => {
           gridTemplateColumns: "1fr 1fr 1fr 1fr",
         }}
       >
-        {placeObjList.map((obj) => (
-          <Box
-            sx={{ boxShadow: 5 }}
-            key={obj.ObjectID}
-            style={{
-              margin: "4px",
-              border: "3px solid orange",
-              borderRadius: "5px",
-            }}
-          >
-            <PlacedObjectOne objData={obj} />
-          </Box>
-        ))}
+        {placeObjList
+          .filter((placeObjList) =>
+            placeObjList.Name.toLowerCase().includes(filter)
+          )
+          .map((obj) => (
+            <Box
+              sx={{ boxShadow: 5 }}
+              key={obj.ObjectID}
+              style={{
+                margin: "4px",
+                border: "3px solid orange",
+                borderRadius: "5px",
+              }}
+            >
+              <PlacedObjectOne objData={obj} />
+            </Box>
+          ))}
       </Box>
     </Box>
   );

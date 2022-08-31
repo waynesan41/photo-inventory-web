@@ -38,7 +38,7 @@ const OwnHeader = (props) => {
       }
       const result = await response.json();
 
-      console.log(result);
+      // console.log(result);
       if (result === "0") {
         window.location = window.location.origin + "/Login";
       } else if (result == "DENY") {
