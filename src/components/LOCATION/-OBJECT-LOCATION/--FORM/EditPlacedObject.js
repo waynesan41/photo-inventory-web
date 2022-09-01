@@ -1,16 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Box, Button, Dialog, Paper, TextField } from "@mui/material";
 import LinearProgress from "@mui/material/LinearProgress";
 
 import { useParams } from "react-router-dom";
-import { useCurrentLocationData } from "../../LocationPage";
+import {
+  useCurrentLocationData,
+  useMainLocationContex,
+} from "../../LocationPage";
 import { useApiURLContex } from "../../../../App";
 
 const EditPlacedObject = (props) => {
   const { ApiURL } = useApiURLContex();
   const { locationInfo } = useCurrentLocationData();
+  const { mainType, accessLvl } = useMainLocationContex();
   const { mainID, locationID } = useParams();
+  const [editAccess, setEditAccess] = useState(false);
   const [loadEdit, setLoadEdit] = useState(false);
   const [loadRemove, setLoadRemove] = useState(false);
 
@@ -50,7 +55,7 @@ const EditPlacedObject = (props) => {
       if (result === "0") {
         window.location = window.location.origin + "/Login";
       } else if (result === "UPDATED") {
-        window.location.reload();
+        window.location.href = window.location.href;
       } else {
         console.log(result);
         console.log("Fail to Upload");
@@ -98,6 +103,14 @@ const EditPlacedObject = (props) => {
     }
     setLoadRemove(false);
   };
+  useEffect(() => {
+    if (mainType == 2) {
+      if (accessLvl == 3) setEditAccess(false);
+      else setEditAccess(true);
+    } else {
+      setEditAccess(false);
+    }
+  }, []);
   return (
     <>
       <Box
@@ -146,6 +159,7 @@ const EditPlacedObject = (props) => {
           type="number"
           label="Quantity"
           defaultValue={props.objData.Quantity}
+          disabled={editAccess}
           required
         />
         <Box display>
@@ -153,7 +167,7 @@ const EditPlacedObject = (props) => {
             Editor: <b>{props.objData.FullName}</b>
           </Box>
           <Box style={{ display: "inline", float: "right" }}>
-            Date: {props.objData.LastUpdate}
+            Last Update: {props.objData.LastUpdate}
           </Box>
         </Box>
 
@@ -166,11 +180,16 @@ const EditPlacedObject = (props) => {
           id="description"
           defaultValue={props.objData.Description}
           label="Placement Description"
+          disabled={editAccess}
           rows={4}
         />
 
         <Box style={{ margin: "10px 0px 10px 0px" }}>
-          <Button type="submit" disabled={loadEdit} variant="outlined">
+          <Button
+            type="submit"
+            disabled={loadEdit || editAccess}
+            variant="outlined"
+          >
             Upadate Placement
           </Button>
           <Button
@@ -178,7 +197,7 @@ const EditPlacedObject = (props) => {
             color="error"
             style={{ marginLeft: "10px" }}
             onClick={openHandler}
-            disabled={loadEdit}
+            disabled={loadEdit || editAccess}
           >
             Remove Object
           </Button>

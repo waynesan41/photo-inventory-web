@@ -10,6 +10,7 @@ import {
 } from "../../LocationPage";
 import MoveLocationSearch from "../--FORM/---MOVE-LOCATION/MoveLocationSearch";
 import { useApiURLContex } from "../../../../App";
+import LocationDetail from "./LocationDetail";
 
 /* const CurrentLocationDataContex = React.createContext();
 export const useCurrentLocationData = () => {
@@ -26,6 +27,7 @@ const LocationCurrent = () => {
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
   const [open3, setOpen3] = useState(false);
+  const [openDetailState, setOpenDetailState] = useState(false);
 
   const openEdit = () => {
     setOpen(true);
@@ -44,6 +46,12 @@ const LocationCurrent = () => {
   };
   const closeMove = () => {
     setOpen3(false);
+  };
+  const openDetail = () => {
+    setOpenDetailState(true);
+  };
+  const closeDetail = () => {
+    setOpenDetailState(false);
   };
 
   /* const fetchLocationInfo = async () => {
@@ -105,6 +113,7 @@ const LocationCurrent = () => {
               maxHeight="300px"
               maxWidth="300px"
               src={`${ApiURL}/image/readImageLocation.php?id1=${mainID}&id2=${locationID}`}
+              onClick={openDetail}
             />
           )}
         </Box>
@@ -157,6 +166,9 @@ const LocationCurrent = () => {
       </Dialog>
       <Dialog open={open3} onClose={closeMove} fullWidth maxWidth="70%">
         <MoveLocationSearch />
+      </Dialog>
+      <Dialog open={openDetailState} onClose={closeDetail} maxWidth="80%">
+        <LocationDetail locData={locationInfo} />
       </Dialog>
     </>
   );
