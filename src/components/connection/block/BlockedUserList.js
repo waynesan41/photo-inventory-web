@@ -46,6 +46,7 @@ const BlockedUserList = () => {
   }, []);
   const titleStyle = {
     fontSize: 25,
+
     fontWeight: "bold",
     borderRadius: "5px",
     margin: "5px 0px 15px 0px",
@@ -57,17 +58,19 @@ const BlockedUserList = () => {
   return (
     <>
       <Box style={titleStyle}>Blocked User</Box>
-      {loadList && <LinearProgress />}
-      {noBlockuser && !loadList && <h2>You don't have any Blocked User.</h2>}
-      {!noBlockuser &&
-        blockUser.map((user) => (
-          <BlockedUserOne
-            key={user.UserID}
-            user={user}
-            currentID={editUserID}
-            setCurrentID={setEdituserID}
-          />
-        ))}
+      <Box>
+        {loadList && <LinearProgress />}
+        {noBlockuser && !loadList && <h2>You don't have any Blocked User.</h2>}
+        {!noBlockuser &&
+          blockUser.map((user) => (
+            <BlockedUserOne
+              key={user.UserID}
+              user={user}
+              currentID={editUserID}
+              setCurrentID={setEdituserID}
+            />
+          ))}
+      </Box>
     </>
   );
 };

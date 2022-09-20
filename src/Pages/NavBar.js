@@ -5,6 +5,8 @@ import {
   BottomNavigationAction,
   Box,
   Button,
+  Link,
+  Popover,
 } from "@mui/material";
 
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -16,6 +18,16 @@ import { useApiURLContex } from "../App";
 
 const NavBar = () => {
   const { ApiURL } = useApiURLContex();
+  //POP OVer ===========
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const open = Boolean(anchorEl);
   const logOutphp = async () => {
     const fetchURL = `${ApiURL}/account/logout.php`;
 
@@ -38,6 +50,7 @@ const NavBar = () => {
       console.log(error.message);
     }
   };
+
   const [value, setValue] = useState(0);
   useEffect(() => {
     switch (window.location.pathname.split("/").at(1)) {
@@ -65,19 +78,30 @@ const NavBar = () => {
           display: "grid",
           gridTemplateColumns: "1fr 10fr 1fr",
           gridGap: "10px",
-          paddingBottom: "5px",
           marginBottom: "5px",
           borderBottom: "2px solid gray",
+          backgroundColor: "#3498db",
         }}
       >
-        <Box>
-          <b>Company Name</b>
-        </Box>
+        <Link href="/MainLocation">
+          <img
+            style={{
+              marginTop: "10px",
+            }}
+            src={require("./logo11.png")}
+            width="170px"
+          />
+        </Link>
+
         <BottomNavigation
           showLabels={true}
           value={value}
           onChange={(event, newValue) => {
             setValue(newValue);
+            // event.target.style.backgroundColor = "#3498db";
+          }}
+          style={{
+            backgroundColor: "#3498db",
           }}
         >
           <BottomNavigationAction
@@ -85,34 +109,63 @@ const NavBar = () => {
             to="/MainLocation"
             label="Main"
             icon={<LocationOnIcon />}
-            style={{ border: "2px solid #4176cf", borderRadius: "10px" }}
+            style={{
+              border: "4px solid #4176cf",
+              backgroundColor: "white",
+              borderRadius: "10px",
+            }}
           />
           <BottomNavigationAction
             component={NavLink}
             to="/Library"
             label="Library"
             icon={<AllInboxIcon />}
-            style={{ border: "2px solid #4176cf", borderRadius: "10px" }}
+            style={{
+              border: "4px solid #4176cf",
+              backgroundColor: "white",
+              borderRadius: "10px",
+            }}
           />
           <BottomNavigationAction
             component={NavLink}
             to="/Connection"
             label="Connection"
             icon={<GroupsIcon />}
-            style={{ border: "2px solid #4176cf", borderRadius: "10px" }}
+            style={{
+              border: "4px solid #4176cf",
+              backgroundColor: "white",
+              borderRadius: "10px",
+            }}
           />
           <BottomNavigationAction
             component={NavLink}
             to="/Profile"
             label="Profile"
             icon={<PersonOutlineIcon />}
-            style={{ border: "2px solid #4176cf", borderRadius: "10px" }}
+            style={{
+              border: "4px solid #4176cf",
+              backgroundColor: "white",
+              borderRadius: "10px",
+            }}
           />
         </BottomNavigation>
         <Box style={{ display: "grid", alignItems: "start" }}>
-          <Button variant="contained" onClick={logOutphp}>
-            LogOut
+          <Button variant="contained" onClick={handleClick}>
+            Log Out
           </Button>
+          <Popover
+            open={open}
+            anchorEl={anchorEl}
+            onClose={handleClose}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+          >
+            <Button onClick={logOutphp} variant="contained" color="error">
+              Confirm
+            </Button>
+          </Popover>
         </Box>
       </Box>
       <Outlet />

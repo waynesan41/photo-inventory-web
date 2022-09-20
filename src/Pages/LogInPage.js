@@ -56,6 +56,7 @@ function LogInPage() {
   /* const handleChangeIndex = (index) => {
     setValue(index);
   }; */
+  const year = new Date().getFullYear();
 
   useEffect(() => {
     const checkLogin = async () => {
@@ -83,36 +84,83 @@ function LogInPage() {
     checkLogin();
   }, []);
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        height: "100vh",
-      }}
-    >
-      <Box sx={{ bgcolor: "background.paper", width: 500 }}>
-        <AppBar position="static">
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            indicatorColor="secondary"
-            textColor="inherit"
-            variant="fullWidth"
-            aria-label="full width tabs example"
-          >
-            <Tab label="Log In" {...a11yProps(0)} />
-            <Tab label="Register" {...a11yProps(1)} />
-          </Tabs>
-        </AppBar>
-
-        <TabPanel value={value} index={0} dir={theme.direction}>
-          <LogIn />
-        </TabPanel>
-        <TabPanel value={value} index={1} dir={theme.direction}>
-          <Register />
-        </TabPanel>
+    <>
+      <Box
+        style={{ backgroundColor: "#2980b9" }}
+        textAlign="center"
+        paddingTop="10px"
+      >
+        <img src="logo.png" height="100px" />
       </Box>
-    </div>
+      <Box
+        style={{
+          width: "auto",
+          justifyContent: "left",
+          display: "inline",
+          position: "static",
+        }}
+      >
+        <Box
+          sx={{
+            border: "3px solid #2980b9",
+            borderRadius: "5px",
+            margin: "20px",
+            display: "inline-block",
+            bgcolor: "background.paper",
+            width: 500,
+            position: "static",
+          }}
+        >
+          <AppBar position="relative" fullWidth>
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              indicatorColor="secondary"
+              textColor="inherit"
+              variant="fullWidth"
+            >
+              <Tab label="Log In" {...a11yProps(0)} />
+              <Tab label="Register" {...a11yProps(1)} />
+            </Tabs>
+          </AppBar>
+
+          <TabPanel value={value} index={0} dir={theme.direction}>
+            <LogIn />
+          </TabPanel>
+          <TabPanel value={value} index={1} dir={theme.direction}>
+            <Register />
+          </TabPanel>
+        </Box>
+        <Box display="inline-block" position="relative">
+          <Box color="#e67e22" display="block" fontSize={30} component="h1">
+            Find Placement
+          </Box>
+          <Box
+            fontSize={25}
+            style={{ wordWrap: "break-word", display: "block" }}
+          >
+            Reconnect with the stuff that you don't remenber placing.
+          </Box>
+        </Box>
+      </Box>
+      <Box
+        style={{
+          position: "fixed",
+          left: "0px",
+          bottom: "0px",
+          right: "0px",
+          minHeight: "50px",
+          backgroundColor: "#2980b9",
+          color: "white",
+          textAlign: "center",
+          padding: "15px",
+          zIndex: "-1",
+        }}
+        component="footer"
+      >
+        FindPlacement &copy; {year}
+      </Box>
+    </>
   );
 }
 

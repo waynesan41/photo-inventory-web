@@ -34,6 +34,7 @@ function App() {
   const yourHandler = () => {
     console.log("Router Change is Called!");
   };
+  document.title = "Find Placement";
   return (
     <>
       <ApiURLContex.Provider value={{ ApiURL }}>
