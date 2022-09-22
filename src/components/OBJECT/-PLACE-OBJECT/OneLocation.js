@@ -10,7 +10,7 @@ import { useApiURLContex } from "../../../App";
 const OneLocation = (props) => {
   const { ApiURL } = useApiURLContex();
   return (
-    <Card style={{ border: "2px solid green" }}>
+    <Card style={{ border: "3px solid #3867d6" }}>
       <Link
         href={`/mainLocation/${props.locationData.MainLocationID}/${props.locationData.LocationID}`}
         style={{ textDecoration: "none", color: "black" }}

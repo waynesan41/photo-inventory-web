@@ -10,6 +10,7 @@ import ErrorPage from "./Pages/ErrorPage";
 import LogInPage from "./Pages/LogInPage";
 import NavBar from "./Pages/NavBar";
 import Connection from "./Pages/Connection";
+import ResetPassword from "./Pages/ResetPassword";
 
 import BlockedUserList from "./components/connection/block/BlockedUserList";
 import RequestFromList from "./components/connection/requestFrom/RequestFromList";
@@ -26,11 +27,11 @@ export const useApiURLContex = () => {
 };
 
 function App() {
-  // const ApiURL = "http://localhost/PhotoInventory/Backend/api";
+  const ApiURL = "http://localhost/PhotoInventory/Backend/api";
 
-  const [ApiURL, setApiURL] = useState(
+  /* const [ApiURL, setApiURL] = useState(
     window.location.origin + "/PhotoInventory/Backend/api"
-  );
+  ); */
   const yourHandler = () => {
     console.log("Router Change is Called!");
   };
@@ -41,6 +42,11 @@ function App() {
         <Router onChange={yourHandler}>
           <Routes>
             <Route path="/Login" element={<LogInPage />} />
+            <Route path="/ResetPassword/*" element={<ResetPassword />} />
+            <Route
+              path="/ResetPassword/:tokenKey"
+              element={<ResetPassword />}
+            />
             <Route path="/" element={<NavBar />}>
               <Route path="/" element={<MainLocation />} />
               <Route path="/MainLocation/" element={<MainLocation />} />

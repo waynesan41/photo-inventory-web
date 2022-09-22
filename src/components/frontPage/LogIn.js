@@ -14,6 +14,8 @@ import Container from "@mui/material/Container";
 import { useApiURLContex } from "../../App";
 
 import LinearProgress from "@mui/material/LinearProgress";
+import { Dialog } from "@mui/material";
+import ForgetPassword from "./-COMPONENTS/ForgetPassword";
 
 export default function SignIn() {
   const { ApiURL } = useApiURLContex();
@@ -21,6 +23,14 @@ export default function SignIn() {
   const [loginMessage, setLoginMessage] = useState("");
 
   const [loadLogin, setLoadLogin] = useState(false);
+  const [openForget, setOpenForget] = useState(false);
+
+  const openForgetHandler = () => {
+    setOpenForget(true);
+  };
+  const closeForgetHandler = () => {
+    setOpenForget(false);
+  };
 
   const incorrectHandler = () => {
     setIncorrect(false);
@@ -116,14 +126,22 @@ export default function SignIn() {
             Log In
           </Button>
           {loadLogin && <LinearProgress />}
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-          </Grid>
         </Box>
+        <Grid container>
+          <Grid item xs>
+            <Link onClick={openForgetHandler} variant="body2">
+              Forgot password?
+            </Link>
+          </Grid>
+        </Grid>
+        <Dialog
+          open={openForget}
+          onClose={closeForgetHandler}
+          maxWidth="sm"
+          fullWidth
+        >
+          <ForgetPassword closeForm={closeForgetHandler} />
+        </Dialog>
       </Box>
     </Container>
   );

@@ -50,7 +50,7 @@ const LocationBread = () => {
         <Link
           href={0}
           style={{
-            border: "2px solid green",
+            border: "2px solid #3867d6",
             borderRadius: "5px",
             padding: "5px",
           }}
@@ -62,7 +62,7 @@ const LocationBread = () => {
             key={loc.LocationID}
             href={`${loc.LocationID}`}
             style={{
-              border: "2px solid green",
+              border: "2px solid #3867d6",
               borderRadius: "5px",
               padding: "5px",
             }}

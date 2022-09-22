@@ -64,8 +64,9 @@ const OwnHeader = (props) => {
         <Box
           component={Button}
           fontSize={25}
-          border="2px solid #0394fc"
+          border="2px solid #ED431E"
           style={{
+            color: "#ED431E",
             display: "inline-block",
             margin: "5px",
             padding: "5px",
@@ -85,8 +86,8 @@ const OwnHeader = (props) => {
         <Box
           fontSize={20}
           style={{
-            color: "#0394fc",
-            border: "2px solid #0394fc",
+            color: "#ED431E",
+            border: "2px solid #ED431E",
             margin: "5px",
             padding: "5px",
             borderRadius: "10px",

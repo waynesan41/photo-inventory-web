@@ -10,6 +10,7 @@ import Box from "@mui/material/Box";
 import LogIn from "../components/frontPage/LogIn";
 import Register from "../components/frontPage/Register";
 import { useApiURLContex } from "../App";
+import { useCallback } from "react";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -57,31 +58,32 @@ function LogInPage() {
     setValue(index);
   }; */
   const year = new Date().getFullYear();
+  const checkLogin = useCallback(async () => {
+    const fetchUrl = `${ApiURL}/checkNotLogin.php`;
 
-  useEffect(() => {
-    const checkLogin = async () => {
-      const fetchUrl = `${ApiURL}/checkNotLogin.php`;
-
-      try {
-        const response = await fetch(fetchUrl, {
-          method: "POST",
-          credentials: "include",
-        });
-        if (!response.ok) {
-          throw new Error(response.statusText);
-        }
-        const result = await response.json();
-        if (result === 1) {
-          window.location = window.location.origin + "/MainLocation";
-        } else {
-          console.log(result);
-          console.log("Not LogIn!");
-        }
-      } catch (error) {
-        console.log(error.message);
+    try {
+      const response = await fetch(fetchUrl, {
+        method: "POST",
+        credentials: "include",
+      });
+      if (!response.ok) {
+        throw new Error(response.statusText);
       }
-    };
-    checkLogin();
+      const result = await response.text();
+      //Because PHP End can't be change for some reason
+      if (result === "1") {
+        window.location = window.location.origin + "/MainLocation";
+      } else {
+        /* console.log(result);
+        console.log("Not LogIn!"); */
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  }, []);
+  checkLogin();
+  useEffect(() => {
+    // checkLogin();
   }, []);
   return (
     <>
@@ -111,7 +113,7 @@ function LogInPage() {
             position: "static",
           }}
         >
-          <AppBar position="relative" fullWidth>
+          <AppBar position="relative">
             <Tabs
               value={value}
               onChange={handleChange}

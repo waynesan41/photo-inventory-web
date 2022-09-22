@@ -13,7 +13,7 @@ const ShareMainLocationOne = (props) => {
   };
 
   return (
-    <Card elevation={5} style={{ backgroundColor: "#e9ffe8" }}>
+    <Card elevation={5} style={{ backgroundColor: "#48dbfb" }}>
       <Link
         to={`${props.mainData.MainLocationID}/0`}
         style={{ textDecoration: "none", color: "black" }}

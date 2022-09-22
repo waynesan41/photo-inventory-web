@@ -13,6 +13,9 @@ import LinearProgress from "@mui/material/LinearProgress";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useApiURLContex } from "../../App";
+import { Dialog } from "@mui/material";
+import { hover } from "@testing-library/user-event/dist/hover";
+import TermAndCondition from "./TermAndCondition";
 
 export default function SignUp() {
   const { ApiURL } = useApiURLContex();
@@ -32,8 +35,17 @@ export default function SignUp() {
   const [userTaken, setUserTaken] = useState(false);
   const [userMessage, setUserMessage] = useState("");
 
+  const [isHover, setIsHover] = useState(true);
+
   const [loadSignUp, setLoadSignUp] = useState(false);
 
+  const [openTerm, setOpenTerm] = useState(false);
+  const openTermHandler = () => {
+    setOpenTerm(true);
+  };
+  const closeTermHandler = () => {
+    setOpenTerm(false);
+  };
   const handleSubmit = useCallback(async (event) => {
     setLoadSignUp(true);
     event.preventDefault();
@@ -257,12 +269,30 @@ export default function SignUp() {
               />
             </Grid>
             <Grid item xs={12}>
-              <FormControlLabel
-                control={
-                  <Checkbox value="allowExtraEmails" required color="primary" />
-                }
-                label="I Agreed to Term and Condition."
-              />
+              <Checkbox
+                value="allowExtraEmails"
+                required
+                color="primary"
+              ></Checkbox>
+              <Box display="inline-block" fontSize={20}>
+                Agreed to{" "}
+                <Box
+                  display="inline-block"
+                  style={{
+                    color: isHover ? "#2c3e50" : "#3498db",
+                    textDecoration: "underline",
+                  }}
+                  onMouseEnter={() => {
+                    setIsHover(true);
+                  }}
+                  onMouseOut={() => {
+                    setIsHover(false);
+                  }}
+                  onClick={openTermHandler}
+                >
+                  Term and condition.
+                </Box>
+              </Box>
             </Grid>
           </Grid>
           <Button
@@ -277,6 +307,9 @@ export default function SignUp() {
           {loadSignUp && <LinearProgress />}
         </Box>
       </Box>
+      <Dialog open={openTerm} onClose={closeTermHandler}>
+        <TermAndCondition />
+      </Dialog>
     </Container>
   );
 }

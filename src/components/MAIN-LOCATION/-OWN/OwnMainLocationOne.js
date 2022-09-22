@@ -21,7 +21,7 @@ const OwnMainLocationOne = (props) => {
   };
   return (
     <>
-      <Card elevation={5} style={{ backgroundColor: "#d0ffcf" }}>
+      <Card elevation={5} style={{ backgroundColor: "#0abde3" }}>
         <Link
           to={`${props.mainData.MainLocationID}/0`}
           style={{ textDecoration: "none", color: "black" }}

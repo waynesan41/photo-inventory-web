@@ -62,8 +62,8 @@ const OwnMainMenu = (props) => {
       <Box
         component={Button}
         fontSize={20}
-        color="#259c3f"
-        border="2px solid #259c3f"
+        color="#0652DD"
+        border="2px solid #0652DD"
         style={{
           display: "inline-block",
           margin: "5px",
@@ -80,8 +80,8 @@ const OwnMainMenu = (props) => {
       </Box>
       <Box
         style={{
-          color: "#259c3f",
-          border: "2px solid #259c3f",
+          color: "#0652DD",
+          border: "2px solid #0652DD",
           margin: "5px",
           padding: "5px",
           borderRadius: "10px",

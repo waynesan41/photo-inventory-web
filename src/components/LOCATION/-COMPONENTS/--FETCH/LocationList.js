@@ -121,7 +121,7 @@ const LocationList = () => {
             key={obj.LocationID}
             style={{
               margin: "4px",
-              border: "3px solid green",
+              border: "3px solid #3867d6",
               borderRadius: "5px",
             }}
           >
