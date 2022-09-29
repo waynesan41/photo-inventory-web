@@ -3,10 +3,9 @@ import { Button, Grid, Box, TextField, LinearProgress } from "@mui/material";
 import React, { useState } from "react";
 import { useApiURLContex } from "../../App";
 const style = {
-  padding: 10,
+  padding: "25px 15px 5px 15px",
   width: 400,
   bgcolor: "background.paper",
-  border: "2px solid #000",
   boxShadow: 24,
   p: 4,
 };

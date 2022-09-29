@@ -10,7 +10,7 @@ import ErrorPage from "./Pages/ErrorPage";
 import LogInPage from "./Pages/LogInPage";
 import NavBar from "./Pages/NavBar";
 import Connection from "./Pages/Connection";
-import ResetPassword from "./Pages/ResetPassword";
+import ResetPassword from "./components/frontPage/ResetPassword";
 
 import BlockedUserList from "./components/connection/block/BlockedUserList";
 import RequestFromList from "./components/connection/requestFrom/RequestFromList";
@@ -25,16 +25,39 @@ const ApiURLContex = React.createContext();
 export const useApiURLContex = () => {
   return useContext(ApiURLContex);
 };
+const ApiURL = "http://localhost/PhotoInventory/Backend/api";
+/* const ApiURL = window.location.origin + "/PhotoInventory/Backend/api"; */
+const checkLogin = async () => {
+  console.log("Check Login From APP");
+  const fetchUrl = `${ApiURL}/checkLogin.php`;
+
+  try {
+    const response = await fetch(fetchUrl, {
+      method: "POST",
+      credentials: "include",
+    });
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    const result = await response.json();
+    //Because PHP End can't be change for some reason
+    if (result === 0) {
+      window.location = window.location.origin + "/login";
+    } else {
+      /* console.log(result);
+      console.log("Not LogIn!"); */
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
 function App() {
-  const ApiURL = "http://localhost/PhotoInventory/Backend/api";
-
-  /* const [ApiURL, setApiURL] = useState(
-    window.location.origin + "/PhotoInventory/Backend/api"
-  ); */
   const yourHandler = () => {
-    console.log("Router Change is Called!");
+    checkLogin();
+    // console.log("Router Change is Called!");
   };
+
   document.title = "Find Placement";
   return (
     <>

@@ -89,21 +89,21 @@ const LibraryCardList = () => {
   }, []);
 
   return (
-    <Grid container spacing={2} style={{ padding: "5px" }}>
+    <Grid container spacing={1}>
       <Grid item xs={6} md={6}>
-        <Box fontSize={30} display="inline-block" marginBottom={2}>
+        <Box fontSize={30} display="inline-block" margin="0px 0px 5px 5px">
           Own Library
         </Box>
         <Button
           variant="contained"
           onClick={openHandler}
-          style={{ display: "inline", float: "right" }}
+          style={{ display: "inline", float: "right", marginRight: "10px" }}
         >
           Add New Library
         </Button>
         {loadOwn && <LinearProgress />}
         <ChangePeopleContex.Provider value={changeTotalPeople}>
-          <Grid container spacing={1}>
+          <Grid container spacing={1} padding="5px">
             {ownLibrary.map((lib) => (
               <Grid item xs={12} sm={12} md={6} key={lib.LibraryID}>
                 <LibraryCardOwn libraryData={lib} />
@@ -121,12 +121,19 @@ const LibraryCardList = () => {
         <NewLibraryForm />
       </Dialog>
 
-      <Grid item xs={6} md={6}>
-        <Box fontSize={30} display="inline-block" marginBottom={2}>
+      <Grid
+        item
+        xs={6}
+        md={6}
+        style={{
+          backgroundColor: "#ff9f43",
+        }}
+      >
+        <Box fontSize={30} display="inline-block" margin="0px 0px 5px 5px">
           Shared Library
         </Box>
         {loadShare && <LinearProgress />}
-        <Grid container spacing={1}>
+        <Grid container spacing={1} padding="5px">
           {shareLibrary.map((lib) => (
             <Grid item xs={12} sm={12} md={6} key={lib.ObjectLibraryID}>
               <LibraryCardShare libraryData={lib} />

@@ -80,11 +80,11 @@ export default function SignUp() {
       if (result.fullName !== "GOOD!") {
         console.log("Full Name Invalid");
       }
-      if (result.username !== "GOOD!") {
+      if (result.username !== "GOOD!" && result !== 1) {
         setUserTaken(true);
         setUserMessage("Username Already Taken");
       }
-      if (result.email !== "GOOD!") {
+      if (result.email !== "GOOD!" && result !== 1) {
         setEmailTaken(true);
         setEmailMessage("Email Already Taken");
       }

@@ -32,7 +32,7 @@ const ForgetPassword = (props) => {
       }
       const result = await response.json();
 
-      //   console.log(result);
+      console.log(result);
       if (result === 1) {
         setCorrect(true);
         setResetMessage("");

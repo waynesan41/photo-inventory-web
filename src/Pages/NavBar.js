@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import {
   BottomNavigation,
@@ -20,6 +20,7 @@ const NavBar = () => {
   const { ApiURL } = useApiURLContex();
   //POP OVer ===========
   const [anchorEl, setAnchorEl] = useState(null);
+  const [value, setValue] = useState(0);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -51,8 +52,32 @@ const NavBar = () => {
     }
   };
 
-  const [value, setValue] = useState(0);
+  const checkLogin = useCallback(async () => {
+    console.log("Check Login From APP");
+    const fetchUrl = `${ApiURL}/checkLogin.php`;
+
+    try {
+      const response = await fetch(fetchUrl, {
+        method: "POST",
+        credentials: "include",
+      });
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      const result = await response.json();
+      //Because PHP End can't be change for some reason
+      if (result === 0) {
+        window.location = window.location.origin + "/login";
+      } else {
+        /* console.log(result);
+        console.log("Not LogIn!"); */
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  }, []);
   useEffect(() => {
+    checkLogin();
     switch (window.location.pathname.split("/").at(1)) {
       case "MainLocation":
         setValue(0);
@@ -75,7 +100,10 @@ const NavBar = () => {
     <Box>
       <Box
         style={{
+          position: "sticky",
+          top: "0px",
           display: "grid",
+          zIndex: 9,
           gridTemplateColumns: "1fr 10fr 1fr",
           gridGap: "10px",
           marginBottom: "5px",

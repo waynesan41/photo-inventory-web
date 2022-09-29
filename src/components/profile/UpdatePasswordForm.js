@@ -6,10 +6,10 @@ import { Button, Grid, Box, TextField } from "@mui/material";
 import LinearProgress from "@mui/material/LinearProgress";
 
 const style = {
-  padding: 10,
+  padding: "20px",
   width: 400,
   bgcolor: "background.paper",
-  border: "2px solid #000",
+  borderRadius: "50%",
   boxShadow: 24,
   p: 4,
 };

@@ -53,7 +53,6 @@ export default function SignIn() {
       }
       const result = await response.json();
 
-      console.log("Result1");
       console.log(result);
       if (result === 1) {
         window.location = window.location.origin + "/Profile";

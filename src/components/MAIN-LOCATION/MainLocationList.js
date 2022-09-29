@@ -42,7 +42,7 @@ const MainLocationList = () => {
   };
 
   const fetchLibrary = async (libType) => {
-    if (libType == 1) {
+    if (libType === 1) {
       setLoadOwn(true);
     } else {
       setLoadShare(true);
@@ -76,7 +76,7 @@ const MainLocationList = () => {
     } catch (error) {
       console.log(error.message);
     }
-    if (libType == 1) {
+    if (libType === 1) {
       setLoadOwn(false);
     } else {
       setLoadShare(false);
@@ -93,21 +93,21 @@ const MainLocationList = () => {
   }, []);
 
   return (
-    <Grid container spacing={2} style={{ padding: "5px" }}>
+    <Grid container spacing={1}>
       <Grid item xs={6} md={6}>
-        <Box fontSize={30} display="inline">
+        <Box fontSize={30} display="inline" margin="0px 0px 5px 5px">
           Own Main Location
         </Box>
         <Button
           variant="contained"
           onClick={openHandler}
-          style={{ display: "inline", float: "right" }}
+          style={{ display: "inline", marginRight: "10px", float: "right" }}
         >
           Add New Main Location
         </Button>
         {loadOwn && <LinearProgress />}
         <ChangePeopleContex.Provider value={changeTotalPeople}>
-          <Grid container spacing={1}>
+          <Grid container spacing={1} padding="5px">
             {ownLibrary.map((lib) => (
               <Grid item xs={12} sm={12} md={6} key={lib.MainLocationID}>
                 <OwnMainLocationOne mainData={lib} />
@@ -120,17 +120,22 @@ const MainLocationList = () => {
         <NewMainLocationForm />
       </Dialog>
 
-      <Grid item xs={6} md={6}>
-        <Box fontSize={30} display="inline">
+      <Grid item xs={6} md={6} backgroundColor="#0984e3">
+        <Box fontSize={30} display="inline" margin="0px 0px 5px 5px">
           Shared Main Location
         </Box>
         {loadShare && <LinearProgress />}
-        <Grid container spacing={1}>
+        <Grid container spacing={1} padding="5px">
           {shareLibrary.map((lib) => (
             <Grid item xs={12} sm={12} md={6} key={lib.MainLocationID}>
               <ShareMainLocationOne mainData={lib} />
             </Grid>
           ))}
+          {shareLibrary.length == 0 && !loadShare && (
+            <Grid item xs={12} sm={12} md={6}>
+              <h2>No Share Main Location.</h2>
+            </Grid>
+          )}
         </Grid>
       </Grid>
     </Grid>

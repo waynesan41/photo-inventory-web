@@ -160,7 +160,7 @@ function LogInPage() {
         }}
         component="footer"
       >
-        FindPlacement &copy; {year}
+        Find Placement &copy; {year}
       </Box>
     </>
   );
