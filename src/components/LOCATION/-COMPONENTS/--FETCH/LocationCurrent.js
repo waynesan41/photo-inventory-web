@@ -94,7 +94,6 @@ const LocationCurrent = () => {
   return (
     <>
       <Box
-        fullWidth
         style={{
           padding: "10px 10px 10px 0px",
           margin: "5px",
@@ -109,7 +108,6 @@ const LocationCurrent = () => {
             <Box
               marginLeft="10px"
               component="img"
-              fullWidth
               maxHeight="300px"
               maxWidth="300px"
               src={`${ApiURL}/image/readImageLocation.php?id1=${mainID}&id2=${locationID}`}

@@ -5,6 +5,8 @@ import { useLibraryContex } from "../../ObjectLibrary";
 import { Box, Button, TextField } from "@mui/material";
 import LinearProgress from "@mui/material/LinearProgress";
 
+import heic2any from "heic2any";
+
 const FormAddObject = () => {
   const { ApiURL } = useApiURLContex();
   const { libraryID, libType } = useLibraryContex();
@@ -77,6 +79,21 @@ const FormAddObject = () => {
     if (!e.target.files || e.target.files.length === 0) {
       setSelectedFile(undefined);
       return;
+    } else if (e.target.files) {
+      console.log(e.target.files[0].type);
+      const type = e.target.files[0].type;
+      if (type === "image/heif" || type === "image/heic") {
+        console.log("THis is Iphone Photos");
+        heic2any({
+          blob: e.target.files[0],
+          toType: "image/jpeg",
+          quality: 2,
+        }).then((convertedBlob) => {
+          setSelectedFile(convertedBlob);
+          console.log(convertedBlob);
+          let url = URL.createObjectURL(convertedBlob);
+        });
+      }
     }
     // I've kept this example simple by using the first image instead of multiple
     setSelectedFile(e.target.files[0]);
@@ -104,7 +121,7 @@ const FormAddObject = () => {
         {selectedFile && (
           <Box>
             <img
-              alt="This is image"
+              alt="Loading Image..."
               style={{ maxHeight: "200px", maxWidth: "200px" }}
               src={preview}
             />
@@ -112,7 +129,12 @@ const FormAddObject = () => {
         )}
         <Button component="label" variant="outlined">
           Upload Image
-          <input type="file" accept="image/*" onChange={onSelectFile} hidden />
+          <input
+            type="file"
+            accept=".HEIC, .heic, .HEIF, .heif, image/*"
+            onChange={onSelectFile}
+            hidden
+          />
         </Button>
         <Button variant="outlined" color="error" onClick={removePreview}>
           Remove Image

@@ -53,8 +53,8 @@ const NavBar = () => {
   };
 
   const checkLogin = useCallback(async () => {
-    console.log("Check Login From APP");
-    const fetchUrl = `${ApiURL}/checkLogin.php`;
+    // console.log("Check Login From APP");
+    const fetchUrl = `${ApiURL}/checkLoginNavBar.php`;
 
     try {
       const response = await fetch(fetchUrl, {
