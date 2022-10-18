@@ -6,9 +6,7 @@ import DeleteConfirm from "./DeleteConfirm";
 
 import { Box, TextField, Button, Dialog } from "@mui/material";
 import LinearProgress from "@mui/material/LinearProgress";
-
-import heic2any from "heic2any";
-
+import heic2any from "alexcorvi-heic2any";
 const EditForm = (props) => {
   const { ApiURL } = useApiURLContex();
   const { libraryID, libType } = useLibraryContex();
@@ -114,15 +112,14 @@ const EditForm = (props) => {
       console.log(e.target.files[0].type);
       const type = e.target.files[0].type;
       if (type === "image/heif" || type === "image/heic") {
-        console.log("THis is Iphone Photos");
+        //Converstion Happen here
         heic2any({
           blob: e.target.files[0],
           toType: "image/jpeg",
-          quality: 2,
+          quality: 0.5,
         }).then((convertedBlob) => {
-          setSelectedFile(convertedBlob);
           console.log(convertedBlob);
-          let url = URL.createObjectURL(convertedBlob);
+          setSelectedFile(convertedBlob);
         });
       }
     }

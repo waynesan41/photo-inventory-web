@@ -4,7 +4,7 @@ import { useMainLocationContex } from "../../LocationPage";
 
 import { Box, Button, TextField } from "@mui/material";
 import LinearProgress from "@mui/material/LinearProgress";
-import heic2any from "heic2any";
+import heic2any from "alexcorvi-heic2any";
 
 const NewLocationForm = (props) => {
   const { ApiURL } = useApiURLContex();
@@ -86,7 +86,7 @@ const NewLocationForm = (props) => {
         heic2any({
           blob: e.target.files[0],
           toType: "image/jpeg",
-          quality: 2,
+          quality: 0.5,
         }).then((convertedBlob) => {
           setSelectedFile(convertedBlob);
           console.log(convertedBlob);

@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { useApiURLContex } from "../../../../App";
 import { useMainLocationContex } from "../../LocationPage";
 import DeleteConfirm from "./DeleteConfirm";
-import heic2any from "heic2any";
+import heic2any from "alexcorvi-heic2any";
 
 const EditLocationForm = (props) => {
   const { ApiURL } = useApiURLContex();
@@ -107,7 +107,7 @@ const EditLocationForm = (props) => {
         heic2any({
           blob: e.target.files[0],
           toType: "image/jpeg",
-          quality: 2,
+          quality: 0.5,
         }).then((convertedBlob) => {
           setSelectedFile(convertedBlob);
           console.log(convertedBlob);

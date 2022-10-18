@@ -42,6 +42,13 @@ export default function SignIn() {
     const data = new FormData(event.currentTarget);
     const fetchUrl = `${ApiURL}/account/login.php`;
 
+    /* for (const pair of data.entries()) {
+      console.log(`${pair[0]}, ${pair[1]}`);
+    } */
+    console.log(data.get("remember"));
+    if (data.get("remember") == undefined) {
+      data.append("remember", 0);
+    }
     try {
       const response = await fetch(fetchUrl, {
         method: "POST",
@@ -112,7 +119,7 @@ export default function SignIn() {
             helperText={loginMessage}
           />
           <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
+            control={<Checkbox name="remember" value={1} color="primary" />}
             label="Remember me"
           />
           <Button

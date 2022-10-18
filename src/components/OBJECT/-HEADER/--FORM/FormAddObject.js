@@ -5,7 +5,7 @@ import { useLibraryContex } from "../../ObjectLibrary";
 import { Box, Button, TextField } from "@mui/material";
 import LinearProgress from "@mui/material/LinearProgress";
 
-import heic2any from "heic2any";
+import heic2any from "alexcorvi-heic2any";
 
 const FormAddObject = () => {
   const { ApiURL } = useApiURLContex();
@@ -87,7 +87,7 @@ const FormAddObject = () => {
         heic2any({
           blob: e.target.files[0],
           toType: "image/jpeg",
-          quality: 2,
+          quality: 0.5,
         }).then((convertedBlob) => {
           setSelectedFile(convertedBlob);
           console.log(convertedBlob);
