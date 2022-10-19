@@ -45,7 +45,7 @@ const LocationBread = () => {
     if (locationID != 0) fetchBread();
   }, []);
   return (
-    <Box margin="10px" display="block">
+    <Box margin="10px" display="inline-block">
       <Breadcrumbs separator=">" arial-label="breadcrumb">
         <Link
           href={0}

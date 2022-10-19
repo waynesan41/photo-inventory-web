@@ -7,15 +7,6 @@ import { TextField, Box, Button, Grid, Dialog } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import LinearProgress from "@mui/material/LinearProgress";
 
-const style = {
-  padding: 10,
-  minWidth: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
-
 const EditLibraryForm = (props) => {
   const { ApiURL } = useApiURLContex();
   const [open, setOpen] = useState(false);
@@ -64,12 +55,12 @@ const EditLibraryForm = (props) => {
     setLoadEdit(false);
   };
   return (
-    <Box style={style} component="form" onSubmit={editFormSubmitHandler}>
-      <Grid container>
-        <Grid item xs={12}>
+    <Box padding="5px" component="form" onSubmit={editFormSubmitHandler}>
+      <Box fullWidth>
+        <Box>
           <h3>Edit Main Location Name</h3>
-        </Grid>
-        <Grid item xs={12} style={{ marginBottom: "20px" }}>
+        </Box>
+        <Box style={{ marginBottom: "20px" }}>
           <TextField
             variant="filled"
             name="name"
@@ -80,8 +71,8 @@ const EditLibraryForm = (props) => {
             defaultValue={props.data.Name}
             autoFocus
           />
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
       {loadEdit && <LinearProgress />}
       <Button
         variant="contained"

@@ -92,7 +92,18 @@ function LogInPage() {
         textAlign="center"
         paddingTop="10px"
       >
-        <img src="logo.png" height="100px" />
+        <Box
+          component="img"
+          src="logo.png"
+          width={{ xs: "100%", md: "400px" }}
+          sx={
+            {
+              // height: "100px",
+              // width: { sm: "100%", md: "100%" },
+              // width: "100%",
+            }
+          }
+        />
       </Box>
       <Box
         style={{
@@ -106,10 +117,10 @@ function LogInPage() {
           sx={{
             border: "3px solid #2980b9",
             borderRadius: "5px",
-            margin: "20px",
+            margin: "10px",
             display: "inline-block",
             bgcolor: "background.paper",
-            width: 500,
+            width: "auto",
             position: "static",
           }}
         >
@@ -133,7 +144,12 @@ function LogInPage() {
             <Register />
           </TabPanel>
         </Box>
-        <Box display="inline-block" position="relative">
+        <Box
+          display="inline-block"
+          position="relative"
+          backgroundColor="white"
+          paddingLeft="10px"
+        >
           <Box color="#e67e22" display="block" fontSize={30} component="h1">
             Find Placement
           </Box>
@@ -151,7 +167,7 @@ function LogInPage() {
           left: "0px",
           bottom: "0px",
           right: "0px",
-          minHeight: "50px",
+          minHeight: "25px",
           backgroundColor: "#2980b9",
           color: "white",
           textAlign: "center",

@@ -1,4 +1,4 @@
-import { Button, Box, Dialog, Grid } from "@mui/material";
+import { Button, Box, Dialog, Popover, Grid } from "@mui/material";
 import UpdateProfileForm from "../components/profile/UpdateProfileForm";
 import UpdatePasswordForm from "../components/profile/UpdatePasswordForm";
 
@@ -16,6 +16,37 @@ const Profile = () => {
   const [profileData, setProfileData] = useState({});
   const [loadProfile, setLoadProfile] = useState(false);
 
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const openlogout = Boolean(anchorEl);
+  const logOutphp = async () => {
+    const fetchURL = `${ApiURL}/account/logout.php`;
+
+    try {
+      const response = await fetch(fetchURL, {
+        mode: "cors",
+        credentials: "include",
+      });
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      const data = await response.json();
+      console.log(data);
+      if (data === 0) {
+        window.location = window.location.origin + "/login";
+      } else {
+        console.log("Log Out Fail!");
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
   useEffect(() => {
     const firstFetch = async () => {
       setLoadProfile(true);
@@ -97,7 +128,7 @@ const Profile = () => {
           color="secondary"
           onClick={profileFormOpener}
         >
-          Edit Profile Information
+          Edit Profile
         </Button>
         <Dialog open={open} onClose={profileFormOpener}>
           <UpdateProfileForm ProfileData={profileData} closeForm={setOpen} />
@@ -106,6 +137,22 @@ const Profile = () => {
         <Button variant="contained" color="primary" onClick={passFormOpener}>
           EDIT PASSWORD
         </Button>
+        <Button variant="contained" color="warning" onClick={handleClick}>
+          Log Out
+        </Button>
+        <Popover
+          open={openlogout}
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left",
+          }}
+        >
+          <Button onClick={logOutphp} variant="contained" color="error">
+            Confirm
+          </Button>
+        </Popover>
         <Dialog open={passForm} onClose={passFormOpener}>
           <UpdatePasswordForm
             ProfileData={profileData}

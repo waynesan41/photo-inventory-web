@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -25,7 +25,10 @@ const ApiURLContex = React.createContext();
 export const useApiURLContex = () => {
   return useContext(ApiURLContex);
 };
-const ApiURL = "http://10.1.10.23/PhotoInventory/Backend/api";
+let ApiURL = "http://10.1.10.91/PhotoInventory/Backend/api";
+if (window.location.origin.includes("localhost")) {
+  ApiURL = "http://localhsot/PhotoInventory/Backend/api";
+}
 // const ApiURL = "http://localhost/PhotoInventory/Backend/api";
 // const ApiURL = window.location.origin + "/PhotoInventory/Backend/api";
 const checkLogin = async () => {

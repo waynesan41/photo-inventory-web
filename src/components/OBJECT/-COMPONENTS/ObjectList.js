@@ -152,17 +152,21 @@ const ObjectList = () => {
         <Box fontSize={20}>There NO Object Found</Box>
       )}
       <Box
-        style={{
+        sx={{
           display: "grid",
-          gridTemplateColumns: "1fr 1fr 1fr 1fr",
+          gridTemplateColumns: { xs: "1fr 1fr", md: "1fr 1fr 1fr 1fr" },
           gridGap: "10px",
         }}
       >
         {object.map((obj) => (
           <Box
-            sx={{ boxShadow: 5 }}
+            sx={{
+              boxShadow: 5,
+              height: "auto",
+              border: "3px solid orange",
+              borderRadius: "5px",
+            }}
             key={obj.ObjectID}
-            style={{ border: "3px solid orange", borderRadius: "5px" }}
           >
             <ObjectOne objData={obj} />
           </Box>

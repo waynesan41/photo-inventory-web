@@ -75,7 +75,7 @@ const MoveLocationForm = (props) => {
           }}
         >
           <Box>
-            <Box component="b">{locationInfo.Name} === </Box>
+            <Box component="b">{locationInfo.Name} ===&#62;&#62; </Box>
             <Box>MainID: {mainID}</Box>
             <Box>LocationID: {locationID}</Box>
             {locationInfo.Photo > 0 && (
@@ -122,7 +122,7 @@ const MoveLocationForm = (props) => {
             onSubmit={fetchMoveLocation}
           >
             <Box fontSize={30}>
-              <i>{locationInfo.Name}</i> === <i>{props.locData.Name}</i>
+              <i>{locationInfo.Name}</i> ===&gt;&gt; <i>{props.locData.Name}</i>
             </Box>
             {loopError && (
               <Box

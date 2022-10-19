@@ -99,19 +99,19 @@ const NavBar = () => {
   return (
     <Box>
       <Box
-        style={{
+        sx={{
           position: "sticky",
           top: "0px",
           display: "grid",
           zIndex: 9,
-          gridTemplateColumns: "1fr 10fr 1fr",
+          gridTemplateColumns: { xs: "1fr", md: "1fr 10fr 1fr" },
           gridGap: "10px",
           marginBottom: "5px",
           borderBottom: "2px solid gray",
           backgroundColor: "#3498db",
         }}
       >
-        <Link href="/MainLocation">
+        <Link href="/MainLocation" display={{ xs: "none", md: "block" }}>
           <img
             style={{
               marginTop: "10px",
@@ -177,7 +177,10 @@ const NavBar = () => {
             }}
           />
         </BottomNavigation>
-        <Box style={{ display: "grid", alignItems: "start" }}>
+        <Box
+          display={{ xs: "none", md: "grid" }}
+          style={{ alignItems: "start" }}
+        >
           <Button variant="contained" onClick={handleClick}>
             Log Out
           </Button>

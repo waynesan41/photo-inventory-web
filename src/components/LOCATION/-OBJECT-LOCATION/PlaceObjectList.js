@@ -104,9 +104,11 @@ const PlaceObjectList = () => {
         )}
       </Box>
       <Box
-        style={{
+        sx={{
           display: "grid",
-          gridTemplateColumns: "1fr 1fr 1fr 1fr",
+          gap: "1px",
+          gridTemplateColumns: { xs: "repeat(2, 1fr)", md: "1fr 1fr 1fr 1fr" },
+          gridTemplateRows: "masonry",
         }}
       >
         {placeObjList

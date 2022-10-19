@@ -156,6 +156,7 @@ const UpdateProfileForm = (props) => {
       component="form"
       onSubmit={updatehandler}
       id="profile-form"
+      width="auto"
     >
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12}>
@@ -168,7 +169,6 @@ const UpdateProfileForm = (props) => {
             label="Full Name"
             defaultValue={props.ProfileData.FullName}
             helperText={nameMessage}
-            autoFocus
           />
         </Grid>
 
@@ -202,7 +202,8 @@ const UpdateProfileForm = (props) => {
       </Grid>
       <Button
         type="submit"
-        fullWidth
+        width="100%"
+        color="secondary"
         variant="contained"
         disabled={loadUpdate}
         sx={{ mt: 3, mb: 2 }}

@@ -59,7 +59,7 @@ const AddShareUser = (props) => {
     fetchConnectedUser();
   }, []);
   return (
-    <Box minWidth={400}>
+    <Box>
       <MainLocationIDContext.Provider value={{ changeNewUser, mainID }}>
         {addUser.length > 0 &&
           addUser.map((User) => (

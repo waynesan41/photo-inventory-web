@@ -4,15 +4,6 @@ import { useApiURLContex } from "../../../../App";
 import { TextField, Box, Button, Grid, Alert, Dialog } from "@mui/material";
 import LinearProgress from "@mui/material/LinearProgress";
 
-const style = {
-  padding: 10,
-  minWidth: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
-
 const DeleteConfirm = (props) => {
   const { ApiURL } = useApiURLContex();
   const [libName, setLibName] = useState("");
@@ -68,7 +59,7 @@ const DeleteConfirm = (props) => {
     setLoadDelete(false);
   };
   return (
-    <Box style={style}>
+    <Box padding="5px">
       <Grid container component="form">
         <Grid item xs={12}>
           <Alert severity="error">

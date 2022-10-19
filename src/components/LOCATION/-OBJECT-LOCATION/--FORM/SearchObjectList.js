@@ -137,9 +137,9 @@ const SearchObjectList = (props) => {
       )}
       {noObject && !loadList && <Box fontSize={20}>No Object Found.</Box>}
       <Box
-        style={{
+        sx={{
           display: "grid",
-          gridTemplateColumns: "1fr 1fr 1fr 1fr",
+          gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
         }}
       >
         {object.map((obj) => (

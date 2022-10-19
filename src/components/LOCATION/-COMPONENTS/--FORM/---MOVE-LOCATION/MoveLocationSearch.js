@@ -80,7 +80,7 @@ const MoveLocationSearch = (props) => {
       <Box
         style={{
           display: "grid",
-          gridTemplateColumns: "1fr 1fr 1fr 1fr",
+          gridTemplateColumns: { xs: "1fr 1fr", md: " 1fr 1fr 1fr 1fr" },
         }}
       >
         <OneLocationMoveTo locationData={baseLocation} />

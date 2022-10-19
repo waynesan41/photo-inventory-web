@@ -94,22 +94,23 @@ const LocationCurrent = () => {
   return (
     <>
       <Box
-        style={{
+        sx={{
           padding: "10px 10px 10px 0px",
           margin: "5px",
           borderRadius: "5px",
           backgroundColor: "#b3d8f8",
-          display: "flex",
-          flexDirection: "row",
+          display: "grid",
+          gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
         }}
+        fullWidth
       >
         <Box>
           {locationInfo.Photo != 0 && (
             <Box
-              marginLeft="10px"
+              margin="0px 10px 0px 10px"
               component="img"
-              maxHeight="300px"
-              maxWidth="300px"
+              maxHeight="400px"
+              maxWidth="100%"
               src={`${ApiURL}/image/readImageLocation.php?id1=${mainID}&id2=${locationID}`}
               onClick={openDetail}
             />
@@ -130,6 +131,7 @@ const LocationCurrent = () => {
           <Box marginTop="10px">
             <Button
               variant="contained"
+              color="secondary"
               onClick={openEdit}
               disabled={accessLvl < 3}
             >

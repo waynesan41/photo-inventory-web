@@ -110,9 +110,9 @@ const LocationList = () => {
         )}
       </Box>
       <Box
-        style={{
+        sx={{
           display: "grid",
-          gridTemplateColumns: "1fr 1fr 1fr 1fr",
+          gridTemplateColumns: { xs: "1fr 1fr", md: "1fr 1fr 1fr 1fr" },
         }}
       >
         {locationList.map((obj) => (

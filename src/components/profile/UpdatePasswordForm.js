@@ -166,12 +166,12 @@ const UpdatePasswordForm = (props) => {
       </Grid>
       <Button
         type="submit"
-        fullWidth
+        width="100%"
         disabled={loadUpdate}
         variant="contained"
         sx={{ mt: 3, mb: 2 }}
       >
-        Update Profile
+        Update Password
       </Button>
       {loadUpdate && <LinearProgress />}
     </Box>
