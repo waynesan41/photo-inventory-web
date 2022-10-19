@@ -62,7 +62,7 @@ export default function SignIn() {
 
       console.log(result);
       if (result === 1) {
-        window.location = window.location.origin + "/Profile";
+        window.location = window.location.origin + "/MainLocation";
       } else if (result === 0) {
         setIncorrect(true);
         setLoginMessage("Incorrect Username, Email or Password!");

@@ -7,6 +7,7 @@ const ForgetPassword = (props) => {
   const { ApiURL } = useApiURLContex();
 
   const [loadSend, setLoadSend] = useState(false);
+  const [loadSendLine, setLoadSendLine] = useState(false);
   const [resetMessage, setResetMessage] = useState("");
   const [incorrect, setIncorrect] = useState(false);
   const [correct, setCorrect] = useState(false);
@@ -17,6 +18,7 @@ const ForgetPassword = (props) => {
   };
   const fetchSendLink = useCallback(async (event) => {
     setLoadSend(true);
+    setLoadSendLine(true);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const fetchUrl = `${ApiURL}/account/forgetPassword.php`;
@@ -39,8 +41,9 @@ const ForgetPassword = (props) => {
       } else if (result === 0) {
         setIncorrect(true);
         setResetMessage("Email Not Found!!");
+        setLoadSend(false);
       }
-      setLoadSend(false);
+      setLoadSendLine(false);
     } catch (error) {
       console.log(error.message);
     }
@@ -68,7 +71,7 @@ const ForgetPassword = (props) => {
           name="email"
           onChange={incorrectHandler}
         />
-        {loadSend && <LinearProgress />}
+        {loadSendLine && <LinearProgress />}
         {correct && (
           <Box
             style={{

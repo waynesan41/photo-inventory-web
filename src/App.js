@@ -25,8 +25,9 @@ const ApiURLContex = React.createContext();
 export const useApiURLContex = () => {
   return useContext(ApiURLContex);
 };
+const ApiURL = "http://10.1.10.23/PhotoInventory/Backend/api";
 // const ApiURL = "http://localhost/PhotoInventory/Backend/api";
-const ApiURL = window.location.origin + "/PhotoInventory/Backend/api";
+// const ApiURL = window.location.origin + "/PhotoInventory/Backend/api";
 const checkLogin = async () => {
   console.log("Check Login From APP");
   const fetchUrl = `${ApiURL}/checkLogin.php`;

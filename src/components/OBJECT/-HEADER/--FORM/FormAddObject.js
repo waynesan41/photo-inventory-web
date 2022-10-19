@@ -48,7 +48,7 @@ const FormAddObject = () => {
       if (result === 0) {
         window.location = window.location.origin + "/Login";
       } else if (result === "ADD") {
-        window.location.reload();
+        window.location.href = window.location.href;
       } else {
         console.log("Fail to Upload");
         console.log(result);
