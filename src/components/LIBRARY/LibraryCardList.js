@@ -117,7 +117,7 @@ const LibraryCardList = () => {
           </Grid>
         </ChangePeopleContex.Provider>
       </Grid>
-      <Dialog open={open} onClose={closeHandler}>
+      <Dialog fullWidth open={open} onClose={closeHandler}>
         <NewLibraryForm />
       </Dialog>
 

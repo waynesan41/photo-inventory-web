@@ -95,16 +95,17 @@ const LocationCurrent = () => {
     <>
       <Box
         sx={{
+          width: "auto",
           padding: "10px 10px 10px 0px",
           margin: "5px",
           borderRadius: "5px",
           backgroundColor: "#b3d8f8",
-          display: "grid",
-          gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
+          display: { md: "flex" },
+          // gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
         }}
         fullWidth
       >
-        <Box>
+        <Box display="inline-block">
           {locationInfo.Photo != 0 && (
             <Box
               margin="0px 10px 0px 10px"
@@ -116,7 +117,8 @@ const LocationCurrent = () => {
             />
           )}
         </Box>
-        <Box marginLeft="10px">
+
+        <Box display="block" marginLeft="10px">
           {locationInfo && (
             <Box>
               <Box fontSize={18}>

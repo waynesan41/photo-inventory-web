@@ -70,7 +70,7 @@ const EditShareUser = (props) => {
     fetchShareUser();
   }, []);
   return (
-    <Box minWidth={400}>
+    <Box>
       <ShareFormChangeContex.Provider value={{ removeUser, changeAccess }}>
         {shareUser.length > 0 &&
           shareUser.map((User) => (

@@ -38,7 +38,7 @@ const ShareMainLocationOne = (props) => {
           Leave Main Location
         </Button>
       </Grid>
-      <Dialog open={open} onClose={closeHandler}>
+      <Dialog fullWidth open={open} onClose={closeHandler}>
         <ConfirmLeaveForm
           mainID={props.mainData.MainLocationID}
           closeConfirm={closeHandler}

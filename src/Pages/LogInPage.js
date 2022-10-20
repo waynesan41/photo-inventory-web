@@ -155,18 +155,22 @@ function LogInPage() {
           </Box>
           <Box
             fontSize={25}
-            style={{ wordWrap: "break-word", display: "block" }}
+            style={{
+              wordWrap: "break-word",
+              display: "block",
+              marginBottom: "10px",
+            }}
           >
-            Reconnect with the stuff that you don't remenber placing.
+            Reconnect with the stuffs you don't remenber placing.
           </Box>
         </Box>
       </Box>
       <Box
-        style={{
-          position: "fixed",
+        sx={{
+          position: { xs: "relative", md: "fixed" },
           left: "0px",
           bottom: "0px",
-          right: "0px",
+          width: { xs: "auto", md: "100%" },
           minHeight: "25px",
           backgroundColor: "#2980b9",
           color: "white",

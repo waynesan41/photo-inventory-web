@@ -3,15 +3,6 @@ import React from "react";
 import { TextField, Box, Button, Grid, Alert, Dialog } from "@mui/material";
 import { useApiURLContex } from "../../../App";
 
-const style = {
-  padding: 10,
-  minWidth: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
-
 const NewMainLocationForm = () => {
   const { ApiURL } = useApiURLContex();
   const fetchAddNewLibrary = async (event) => {
@@ -42,8 +33,10 @@ const NewMainLocationForm = () => {
     }
   };
   return (
-    <Box style={style} component="form" onSubmit={fetchAddNewLibrary}>
-      <h3>Add New Main Location</h3>
+    <Box padding="5px" component="form" onSubmit={fetchAddNewLibrary}>
+      <Box fontSize={25} marginBottom="10px" fontWeight="bold">
+        Add New Main Location
+      </Box>
       <Box style={{ marginBottom: "20px" }}>
         <TextField
           variant="filled"

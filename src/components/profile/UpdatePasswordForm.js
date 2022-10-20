@@ -5,15 +5,6 @@ import { useApiURLContex } from "../../App";
 import { Button, Grid, Box, TextField } from "@mui/material";
 import LinearProgress from "@mui/material/LinearProgress";
 
-const style = {
-  padding: "20px",
-  width: 400,
-  bgcolor: "background.paper",
-  borderRadius: "50%",
-  boxShadow: 24,
-  p: 4,
-};
-
 const UpdatePasswordForm = (props) => {
   const { ApiURL } = useApiURLContex();
   const [password, setPassword] = useState("");
@@ -104,7 +95,7 @@ const UpdatePasswordForm = (props) => {
   };
   return (
     <Box
-      style={style}
+      padding="15px 5px 0px 5px"
       component="form"
       onSubmit={updatehandler}
       id="profile-form"

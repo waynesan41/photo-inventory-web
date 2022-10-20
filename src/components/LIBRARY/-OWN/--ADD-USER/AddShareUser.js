@@ -55,7 +55,7 @@ const AddShareUser = (props) => {
     fetchConnectedUser();
   }, []);
   return (
-    <Box minWidth={400}>
+    <Box>
       {addUser.length > 0 &&
         addUser.map((User) => (
           <Box style={{ margin: "3px" }} key={User.UserID}>

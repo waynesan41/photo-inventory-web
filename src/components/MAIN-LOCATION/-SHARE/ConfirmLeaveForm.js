@@ -37,7 +37,7 @@ const ConfirmLeaveForm = (props) => {
     setLoadLeave(false);
   };
   return (
-    <Box minWidth={350} style={{ padding: "10px" }}>
+    <Box style={{ padding: "10px" }}>
       <Alert severity="error">
         Leave This Library will Remove all Access to Library.
       </Alert>

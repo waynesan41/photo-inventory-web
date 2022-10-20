@@ -36,23 +36,30 @@ const LibraryCardOwn = (props) => {
         </Link>
       </Card>
       <Grid container style={{ justifyContent: "center" }}>
-        <Button variant="contained" color="info" onClick={() => openHandler(1)}>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => openHandler(1)}
+        >
           Edit Library
         </Button>
 
         <Button
           variant="contained"
-          color="secondary"
           onClick={() => openHandler(2)}
           disabled={!props.libraryData.NumPeople}
         >
           Edit User
         </Button>
-        <Button variant="contained" onClick={() => openHandler(3)}>
+        <Button
+          variant="contained"
+          color="success"
+          onClick={() => openHandler(3)}
+        >
           ADD User
         </Button>
       </Grid>
-      <Dialog open={open} onClose={closeHandler}>
+      <Dialog fullWidth open={open} onClose={closeHandler}>
         {formType == 1 && (
           <EditLibraryForm data={props.libraryData} closeForm={closeHandler} />
         )}

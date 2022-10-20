@@ -23,7 +23,7 @@ const ShareUserOne = (props) => {
         subheader={
           <>
             Username: {props.user.Username}
-            <br /> Access Level: {props.user.AccessType} ID: {props.user.UserID}
+            <br /> Access Level: {props.user.AccessType}
           </>
         }
       >

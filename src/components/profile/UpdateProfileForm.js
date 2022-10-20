@@ -2,13 +2,6 @@ import { Button, Grid, Box, TextField, LinearProgress } from "@mui/material";
 
 import React, { useState } from "react";
 import { useApiURLContex } from "../../App";
-const style = {
-  padding: "25px 15px 5px 15px",
-  width: 400,
-  bgcolor: "background.paper",
-  boxShadow: 24,
-  p: 4,
-};
 
 const UpdateProfileForm = (props) => {
   const { ApiURL } = useApiURLContex();
@@ -152,7 +145,7 @@ const UpdateProfileForm = (props) => {
   const [loadUpdate, setLoadUpdate] = useState(false);
   return (
     <Box
-      style={style}
+      padding="15px 5px 0px 5px"
       component="form"
       onSubmit={updatehandler}
       id="profile-form"

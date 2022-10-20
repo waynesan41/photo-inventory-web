@@ -5,14 +5,6 @@ import { useApiURLContex } from "../../../App";
 import { TextField, Box, Button } from "@mui/material";
 import LinearProgress from "@mui/material/LinearProgress";
 
-const style = {
-  padding: 10,
-  minWidth: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
 const NewLibraryForm = () => {
   const { ApiURL } = useApiURLContex();
   const [loadAdd, setLoadAdd] = useState(false);
@@ -46,7 +38,7 @@ const NewLibraryForm = () => {
     }
   };
   return (
-    <Box style={style} component="form" onSubmit={fetchAddNewLibrary}>
+    <Box padding="5px" component="form" onSubmit={fetchAddNewLibrary}>
       <h3>Add New Library</h3>
       <Box style={{ marginBottom: "20px" }}>
         <TextField

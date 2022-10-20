@@ -7,15 +7,6 @@ import { TextField, Box, Button, Grid, Dialog } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import LinearProgress from "@mui/material/LinearProgress";
 
-const style = {
-  padding: 10,
-  minWidth: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
-
 const EditLibraryForm = (props) => {
   const { ApiURL } = useApiURLContex();
   const [open, setOpen] = useState(false);
@@ -64,7 +55,7 @@ const EditLibraryForm = (props) => {
     setLoadEdit(false);
   };
   return (
-    <Box style={style} component="form" onSubmit={editFormSubmitHandler}>
+    <Box padding="5px" component="form" onSubmit={editFormSubmitHandler}>
       <Grid container>
         <Grid item xs={12}>
           <h3>Edit Library</h3>

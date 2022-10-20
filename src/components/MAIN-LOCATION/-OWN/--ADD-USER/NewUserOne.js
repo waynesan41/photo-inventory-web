@@ -20,19 +20,10 @@ const NewUserOne = (props) => {
           </Button>
         }
         title={props.user.FullName}
-        subheader={
-          <>
-            Username: {props.user.Username}
-            <br />
-            ID: {props.user.UserID}
-          </>
-        }
+        subheader={<>Username: {props.user.Username}</>}
       />
       <Dialog open={open} onClose={closeHandler}>
-        <NewUserShareForm
-          user={props.user}
-          closeShareForm={closeHandler}
-        />
+        <NewUserShareForm user={props.user} closeShareForm={closeHandler} />
       </Dialog>
     </Card>
   );

@@ -192,7 +192,6 @@ export default function SignUp() {
                 // defaultValue="杠杠"
                 inputProps={{ maxLength: 45 }}
                 onChange={fullNameHandler}
-                autoFocus
                 helperText={fullNameValid && "Name require 1 to 30 characters."}
               />
             </Grid>
