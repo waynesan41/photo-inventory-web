@@ -55,8 +55,9 @@ const MoveLocationForm = (props) => {
       } else if (result === "LOOP" || result === "FAIL") {
         setLoopError(true);
       } else if (result === "MOVED") {
-        window.location.reload();
+        window.location.href = window.location.href;
       } else {
+        setLoopError(true);
         console.log("Fail to Upload");
       }
     } catch (error) {
@@ -76,11 +77,9 @@ const MoveLocationForm = (props) => {
         >
           <Box>
             <Box component="b">{locationInfo.Name} ===&#62;&#62; </Box>
-            <Box>MainID: {mainID}</Box>
-            <Box>LocationID: {locationID}</Box>
             {locationInfo.Photo > 0 && (
               <Paper
-                style={{ border: "4px solid green" }}
+                style={{ border: "4px solid #3867d6" }}
                 component="img"
                 height="250"
                 src={`${ApiURL}/image/readImageLocation.php?id1=${mainID}&id2=${locationID}`}
@@ -89,11 +88,9 @@ const MoveLocationForm = (props) => {
           </Box>
           <Box>
             <Box component="b">{props.locData.Name}</Box>
-            <Box>MainID: {props.locData.MainLocationID}</Box>
-            <Box>LocationID: {props.locData.LocationID}</Box>
             {props.locData.Photo > 0 && (
               <Paper
-                style={{ border: "4px solid orange" }}
+                style={{ border: "4px solid #3867d8" }}
                 component="img"
                 height="250"
                 src={`${ApiURL}/image/readImageLocation.php?id1=${props.locData.MainLocationID}&id2=${props.locData.LocationID}`}

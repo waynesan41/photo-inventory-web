@@ -78,19 +78,27 @@ const MoveLocationSearch = (props) => {
       </Box>
       {loadList && <LinearProgress />}
       <Box
-        style={{
+        sx={{
           display: "grid",
           gridTemplateColumns: { xs: "1fr 1fr", md: " 1fr 1fr 1fr 1fr" },
         }}
       >
-        <OneLocationMoveTo locationData={baseLocation} />
+        <Box
+          style={{
+            margin: "4px",
+            border: "3px solid #3867d6",
+            borderRadius: "5px",
+          }}
+        >
+          <OneLocationMoveTo locationData={baseLocation} />
+        </Box>
         {locationList.map((obj) => (
           <Box
             sx={{ boxShadow: 5 }}
             key={obj.LocationID}
             style={{
               margin: "4px",
-              border: "3px solid green",
+              border: "3px solid #3867d6",
               borderRadius: "5px",
             }}
           >
