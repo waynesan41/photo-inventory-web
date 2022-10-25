@@ -10,6 +10,8 @@ const SearchUserList = () => {
   const [noUser, setNoUser] = useState(false);
   const [searchUser, setsearchUser] = useState([]);
   const [loadSearch, setLoadSearch] = useState(false);
+  const [userValid, setUserValid] = useState(false);
+  const [userMessage, setUserMessage] = useState("");
   // const [currentID, setCurrentID] = useState();
 
   const removeBlockUser = (userID) => {
@@ -17,6 +19,20 @@ const SearchUserList = () => {
     setsearchUser(searchUser.filter((user) => user.UserID !== userID));
   };
 
+  const validateUsername = (event) => {
+    const usernameRegex = /^[0-9a-z_.]{0,20}$/;
+    const email = event.target.value.toLowerCase();
+    event.target.value = event.target.value.toLowerCase();
+    if (usernameRegex.test(email)) {
+      setUserValid(false);
+      setUserMessage("");
+    } else {
+      setUserValid(true);
+      setUserMessage(
+        "Username can contain _ . and 3 to 35 letters and number."
+      );
+    }
+  };
   const fetchSearchUser = async (event) => {
     setLoadSearch(true);
     event.preventDefault();
@@ -61,11 +77,14 @@ const SearchUserList = () => {
         onSubmit={fetchSearchUser}
       >
         <TextField
+          error={userValid}
           id="username"
           label="Search Username"
           name="username"
           variant="outlined"
           style={{ marginRight: "10px" }}
+          onChange={validateUsername}
+          helperText={userMessage}
         />
 
         <Button variant="outlined" type="submit" disabled={loadSearch}>

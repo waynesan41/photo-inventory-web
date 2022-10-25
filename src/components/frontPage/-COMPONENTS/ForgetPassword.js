@@ -21,6 +21,7 @@ const ForgetPassword = (props) => {
     setLoadSendLine(true);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    data.append("apiURL", window.location.origin);
     const fetchUrl = `${ApiURL}/account/forgetPassword.php`;
 
     try {

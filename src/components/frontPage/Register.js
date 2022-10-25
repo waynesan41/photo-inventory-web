@@ -115,7 +115,8 @@ export default function SignUp() {
   };
   const validateUsername = (event) => {
     const usernameRegex = /^[0-9a-z_.]{3,20}$/;
-    const email = event.target.value;
+    const email = event.target.value.toLowerCase();
+    event.target.value = event.target.value.toLowerCase();
     setUserTaken(false);
     if (usernameRegex.test(email)) {
       setUserValid(false);
@@ -220,7 +221,6 @@ export default function SignUp() {
                 label="Username"
                 inputProps={{ maxLength: 35 }}
                 name="username"
-                // defaultValue="randomGuy123"
                 onChange={validateUsername}
                 helperText={userMessage}
               />

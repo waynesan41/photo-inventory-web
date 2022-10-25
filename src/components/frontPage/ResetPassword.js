@@ -74,9 +74,9 @@ const ResetPassword = () => {
   //CONFIRM PASSWORD HANDLER
 
   useEffect(() => {
-    checkLogin();
-    // checkLogin();
     checkToken();
+    // checkLogin();
+    // checkLogin();
   }, []);
   return (
     <>

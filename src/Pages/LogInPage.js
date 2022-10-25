@@ -83,7 +83,7 @@ function LogInPage() {
   }, []);
   checkLogin();
   useEffect(() => {
-    // checkLogin();
+    checkLogin();
   }, []);
   return (
     <>

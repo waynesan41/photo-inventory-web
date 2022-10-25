@@ -13,7 +13,7 @@ const AcceptDenied = (props) => {
     const formData = new FormData();
     formData.append("userID", props.currentID);
     formData.append("update", "A");
-    const fetchURL = `${ApiURL}/Connection/updateConnection.php`;
+    const fetchURL = `${ApiURL}/connection/updateConnection.php`;
     try {
       const response = await fetch(fetchURL, {
         method: "POST",
@@ -31,7 +31,7 @@ const AcceptDenied = (props) => {
         props.close(null);
         console.log("Accepted");
       } else {
-        console.log("Accepted");
+        console.log("ERROR ACCEPTING");
       }
       setLoadAccept(false);
     } catch (error) {
