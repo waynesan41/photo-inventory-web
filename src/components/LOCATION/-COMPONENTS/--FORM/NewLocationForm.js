@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { useApiURLContex } from "../../../../App";
 import { useMainLocationContex } from "../../LocationPage";
 
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, TextField, Input } from "@mui/material";
 import LinearProgress from "@mui/material/LinearProgress";
 import heic2any from "alexcorvi-heic2any";
 
@@ -120,18 +120,19 @@ const NewLocationForm = (props) => {
             <Box>
               <img
                 alt="Loading Image..."
-                style={{ maxHeight: "200px", maxWidth: "200px" }}
+                style={{ maxHeight: "350px", maxWidth: "200px" }}
                 src={preview}
               />
             </Box>
           )}
-          <Button component="label" variant="outlined">
-            Upload Image
-            <input
+          <Button variant="outlined" for="uploadImage">
+            Upload Image / Drag & Drop
+            <Input
+              id="uploadImage"
+              sx={{ position: "absolute", opacity: "0" }}
               type="file"
               accept=".HEIC, .heic, .HEIF, .heif, image/*"
               onChange={onSelectFile}
-              hidden
             />
           </Button>
           <Button variant="outlined" color="error" onClick={removePreview}>

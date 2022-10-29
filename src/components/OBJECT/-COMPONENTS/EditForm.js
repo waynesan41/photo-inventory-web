@@ -4,7 +4,7 @@ import { useApiURLContex } from "../../../App";
 import { useLibraryContex } from "../ObjectLibrary";
 import DeleteConfirm from "./DeleteConfirm";
 
-import { Box, TextField, Button, Dialog } from "@mui/material";
+import { Box, TextField, Button, Dialog, Input } from "@mui/material";
 import LinearProgress from "@mui/material/LinearProgress";
 import heic2any from "alexcorvi-heic2any";
 const EditForm = (props) => {
@@ -186,13 +186,14 @@ const EditForm = (props) => {
             />
           </Box>
         )}
-        <Button component="label" variant="outlined">
-          Upload Image
-          <input
+        <Button variant="outlined" for="uploadImage">
+          Upload Image / Drag & Drop
+          <Input
+            id="uploadImage"
+            sx={{ position: "absolute", opacity: "0" }}
             type="file"
             accept=".HEIC, .heic, .HEIF, .heif, image/*"
             onChange={onSelectFile}
-            hidden
           />
         </Button>
         <Button variant="outlined" color="error" onClick={removePreview}>
